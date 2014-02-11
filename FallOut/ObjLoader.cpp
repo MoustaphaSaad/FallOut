@@ -13,6 +13,7 @@ Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 	Assimp::Importer importer;
 
 	const aiScene* scene = importer.ReadFile(fileName.c_str(),aiProcess_Triangulate|aiProcess_GenSmoothNormals);
+	//const aiMaterial* mat = scene->mMaterials[0];
 	if(scene){
 		vector<Vertex> vertices;
 		vector<int> indices;
@@ -31,6 +32,8 @@ Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 			vec3 norm = vec3(pNormal->x,pNormal->y,pNormal->z);
 			vec3 col = vec3(pColor->r,pColor->g,pColor->b);
 			vec2 tex = vec2(pTexCoord->x,pTexCoord->y);
+
+			
 
 			vertices.push_back(Vertex(pos,norm,col,tex));
 		}

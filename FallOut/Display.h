@@ -17,5 +17,8 @@ public:
 		height = h;
 		this->title = title;
 	}
+	float getAspect(){
+		return (float)width/(float)height;
+	}
 };
 #endif

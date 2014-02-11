@@ -30,7 +30,54 @@ void Shader::Update(Transform transform,Material material){
 	
 }
 
-
+void Shader::setUniform(string name,int val){
+	UniformData *uni = NULL;
+	for(int i=0;i<m_Uniforms.size();i++){
+		if(m_Uniforms[i].Name == name)
+			uni = &m_Uniforms[i];
+	}
+	if(uni){
+		printf("Error Uniform %s doesn't Exist\n",name.c_str());
+		return;
+	}
+	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+}
+void Shader::setUniform(string name,float val){
+	UniformData *uni = NULL;
+	for(int i=0;i<m_Uniforms.size();i++){
+		if(m_Uniforms[i].Name == name)
+			uni = &m_Uniforms[i];
+	}
+	if(uni){
+		printf("Error Uniform %s doesn't Exist\n",name.c_str());
+		return;
+	}
+	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+}
+void Shader::setUniform(string name,vec3 val){
+	UniformData *uni = NULL;
+	for(int i=0;i<m_Uniforms.size();i++){
+		if(m_Uniforms[i].Name == name)
+			uni = &m_Uniforms[i];
+	}
+	if(uni){
+		printf("Error Uniform %s doesn't Exist\n",name.c_str());
+		return;
+	}
+	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+}
+void Shader::setUniform(string name,mat4 val){
+	UniformData *uni = NULL;
+	for(int i=0;i<m_Uniforms.size();i++){
+		if(m_Uniforms[i].Name == name)
+			uni = &m_Uniforms[i];
+	}
+	if(uni){
+		printf("Error Uniform %s doesn't Exist\n",name.c_str());
+		return;
+	}
+	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+}
 
 string Shader::loadShader(const string fileName){
 	ifstream file;

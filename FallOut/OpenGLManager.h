@@ -22,5 +22,10 @@ public:
 	vector<UniformData> CreateUniforms(const string txt,unsigned int program);
 	void DeleteShader(unsigned int program,unsigned int* shaders,int size);
 	void BindShader(unsigned int program);
+
+	void setUniform(unsigned int loc,int value);
+	void setUniform(unsigned int loc,float value);
+	void setUniform(unsigned int loc,const vec3 value);
+	void setUniform(unsigned int loc,const mat4 value);
 };
 #endif

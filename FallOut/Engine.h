@@ -14,6 +14,7 @@ public:
 	void initiate(Display d,GraphicsHandle h);
 	void start();
 	void setClearColor(vec3);
+	Display* getDisplay();
 	~Engine();
 private:
 	void init();
@@ -21,6 +22,7 @@ private:
 
 	GXManager* gxManager;
 	static Engine* engine;
+	Display* display;
 	ResourceManager* resourceManager;
 };
 #endif

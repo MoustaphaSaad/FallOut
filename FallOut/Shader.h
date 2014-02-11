@@ -14,6 +14,10 @@ class Shader:public Resource{
 public:
 	Shader(const string name,const string fileName);
 	void Update(Transform transform,Material material);
+	void setUniform(string name,int val);
+	void setUniform(string name,float val);
+	void setUniform(string name,vec3 val);
+	void setUniform(string name,mat4 val);
 	void Bind();
 	~Shader();
 

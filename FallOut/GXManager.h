@@ -27,6 +27,11 @@ public:
 	virtual void DeleteShader(unsigned int program,unsigned int* shaders,int size){}
 	virtual void BindShader(unsigned int p){}
 
+	virtual void setUniform(unsigned int loc,int value){}
+	virtual void setUniform(unsigned int loc,float value){}
+	virtual void setUniform(unsigned int loc,const vec3 value){}
+	virtual void setUniform(unsigned int loc,const mat4 value){}
+
 	vec3 getClearColor(){
 		return clearColor;
 	}

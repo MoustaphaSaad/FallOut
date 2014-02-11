@@ -244,3 +244,16 @@ void OpenGLManager::BindShader(unsigned int program)
         lastProgram = program;
     }
 }
+
+void OpenGLManager::setUniform(unsigned int loc,int value){
+	glUniform1i(loc,value);
+}
+void OpenGLManager::setUniform(unsigned int loc,float value){
+	glUniform1f(loc,value);
+}
+void OpenGLManager::setUniform(unsigned int loc,const vec3 value){
+	glUniform3f(loc,value.GetX(),value.GetY(),value.GetZ());
+}
+void OpenGLManager::setUniform(unsigned int loc,const mat4 value){
+	glUniformMatrix4fv(loc,1,GL_TRUE,&(value[0][0]));
+}

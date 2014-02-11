@@ -5,6 +5,7 @@ Engine* Engine::engine = NULL;
 Engine::Engine(){
 		gxManager = NULL;
 		resourceManager = NULL;
+		display = NULL;
 		engine = this;
 }
 Engine* Engine::getEngine(){
@@ -12,6 +13,9 @@ Engine* Engine::getEngine(){
 }
 GXManager* Engine::getGXManager(){
 	return gxManager;
+}
+Display* Engine::getDisplay(){
+	return display;
 }
 void Engine::setClearColor(vec3 v){
 	gxManager->setClearColor(v);
@@ -30,10 +34,10 @@ Engine::~Engine(){
 
 void Engine::init(){
 	Shader* shoho = resourceManager->createShader("basic","res/basic.glsl");
-	Mesh* oi =resourceManager->createMesh("cube","res/CUBE.obj");
+	Mesh* oi =resourceManager->createMesh("cube","res/moksa.obj");
 }
 void Engine::initMembers(GraphicsHandle h,Display d){
-	
+	display = &d;
 	if(h == GraphicsHandle::OpenGL){
 		gxManager = new OpenGLManager(d);
 	}else if(h == GraphicsHandle::DirectX){

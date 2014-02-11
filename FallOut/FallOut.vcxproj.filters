@@ -96,6 +96,9 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="ObjLoader.cpp">
       <Filter>Header Files\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
