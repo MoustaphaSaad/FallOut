@@ -5,12 +5,13 @@
 #include<vector>
 using namespace std;
 class GameObject{
+	friend class RenderEngine;
 public:
 	GameObject(const Transform trans = Transform());
 
-	void Input();
-	void Update();
-	void Render();
+	virtual void Input();
+	virtual void Update();
+	virtual void Render();
 
 	void addChild(GameObject* child);
 	void removeChild(GameObject* child);

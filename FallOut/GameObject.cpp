@@ -1,6 +1,7 @@
 #include"GameObject.h"
 #include"ObjectRenderer.h"
 #include"ObjectBehavior.h"
+#include"Engine.h"
 #include<algorithm>
 
 GameObject::GameObject(const Transform transform){
@@ -23,10 +24,7 @@ void GameObject::Update(){
 	}
 }
 void GameObject::Render(){
-	RenderComponent->Render();
-	for (auto it : childList){
-		it->Render();
-	}
+	Engine::getEngine()->getRenderer()->drawGameObject(this);
 }
 
 void GameObject::addChild(GameObject* child){

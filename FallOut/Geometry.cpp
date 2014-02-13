@@ -7,9 +7,6 @@ Geometry::Geometry(IVertex* vertices,int* indices,int nbVertices,int nbIndices,V
 	indicesTab = indices;
 	format = form;
 
-	//memcpy(verticesTab, vertices, nbVertices * form->vertexSize);
-    //memcpy(indicesTab, indices, nbIndices * sizeof(int));
-
 
     this->verticesCount = nbVertices;
     this->indicesCount = nbIndices;

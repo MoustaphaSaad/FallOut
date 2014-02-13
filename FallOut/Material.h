@@ -6,9 +6,9 @@ public:
 	Material(const string);
 	~Material();
 
-	//Shader getShader();
-	//void setShader(Shader shader);
+	Shader getShader();
+	void setShader(Shader shader);
 private :
-	//Shader* shader;
+	Shader* shader;
 };
 #endif

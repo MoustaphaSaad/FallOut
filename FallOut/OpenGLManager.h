@@ -10,6 +10,7 @@ public:
 	void start();
 	static void clearBuffers();
 	static void display();
+	static void Idle();
 
 	unsigned int CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture);
 	void DeleteTexture(unsigned int texture);
@@ -27,5 +28,11 @@ public:
 	void setUniform(unsigned int loc,float value);
 	void setUniform(unsigned int loc,const vec3 value);
 	void setUniform(unsigned int loc,const mat4 value);
+
+	unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic);
+	unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic);
+	unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type);
+
+	void drawGeometry(Geometry* geo,unsigned int vbo,unsigned int ibo);
 };
 #endif

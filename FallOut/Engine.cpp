@@ -6,6 +6,7 @@ Engine::Engine(){
 		gxManager = NULL;
 		resourceManager = NULL;
 		display = NULL;
+		rEngine = NULL;
 		engine = this;
 }
 Engine* Engine::getEngine(){
@@ -16,6 +17,9 @@ GXManager* Engine::getGXManager(){
 }
 Display* Engine::getDisplay(){
 	return display;
+}
+RenderEngine* Engine::getRenderer(){
+	return rEngine;
 }
 void Engine::setClearColor(vec3 v){
 	gxManager->setClearColor(v);
@@ -47,4 +51,5 @@ void Engine::initMembers(GraphicsHandle h,Display d){
 		gxManager = NULL;
 	}
 	resourceManager = ResourceManager::getInstance();
+	rEngine = new RenderEngine();
 }

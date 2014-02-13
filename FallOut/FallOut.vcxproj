@@ -82,6 +82,7 @@
     <ClInclude Include="ObjectRenderer.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="OpenGLManager.h" />
+    <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
@@ -99,8 +100,10 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ObjectRenderer.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="OpenGLManager.cpp" />
+    <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Shader.cpp" />

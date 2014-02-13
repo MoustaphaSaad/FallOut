@@ -2,6 +2,7 @@
 #define ENGINE_H
 #include"Resources.h"
 #include"OpenGLManager.h"
+#include"RenderEngine.h"
 enum GraphicsHandle{ OpenGL,DirectX};
 
 class Engine{
@@ -11,6 +12,7 @@ public:
 	Engine();
 	static Engine* getEngine();
 	GXManager* getGXManager();
+	RenderEngine* getRenderer();
 	void initiate(Display d,GraphicsHandle h);
 	void start();
 	void setClearColor(vec3);
@@ -24,5 +26,6 @@ private:
 	static Engine* engine;
 	Display* display;
 	ResourceManager* resourceManager;
+	RenderEngine* rEngine;
 };
 #endif

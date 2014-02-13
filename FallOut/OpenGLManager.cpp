@@ -8,6 +8,7 @@
 #include"Engine.h"
 #include"Shader.h"
 #include"Mesh.h"
+#include"ObjectRenderer.h"
 #include<GL\freeglut.h>
 using namespace std;
 OpenGLManager::OpenGLManager(Display d):GXManager(){
@@ -30,7 +31,8 @@ void OpenGLManager::initiate(Display d){
 void OpenGLManager::start(){
 	glClearColor(clearColor.GetX(),clearColor.GetY(),clearColor.GetZ(),1);
 	glutDisplayFunc(&OpenGLManager::display);
-	glutIdleFunc(&OpenGLManager::display);
+	glutIdleFunc(&OpenGLManager::Idle);
+	//glutIdleFunc(&OpenGLManager::display);
 	glutMainLoop();
 }
 void OpenGLManager::clearBuffers(){
@@ -38,17 +40,17 @@ void OpenGLManager::clearBuffers(){
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 }
+void OpenGLManager::Idle(){
+	glutPostRedisplay();
+}
 void OpenGLManager::display(){
 	clearBuffers();
 	Mesh* er =(Mesh*) ResourceManager::getInstance()->getResource("cube");
 	Shader* sh = (Shader*) ResourceManager::getInstance()->getResource("basic");
 	sh->Bind();
-	er->draw();
-	/*glBegin(GL_TRIANGLES);
-	glVertex2d(-1,-1);
-	glVertex2d(0,1);
-	glVertex2d(1,-1);
-	glEnd();*/
+	GameObject* obj = new GameObject(Transform());
+	obj->setRenderComponent(new ObjectRenderer(er));
+	obj->Render();
 	glutSwapBuffers();
 }
 unsigned int OpenGLManager::CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture)
@@ -140,9 +142,10 @@ string prepareVS(const string txt){
 	while(true){
 		string prev = output;
 		string rep = "layout(location =";
-		char *x=new char[30];
-		_itoa(i,x,10);
-		rep.append(x);
+		//char *x=new char[30];
+		//_itoa(i,x,10);
+		//rep.append(x);
+		rep+=i+48;
 		rep += " ) in";
 		output = StringOp::findReplaceFirst(output,"attribute",rep);
 		if(!prev.compare(output))
@@ -215,7 +218,7 @@ vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int 
 		if(substrs.size()>0)
 			if(!substrs[0].compare("uniform")){
 				string name = substrs[2];
-				for(int i=0;i<name.size();i++){
+				for(unsigned int i=0;i<name.size();i++){
 					if(name[i] == ';'||name[i] == ' ')
 						name.erase(i,1);
 				}
@@ -256,4 +259,47 @@ void OpenGLManager::setUniform(unsigned int loc,const vec3 value){
 }
 void OpenGLManager::setUniform(unsigned int loc,const mat4 value){
 	glUniformMatrix4fv(loc,1,GL_TRUE,&(value[0][0]));
+}
+
+unsigned int OpenGLManager::CreateVertexBuffer(void* data,int dataSize,bool isStatic){
+	return CreateDataBuffer(data,dataSize,isStatic,GL_ARRAY_BUFFER);
+}
+unsigned int OpenGLManager::CreateIndexBuffer(void* data,int dataSize,bool isStatic){
+	return CreateDataBuffer(data,dataSize,isStatic,GL_ELEMENT_ARRAY_BUFFER);
+}
+unsigned int OpenGLManager::CreateDataBuffer(void* data,int dataSize,bool isStatic,int type){
+	unsigned int loc;
+	int state;
+	if(isStatic)
+		state = GL_STATIC_DRAW;
+	else
+		state = GL_DYNAMIC_DRAW;
+
+	glGenBuffers(1,&loc);
+
+	glBindBuffer(type,loc);
+	glBufferData(type,dataSize,data,state);
+
+	return loc;
+}
+
+void OpenGLManager::drawGeometry(Geometry* geometry,unsigned int vbo,unsigned int ibo){
+	for(int i = 0; i < geometry->getFormat()->nElements; i++)
+        glEnableVertexAttribArray(i);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	int memOffset = 0;
+    for(int i = 0; i < geometry->getFormat()->nElements; i++)
+    {
+		int n = geometry->getFormat()->Sizes[i] / sizeof(float);
+        glVertexAttribPointer(i, n, GL_FLOAT, GL_FALSE, geometry->getFormat()->vertexSize, (GLvoid*)memOffset);
+		memOffset += geometry->getFormat()->Sizes[i];
+    }
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glDrawElements(GL_TRIANGLES, geometry->getIndicesCount(), GL_UNSIGNED_INT, 0);
+
+	for(int i = 0; i < geometry->getFormat()->nElements; i++)
+        glDisableVertexAttribArray(i);
 }

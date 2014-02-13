@@ -3,6 +3,7 @@
 #include"Math3D.h"
 #include"Display.h"
 #include"GlobalStructs.h"
+#include"Geometry.h"
 #include<vector>
 #include<GL\glew.h>
 using namespace std;
@@ -32,6 +33,11 @@ public:
 	virtual void setUniform(unsigned int loc,const vec3 value){}
 	virtual void setUniform(unsigned int loc,const mat4 value){}
 
+	virtual unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic){return 0;}
+	virtual unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic){return 0;}
+	virtual unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type){return 0;}
+
+	virtual void drawGeometry(Geometry* geo,unsigned int vbo,unsigned int ibo){}
 	vec3 getClearColor(){
 		return clearColor;
 	}

@@ -6,6 +6,7 @@
 #include<string>
 using namespace std;
 class Mesh:public Resource{
+	friend class RenderEngine;
 public:
 	Mesh(const string name,Geometry* geo,Material* mat);
 	//Mesh(const string name);

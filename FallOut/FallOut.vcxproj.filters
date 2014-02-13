@@ -99,6 +99,9 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="RenderEngine.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -150,6 +153,12 @@
       <Filter>Header Files\Helper</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectRenderer.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>
