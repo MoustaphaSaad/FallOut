@@ -13,12 +13,17 @@ Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 	Assimp::Importer importer;
 
 	const aiScene* scene = importer.ReadFile(fileName.c_str(),aiProcess_Triangulate|aiProcess_GenSmoothNormals);
-	//const aiMaterial* mat = scene->mMaterials[0];
 	if(scene){
 		vector<Vertex> vertices;
 		vector<int> indices;
 
 		const aiMesh* Lmesh = scene->mMeshes[0];
+		const aiMaterial* mat = scene->mMaterials[Lmesh->mMaterialIndex];
+		//float diff;
+		//unsigned int max;
+		//aiString path;
+		//mat->GetTexture(aiTextureType_DIFFUSE,0,&path);
+		//aiGetMaterialFloat(mat, AI_MATKEY_SHININESS, &diff);
 		const aiVector3D Zero3D(0.0f,0.0f,0.0f);
 		const aiColor4D EmptyColor(0.0f,0.0f,0.0f,0.0f);
 

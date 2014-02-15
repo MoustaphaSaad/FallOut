@@ -7,9 +7,11 @@ Engine::Engine(){
 		resourceManager = NULL;
 		display = NULL;
 		rEngine = NULL;
-		engine = this;
 }
 Engine* Engine::getEngine(){
+	if(!engine){
+		engine = new Engine();
+	}
 	return engine;
 }
 GXManager* Engine::getGXManager(){
@@ -28,7 +30,8 @@ void Engine::initiate(Display d,GraphicsHandle h){
 	initMembers(h,d);
 	gxManager->setClearColor(vec3(0,0,0));
 }
-void Engine::start(){
+void Engine::start(Application* app){
+	this->app = app;
 	init();
 	gxManager->start();
 }
@@ -36,9 +39,26 @@ Engine::~Engine(){
 	delete gxManager;
 }
 
+void Engine::input(){
+	app->input();
+}
+
+void Engine::update(){
+	app->update();
+}
+
+void Engine::render(){
+	app->postRender();
+	if(!app->scene)
+		rEngine->drawGameObject(app->scene);
+}
+
 void Engine::init(){
-	Shader* shoho = resourceManager->createShader("basic","res/basic.glsl");
-	Mesh* oi =resourceManager->createMesh("cube","res/moksa.obj");
+	app->init();
+	app->loadResources();
+	app->setupScene();
+	//Shader* shoho = resourceManager->createShader("basic","res/basic.glsl");
+	//Mesh* oi =resourceManager->createMesh("cube","res/moksa.obj");
 }
 void Engine::initMembers(GraphicsHandle h,Display d){
 	display = &d;

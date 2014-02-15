@@ -102,6 +102,12 @@
     <ClInclude Include="RenderEngine.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -160,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="ObjectRenderer.cpp">
       <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Header Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

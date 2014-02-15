@@ -26,8 +26,21 @@ void Shader::Bind(){
 	Engine::getEngine()->getGXManager()->BindShader(m_Program);
 }
 
-void Shader::Update(Transform transform,Material material){
-	
+void Shader::Update(Material material){
+	for(int i=0;i<m_Uniforms.size();i++){
+		if(m_Uniforms[i].Type.compare("float"))
+			setUniform(m_Uniforms[i].Name,material.getFloat(m_Uniforms[i].Name));
+
+		if(m_Uniforms[i].Type.compare("int"))
+			setUniform(m_Uniforms[i].Name,material.getInt(m_Uniforms[i].Name));
+
+		if(m_Uniforms[i].Type.compare("vec3"))
+			setUniform(m_Uniforms[i].Name,material.getVec3(m_Uniforms[i].Name));
+
+		if(m_Uniforms[i].Type.compare("mat4"))
+			setUniform(m_Uniforms[i].Name,material.getMat4(m_Uniforms[i].Name));
+	}
+
 }
 
 void Shader::setUniform(string name,int val){

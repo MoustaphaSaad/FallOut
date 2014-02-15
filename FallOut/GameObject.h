@@ -30,7 +30,7 @@ public:
 	Component getBehaviorComponent();
 	~GameObject();
 	
-private:
+protected:
 	Transform transform;
 	vector<GameObject*> childList;
 	Component *RenderComponent,*BehaviorComponent;

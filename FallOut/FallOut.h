@@ -14,6 +14,7 @@
 #include"Texture.h"
 #include"Resource.h"
 #include"RenderEngine.h"
+#include"Application.h"
 //Engine Objects
 #include"GameObject.h"
 #include"Component.h"
@@ -24,3 +25,4 @@
 #include"Mesh.h"
 #include"Vertex.h"
 #include"Camera.h"
+#include"Scene.h"

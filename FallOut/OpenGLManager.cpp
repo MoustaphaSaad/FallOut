@@ -41,16 +41,19 @@ void OpenGLManager::clearBuffers(){
 
 }
 void OpenGLManager::Idle(){
+	Engine::getEngine()->input();
+	Engine::getEngine()->update();
 	glutPostRedisplay();
 }
 void OpenGLManager::display(){
 	clearBuffers();
-	Mesh* er =(Mesh*) ResourceManager::getInstance()->getResource("cube");
+	/*Mesh* er =(Mesh*) ResourceManager::getInstance()->getResource("cube");
 	Shader* sh = (Shader*) ResourceManager::getInstance()->getResource("basic");
 	sh->Bind();
 	GameObject* obj = new GameObject(Transform());
 	obj->setRenderComponent(new ObjectRenderer(er));
-	obj->Render();
+	obj->Render();*/
+	Engine::getEngine()->render();
 	glutSwapBuffers();
 }
 unsigned int OpenGLManager::CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture)
@@ -168,14 +171,32 @@ string prepareFS(const string txt){
 	output = StringOp::findReplaceAll(output,"FSmain()","main()");
 	return output;
 }
+string InOutManagement(const string txt,unsigned int type){
+	string output = txt;
+	if(type == GL_VERTEX_SHADER){
+		output = StringOp::findReplaceAll(output,"vout","out");
+		output = StringOp::findReplaceAll(output,"vin","in");
+		output = StringOp::deleteLine(output,"fout");
+		output = StringOp::deleteLine(output,"fin");
+	}else if(type == GL_FRAGMENT_SHADER){
+		output = StringOp::findReplaceAll(output,"fout","out");
+		output = StringOp::findReplaceAll(output,"fin","in");
+		output = StringOp::deleteLine(output,"vout");
+		output = StringOp::deleteLine(output,"vin");
+	}
+	return output;
+
+}
 unsigned int OpenGLManager::CreateVertexShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void FSmain()");
 	shaderTxt = prepareVS(shaderTxt);
+	shaderTxt = InOutManagement(shaderTxt,GL_VERTEX_SHADER);
 	return CreateShader(shaderTxt,GL_VERTEX_SHADER);
 }
 unsigned int OpenGLManager::CreateFragmentShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void VSmain()");
 	shaderTxt = prepareFS(shaderTxt);
+	shaderTxt = InOutManagement(shaderTxt,GL_FRAGMENT_SHADER);
 	return CreateShader(shaderTxt,GL_FRAGMENT_SHADER);
 }
 unsigned int OpenGLManager::CreateShader(const string txt,unsigned int type){
@@ -228,6 +249,7 @@ vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int 
 	}
 	return output;
 }
+
 void OpenGLManager::DeleteShader(unsigned int program,unsigned int* shaders,int size){
 	for(int i = 0; i < size; i++)
     {
