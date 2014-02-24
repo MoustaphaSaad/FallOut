@@ -1,6 +1,6 @@
 #ifndef GXManager_H
 #define GXManager_H
-#include"Math3D.h"
+
 #include"Display.h"
 #include"GlobalStructs.h"
 #include"Geometry.h"
@@ -14,11 +14,11 @@ public:
 	}
 	virtual void initiate(Display d){}
 	virtual void start(){}
+	virtual void clearBuffers(){}
 
-	unsigned int CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture){ return -1;}
-	void DeleteTexture(unsigned int texture){}
-	void BindTexture(unsigned int texture, int unit){}
-	static void clearBuffers(){}
+	virtual unsigned int CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture){ return -1;}
+	virtual void DeleteTexture(unsigned int texture){}
+	virtual void BindTexture(unsigned int texture, int unit){}
 
 	virtual unsigned int CreateVertexShader(const string txt){return 0;}
 	virtual unsigned int CreateFragmentShader(const string txt){return 0;}
@@ -37,6 +37,8 @@ public:
 	virtual unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic){return 0;}
 	virtual unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type){return 0;}
 
+	virtual void refresh(){}
+
 	virtual void drawGeometry(Geometry* geo,unsigned int vbo,unsigned int ibo){}
 	vec3 getClearColor(){
 		return clearColor;
@@ -47,4 +49,5 @@ public:
 protected:
 	vec3 clearColor;
 };
+
 #endif

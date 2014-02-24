@@ -4,13 +4,14 @@
 
 class OpenGLManager : public GXManager{
 public:
-	OpenGLManager(Display d);
-	void initiate(Display d);
+	OpenGLManager(Display* d);
+	void initiate(Display* d);
 	
 	void start();
 	static void clearBuffers();
 	static void display();
 	static void Idle();
+	static void reshapeFunc(int w,int h);
 
 	unsigned int CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture);
 	void DeleteTexture(unsigned int texture);
@@ -32,6 +33,8 @@ public:
 	unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic);
 	unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic);
 	unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type);
+
+	void refresh();
 
 	void drawGeometry(Geometry* geo,unsigned int vbo,unsigned int ibo);
 };

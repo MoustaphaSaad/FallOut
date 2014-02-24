@@ -9,17 +9,18 @@
 #include"Shader.h"
 #include"Mesh.h"
 #include"ObjectRenderer.h"
+#include"InputGL.h"
 #include<GL\freeglut.h>
 using namespace std;
-OpenGLManager::OpenGLManager(Display d):GXManager(){
+OpenGLManager::OpenGLManager(Display* d):GXManager(){
 	initiate(d);
 }
-void OpenGLManager::initiate(Display d){
+void OpenGLManager::initiate(Display* d){
 	int argc=0;
 	glutInit(&argc, NULL);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(d.width,d.height);
-	glutCreateWindow(d.title.c_str());
+	glutInitDisplayMode(GLUT_DEPTH|GLUT_RGBA | GLUT_DOUBLE );
+	glutInitWindowSize(d->width,d->height);
+	glutCreateWindow(d->title.c_str());
 	glutInitContextVersion(4, 1);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 	if (glewInit()) {
@@ -32,27 +33,36 @@ void OpenGLManager::start(){
 	glClearColor(clearColor.GetX(),clearColor.GetY(),clearColor.GetZ(),1);
 	glutDisplayFunc(&OpenGLManager::display);
 	glutIdleFunc(&OpenGLManager::Idle);
-	//glutIdleFunc(&OpenGLManager::display);
+	glutReshapeFunc(&OpenGLManager::reshapeFunc);
+	glutKeyboardFunc(&InputGL::keyboardDownFunc);
+	glutKeyboardUpFunc(&InputGL::keyboardUpFunc);
+	glutMouseFunc(&InputGL::mouseFunc);
+	glutMotionFunc(&InputGL::mouseMotionFunc);
+	glutPassiveMotionFunc(&InputGL::mouseMotionFunc);
 	glutMainLoop();
 }
+void OpenGLManager::reshapeFunc(int w,int h){
+	Engine::getEngine()->getDisplay()->width = w;
+	Engine::getEngine()->getDisplay()->height = h;
+}
 void OpenGLManager::clearBuffers(){
+	vec3 val = Engine::getEngine()->getGXManager()->getClearColor();
+	glClearColor(val.GetX(),val.GetY(),val.GetZ(),1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 }
-void OpenGLManager::Idle(){
-	Engine::getEngine()->input();
-	Engine::getEngine()->update();
+void OpenGLManager::refresh(){
 	glutPostRedisplay();
 }
+void OpenGLManager::Idle(){
+	Engine::getEngine()->gameLoop();
+}
 void OpenGLManager::display(){
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_RGBA);
+	glEnable(GL_DOUBLE);
 	clearBuffers();
-	/*Mesh* er =(Mesh*) ResourceManager::getInstance()->getResource("cube");
-	Shader* sh = (Shader*) ResourceManager::getInstance()->getResource("basic");
-	sh->Bind();
-	GameObject* obj = new GameObject(Transform());
-	obj->setRenderComponent(new ObjectRenderer(er));
-	obj->Render();*/
 	Engine::getEngine()->render();
 	glutSwapBuffers();
 }
@@ -187,16 +197,41 @@ string InOutManagement(const string txt,unsigned int type){
 	return output;
 
 }
+string UniformManagement(const string txt,unsigned int type){
+	string output = txt;
+	if(type == GL_VERTEX_SHADER){
+		output = StringOp::findReplaceAll(output,"vuniform","uniform");
+		while(true){
+			string prev = output;
+			output = StringOp::deleteLine(output,"funiform");
+			if(output == prev)
+				break;
+		}
+	}else if(type == GL_FRAGMENT_SHADER){
+		output = StringOp::findReplaceAll(output,"funiform","uniform");
+		while(true){
+			string prev = output;
+			output = StringOp::deleteLine(output,"vuniform");
+			if(output == prev)
+				break;
+		}
+	}
+	return output;
+
+}
 unsigned int OpenGLManager::CreateVertexShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void FSmain()");
+	shaderTxt = removeFunction(shaderTxt,"vec4 ads()");
 	shaderTxt = prepareVS(shaderTxt);
 	shaderTxt = InOutManagement(shaderTxt,GL_VERTEX_SHADER);
+	shaderTxt = UniformManagement(shaderTxt,GL_VERTEX_SHADER);
 	return CreateShader(shaderTxt,GL_VERTEX_SHADER);
 }
 unsigned int OpenGLManager::CreateFragmentShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void VSmain()");
 	shaderTxt = prepareFS(shaderTxt);
 	shaderTxt = InOutManagement(shaderTxt,GL_FRAGMENT_SHADER);
+	shaderTxt = UniformManagement(shaderTxt,GL_FRAGMENT_SHADER);
 	return CreateShader(shaderTxt,GL_FRAGMENT_SHADER);
 }
 unsigned int OpenGLManager::CreateShader(const string txt,unsigned int type){
@@ -237,7 +272,7 @@ vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int 
 	while(getline(ss,line)){
 		vector<string> substrs = StringOp::Split(line,' ');
 		if(substrs.size()>0)
-			if(!substrs[0].compare("uniform")){
+			if(!substrs[0].compare("vuniform")||!substrs[0].compare("funiform")){
 				string name = substrs[2];
 				for(unsigned int i=0;i<name.size();i++){
 					if(name[i] == ';'||name[i] == ' ')

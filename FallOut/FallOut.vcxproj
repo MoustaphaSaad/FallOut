@@ -75,9 +75,12 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GlobalStructs.h" />
+    <ClInclude Include="InputGL.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="Math3D.h" />
     <ClInclude Include="GXManager.h" />
+    <ClInclude Include="MaterialBasic.h" />
+    <ClInclude Include="Math3D.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObjectBehavior.h" />
     <ClInclude Include="ObjectRenderer.h" />
@@ -91,6 +94,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="StringOp.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Timing.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
@@ -100,7 +104,10 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="InputGL.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MaterialBasic.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ObjectRenderer.cpp" />
@@ -115,6 +122,7 @@
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="StringOp.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

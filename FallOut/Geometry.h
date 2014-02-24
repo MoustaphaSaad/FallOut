@@ -22,9 +22,10 @@ public:
 private:
 	IVertex* verticesTab;
 	int* indicesTab;
-
 	int verticesCount;
 	int indicesCount;
+
+	void calcNormals();
 
 	unsigned int primitive;
 	VertexFormat* format;

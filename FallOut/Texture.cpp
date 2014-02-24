@@ -16,7 +16,7 @@ Texture::Texture(const string ResourceName,const std::string fileName, bool line
 	
 }
 
-Texture::Texture(const string ResourceName,int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture):Resource(ResourceName,ResourceType::TEXTURE)
+Texture::Texture(const string ResourceName,int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture):Resource()
 {
 	this->type = ResourceType::TEXTURE;
 	TextureID = Engine::getEngine()->getGXManager()->CreateTexture(width, height, data, linearFiltering, repeatTexture);

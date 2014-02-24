@@ -1,6 +1,6 @@
 #include"Transform.h"
 
-Transform::Transform(const vec3 pos,const vec4 rot , const vec3 scal ){
+Transform::Transform(const vec3 pos,const vec3 rot , const vec3 scal ){
 	this->position = pos;
 	this->rotation = rot;
 	this->scale = scal;
@@ -28,8 +28,9 @@ void Transform::setChildModel(const mat4 childModel){
 }
 void Transform::CalcModel()
 {
-	Matrix4f translation = Matrix4f::InitTranslation(position);
-	Matrix4f ScaleM = Matrix4f::InitScale(scale);
+	mat4 translation = mat4::InitTranslation(position);
+	mat4 ScaleM = mat4::InitScale(scale);
+	mat4 rot = mat4::InitRotation(rotation);
 
-	model = childModel * translation * rotation.ToMatrix() * ScaleM;
+	model = childModel* translation * rot * ScaleM;
 }

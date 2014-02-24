@@ -2,34 +2,57 @@
 #include<iostream>
 #include<sstream>
 #include<vector>
-#include"Math3D.h"
-#include"Material.h"
+#include"MaterialBasic.h"
 #include<assimp/Importer.hpp>
 #include<assimp/scene.h>
 #include<assimp/postprocess.h>
+#include"StringOp.h"
 
+Material* matHandle(const string resourceName,const aiMaterial* Imat,string fileName){
+	BasicMaterial* out = new BasicMaterial();
+	aiColor4D diffuse;
+	if(AI_SUCCESS == aiGetMaterialColor(Imat,AI_MATKEY_COLOR_DIFFUSE,&diffuse)){
+		out->setDiffuse(vec3(diffuse.r,diffuse.g,diffuse.b));
+	}
+	aiColor4D specular;
+	if(AI_SUCCESS == aiGetMaterialColor(Imat,AI_MATKEY_COLOR_SPECULAR,&specular)){
+		out->setSpecular(vec3(specular.r,specular.g,specular.b));
+	}
+	float specularShininess;
+	if(AI_SUCCESS == aiGetMaterialFloat(Imat,AI_MATKEY_SHININESS,&specularShininess)){
+		out->setShininess(specularShininess);
+	}
+	vector<string> absPathList = StringOp::Split(fileName,'/');
+	string absPath="";
+	for(int i=0;i<absPathList.size()-1;i++){
+		absPath+=absPathList[i];
+		absPath+="/";
+	}
+	aiString texPath;
+	if(AI_SUCCESS == Imat->GetTexture(aiTextureType_DIFFUSE,0,&texPath)){
+		Texture* tex = new Texture(resourceName+"Tex",absPath+texPath.data);
+		out->setTexture(tex);
+	}
+	return (Material*)out;
 
+}
 Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(fileName.c_str(),aiProcess_Triangulate|aiProcess_GenSmoothNormals);
+	const aiScene* scene = importer.ReadFile(fileName.c_str(),aiProcess_Triangulate|aiProcess_GenSmoothNormals|aiProcess_GenUVCoords);
 	if(scene){
 		vector<Vertex> vertices;
 		vector<int> indices;
-
 		const aiMesh* Lmesh = scene->mMeshes[0];
 		const aiMaterial* mat = scene->mMaterials[Lmesh->mMaterialIndex];
-		//float diff;
-		//unsigned int max;
-		//aiString path;
-		//mat->GetTexture(aiTextureType_DIFFUSE,0,&path);
-		//aiGetMaterialFloat(mat, AI_MATKEY_SHININESS, &diff);
+		float diff;
+		Material* MeshMat = matHandle(resourceName,mat,fileName);
 		const aiVector3D Zero3D(0.0f,0.0f,0.0f);
 		const aiColor4D EmptyColor(0.0f,0.0f,0.0f,0.0f);
 
 		for(unsigned int i=0;i<Lmesh->mNumVertices;i++){
 			const aiVector3D* pPos = &(Lmesh->mVertices[i]);
-			const aiVector3D* pNormal =Lmesh->HasNormals()? &(Lmesh->mNormals[i]):&Zero3D;
+			const aiVector3D* pNormal =&(Lmesh->mNormals[i]);
 			const aiColor4D* pColor =Lmesh->HasVertexColors(0)? (Lmesh->mColors[i]):&EmptyColor;
 			const aiVector3D* pTexCoord = Lmesh->HasTextureCoords(0) ? &(Lmesh->mTextureCoords[0][i]) : &Zero3D;
 
@@ -51,7 +74,7 @@ Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 		}
 
 		Geometry* geo = new Geometry(&vertices[0],&indices[0],vertices.size(),indices.size(),new VertexDescription());
-		Mesh* mesh = new Mesh(resourceName,geo,new Material("moka"));
+		Mesh* mesh = new Mesh(resourceName,geo,MeshMat);
 		return mesh;
 	}else{
 		printf("Can't read file %s\n",fileName.c_str());

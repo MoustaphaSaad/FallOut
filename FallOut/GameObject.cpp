@@ -4,7 +4,7 @@
 #include"Engine.h"
 #include<algorithm>
 
-GameObject::GameObject(const Transform transform){
+GameObject::GameObject(Transform* transform){
 	this->transform = transform;
 	childList = vector<GameObject*>();
 	RenderComponent = new ObjectRenderer();
@@ -44,11 +44,11 @@ GameObject* GameObject::getChild(int ix){
 	return childList[ix];
 }
 
-Transform GameObject::getTransform(){
+Transform* GameObject::getTransform(){
 	return transform;
 }
 
-void GameObject::setTransform(const Transform transform){
+void GameObject::setTransform(Transform* transform){
 	this->transform = transform;
 }
 

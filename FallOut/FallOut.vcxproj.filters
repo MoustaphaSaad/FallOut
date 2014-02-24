@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math3D.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="FallOut.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -108,13 +105,25 @@
     <ClInclude Include="Application.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Math3D.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialBasic.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="InputGL.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Timing.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Math3D.cpp">
-      <Filter>Header Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Header Files\Core</Filter>
@@ -171,6 +180,21 @@
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Math3D.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialBasic.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="InputGL.cpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Timing.cpp">
       <Filter>Header Files\Core</Filter>
     </ClCompile>
   </ItemGroup>

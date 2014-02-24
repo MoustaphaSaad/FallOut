@@ -1,6 +1,8 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
-#include"Math3D.h";
+
+#include"Math3D.h"
+
 class Camera{
 public:
 	Camera(const vec3 pos = vec3(),const vec3 forw = vec3(0,0,1),const vec3 up = vec3(0,1,0));
@@ -34,7 +36,7 @@ private:
 class PerspectiveCamera: public Camera{
 public:
     PerspectiveCamera(const vec3 pos = vec3(0,0,0), const vec3 forward = vec3(0,0,1), const vec3 up = vec3(0,1,0),
-                      float fov = ToRadians(70.0f), float zNear = 0.01f, float zFar = 1000.0f);
+                      float fov = ToRadians(45.0f), float zNear = 0.1f, float zFar = 1000.0f);
 
 	mat4 getProjection();
 

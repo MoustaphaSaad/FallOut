@@ -85,3 +85,14 @@ Shader* ResourceManager::createShader(const string name,const string fileName){
 	}
 	return obj;
 }
+
+Material* ResourceManager::createMaterial(const string name,Shader* shader){
+	Material* obj;
+	if(!isExist(name)){
+		obj = new Material(name,shader);
+		RegisterResource(obj);
+	}else{
+		obj= (Material*)getResource(name);
+	}
+	return obj;
+}

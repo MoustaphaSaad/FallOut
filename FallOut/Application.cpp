@@ -2,10 +2,11 @@
 Application::Application(){
 	scene = new Scene();
 	Engine = Engine::getEngine();
+	Input = Engine->getInputManager();
+	rEngine = Engine->getRenderer();
 	resourceManager = ResourceManager::getInstance();
 	gxManager = Engine->getGXManager();
 }
-
 void Application::init(){
 }
 void Application::input(){

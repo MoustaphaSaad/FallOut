@@ -8,7 +8,7 @@ using namespace std;
 class Texture:public Resource{
 public:
 	Texture(const string ResourceName,const string fileName, bool linearFiltering = true, bool repeatTexture = true);
-	Texture(const string ResourceName,int width = 0,int height =0, unsigned char* data =0, bool linearFiltering = true, bool repeatTexture = true);
+	Texture(const string ResourceName="",int width = 0,int height =0, unsigned char* data =0, bool linearFiltering = true, bool repeatTexture = true);
 
 	void bind(int uint=0) const;
 

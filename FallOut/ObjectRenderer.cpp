@@ -2,13 +2,20 @@
 #include"Engine.h"
 
 ObjectRenderer::ObjectRenderer(Mesh* m){
-	mesh = m;
+	Meshes.push_back(m);
 }
+
+ObjectRenderer::ObjectRenderer(vector<Mesh*> m){
+	Meshes = vector<Mesh*>(m);
+}
+
 ObjectRenderer::ObjectRenderer(){
-	mesh = NULL;
+	Meshes = vector<Mesh*>();
 }
 ObjectRenderer::~ObjectRenderer(){
-	delete mesh;
+	for(int i=0;i<Meshes.size();i++)
+		delete Meshes[i];
+	Meshes.clear();
 }
 
 void ObjectRenderer::Input(){
@@ -18,5 +25,6 @@ void ObjectRenderer::Update(){
 }
 
 void ObjectRenderer::Render(){
-	Engine::getEngine()->getRenderer()->drawMesh(mesh);
+	for(int i=0;i<Meshes.size();i++)
+		Engine::getEngine()->getRenderer()->drawMesh(Meshes[i]);
 }

@@ -12,8 +12,9 @@
 using namespace std;
 class Shader:public Resource{
 public:
+	Shader(const string fileName);
 	Shader(const string name,const string fileName);
-	void Update(Material material);
+	void Update(Material* material);
 	void setUniform(string name,int val);
 	void setUniform(string name,float val);
 	void setUniform(string name,vec3 val);

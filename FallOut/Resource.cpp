@@ -4,6 +4,10 @@ Resource::Resource(const string name,ResourceType t){
 		this->name = name;
 		this->type = t;
 }
+Resource::Resource(){
+	this->name = "";
+	this->type = ResourceType::UNDEFINED;
+}
 Resource::~Resource(){
 }
 string Resource::getName(){
@@ -11,4 +15,11 @@ string Resource::getName(){
 }
 ResourceType Resource::getType(){
 	return type;
+}
+
+void Resource::setName(string val){
+	this->name = val;
+}
+void Resource::setType(ResourceType val){
+	this->type = val;
 }

@@ -6,6 +6,21 @@
 #include <iostream>
 #include"StringOp.h"
 using namespace std;
+
+Shader::Shader(const string fileName):Resource(){
+	this->type = ResourceType::SHADER;
+	m_Program=0;
+	m_isValid = false;
+	m_Shaders = vector<unsigned int>();
+	m_Uniforms = vector<UniformData>();
+
+	string shaderText = loadShader(fileName);
+	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateVertexShader(shaderText));
+	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateFragmentShader(shaderText));
+	m_Program = Engine::getEngine()->getGXManager()->CreateProgram(&m_Shaders[0],m_Shaders.size());
+	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program);
+}
+
 Shader::Shader(const string name,const string fileName):Resource(name,ResourceType::SHADER){
 	m_Program=0;
 	m_isValid = false;
@@ -26,20 +41,8 @@ void Shader::Bind(){
 	Engine::getEngine()->getGXManager()->BindShader(m_Program);
 }
 
-void Shader::Update(Material material){
-	for(int i=0;i<m_Uniforms.size();i++){
-		if(m_Uniforms[i].Type.compare("float"))
-			setUniform(m_Uniforms[i].Name,material.getFloat(m_Uniforms[i].Name));
+void Shader::Update(Material* material){
 
-		if(m_Uniforms[i].Type.compare("int"))
-			setUniform(m_Uniforms[i].Name,material.getInt(m_Uniforms[i].Name));
-
-		if(m_Uniforms[i].Type.compare("vec3"))
-			setUniform(m_Uniforms[i].Name,material.getVec3(m_Uniforms[i].Name));
-
-		if(m_Uniforms[i].Type.compare("mat4"))
-			setUniform(m_Uniforms[i].Name,material.getMat4(m_Uniforms[i].Name));
-	}
 
 }
 
@@ -49,7 +52,7 @@ void Shader::setUniform(string name,int val){
 		if(m_Uniforms[i].Name == name)
 			uni = &m_Uniforms[i];
 	}
-	if(uni){
+	if(!uni){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
@@ -61,7 +64,7 @@ void Shader::setUniform(string name,float val){
 		if(m_Uniforms[i].Name == name)
 			uni = &m_Uniforms[i];
 	}
-	if(uni){
+	if(!uni){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
@@ -73,7 +76,7 @@ void Shader::setUniform(string name,vec3 val){
 		if(m_Uniforms[i].Name == name)
 			uni = &m_Uniforms[i];
 	}
-	if(uni){
+	if(!uni){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
@@ -85,7 +88,7 @@ void Shader::setUniform(string name,mat4 val){
 		if(m_Uniforms[i].Name == name)
 			uni = &m_Uniforms[i];
 	}
-	if(uni){
+	if(!uni){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}

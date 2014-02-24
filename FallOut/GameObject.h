@@ -7,7 +7,7 @@ using namespace std;
 class GameObject{
 	friend class RenderEngine;
 public:
-	GameObject(const Transform trans = Transform());
+	GameObject(Transform* trans=new Transform());
 
 	virtual void Input();
 	virtual void Update();
@@ -20,9 +20,9 @@ public:
 	int childrenCount();
 	GameObject* getChild(int ix);
 
-	Transform getTransform();
+	Transform* getTransform();
 
-	void setTransform(const Transform trans);
+	void setTransform(Transform* trans);
 	void setRenderComponent( Component* val);
 	void setBehaviorComponent( Component* val);
 
@@ -31,7 +31,7 @@ public:
 	~GameObject();
 	
 protected:
-	Transform transform;
+	Transform* transform;
 	vector<GameObject*> childList;
 	Component *RenderComponent,*BehaviorComponent;
 };

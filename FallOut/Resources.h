@@ -22,6 +22,7 @@ public:
 	Texture* createTexture(const string name,const string fileName);
 	Texture* createTexture(const string name,int w,int h,unsigned char* data);
 	Shader* createShader(const string name,const string fileName);
+	Material* createMaterial(const string name,Shader* shader);
 	void DeleteAll();
 	void Delete(const string name);
 	bool isExist(const string name);

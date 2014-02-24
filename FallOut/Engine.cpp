@@ -20,53 +20,85 @@ GXManager* Engine::getGXManager(){
 Display* Engine::getDisplay(){
 	return display;
 }
+InputManager* Engine::getInputManager(){
+	return Input;
+}
 RenderEngine* Engine::getRenderer(){
 	return rEngine;
 }
 void Engine::setClearColor(vec3 v){
 	gxManager->setClearColor(v);
 }
-void Engine::initiate(Display d,GraphicsHandle h){
+void Engine::initiate(Display* d,GraphicsHandle h){
 	initMembers(h,d);
-	gxManager->setClearColor(vec3(0,0,0));
 }
 void Engine::start(Application* app){
 	this->app = app;
 	init();
+	Time::init();
+	gameLoop();
 	gxManager->start();
+}
+void Engine::gameLoop(){
+	double current = Time::getTime();
+	double passedTime = current - Time::lastTime;
+	Time::frameTimeCount +=passedTime;
+	Time::timeCount += passedTime;
+	Time::lastTime = current;
+
+	if(Time::frameTimeCount>=1.0){
+		Time::frameCount = 0;
+		Time::frameTimeCount = 0;
+	}
+	if(Time::timeCount>=Time::frameLimit){
+		Time::update(Time::frameLimit);
+		input();
+		update();
+		Time::timeCount -=Time::frameLimit;
+	}
+	render();
+	gxManager->refresh();
+	Time::frameCount++;
+	Input->update();
+	cout<<Time::g_Delta<<endl;
 }
 Engine::~Engine(){
 	delete gxManager;
 }
 
 void Engine::input(){
+	if(app->scene!=NULL)
+		app->scene->Input();
 	app->input();
 }
 
 void Engine::update(){
+	if(app->scene!=NULL)
+		app->scene->Input();
 	app->update();
 }
 
 void Engine::render(){
+	gxManager->setClearColor(app->scene->getClearColor());
 	app->postRender();
-	if(!app->scene)
-		rEngine->drawGameObject(app->scene);
+	if(app->scene!=NULL)
+		rEngine->drawScene(app->scene);
 }
 
 void Engine::init(){
 	app->init();
 	app->loadResources();
 	app->setupScene();
-	//Shader* shoho = resourceManager->createShader("basic","res/basic.glsl");
-	//Mesh* oi =resourceManager->createMesh("cube","res/moksa.obj");
 }
-void Engine::initMembers(GraphicsHandle h,Display d){
-	display = &d;
+void Engine::initMembers(GraphicsHandle h,Display* d){
+	display = d;
 	if(h == GraphicsHandle::OpenGL){
 		gxManager = new OpenGLManager(d);
+		Input = new InputGL();
 	}else if(h == GraphicsHandle::DirectX){
 		//TODO : DirectX Manager
 		//gxManager = new DirectXManager(d);
+		//Input = new InputDX();
 	}else{
 		gxManager = NULL;
 	}

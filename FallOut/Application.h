@@ -19,6 +19,8 @@ protected:
 	Scene* scene;
 	ResourceManager* resourceManager;
 	Engine* Engine;
+	InputManager* Input;
+	RenderEngine* rEngine;
 	GXManager* gxManager;
 };
 #endif
