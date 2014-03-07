@@ -24,7 +24,8 @@ public:
 	virtual unsigned int CreateFragmentShader(const string txt){return 0;}
 	virtual unsigned int CreateShader(const string txt,unsigned int){return 0;}
 	virtual unsigned int CreateProgram(unsigned int* shdrs,int size){return 0;}
-	virtual vector<UniformData> CreateUniforms(const string shdr,unsigned int program){return vector<UniformData>();}
+	virtual vector<UniformData> CreateUniforms(const string shdr,unsigned int program,vector<ShaderStruct> strct){return vector<UniformData>();}
+	virtual vector<ShaderStruct> CreateStructs(const string shdr,unsigned int program){return vector<ShaderStruct>();}
 	virtual void DeleteShader(unsigned int program,unsigned int* shaders,int size){}
 	virtual void BindShader(unsigned int p){}
 

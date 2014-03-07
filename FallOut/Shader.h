@@ -26,6 +26,7 @@ private:
 	unsigned int m_Program;
 	vector<unsigned int> m_Shaders;
 	vector<UniformData> m_Uniforms;
+	vector<ShaderStruct> m_Structs;
 	bool m_isValid;
 
 	

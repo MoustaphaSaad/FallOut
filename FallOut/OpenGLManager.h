@@ -21,7 +21,8 @@ public:
 	unsigned int CreateFragmentShader(const string txt);
 	unsigned int CreateShader(const string txt,unsigned int type);
 	unsigned int CreateProgram(unsigned int* shdrs,int size);
-	vector<UniformData> CreateUniforms(const string txt,unsigned int program);
+	vector<UniformData> CreateUniforms(const string txt,unsigned int program,vector<ShaderStruct> strct);
+	vector<ShaderStruct> CreateStructs(const string shdr,unsigned int program);
 	void DeleteShader(unsigned int program,unsigned int* shaders,int size);
 	void BindShader(unsigned int program);
 

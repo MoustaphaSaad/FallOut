@@ -44,6 +44,7 @@ void Engine::gameLoop(){
 	double passedTime = current - Time::lastTime;
 	Time::frameTimeCount +=passedTime;
 	Time::timeCount += passedTime;
+	bool draw = false;
 	Time::lastTime = current;
 
 	if(Time::frameTimeCount>=1.0){
@@ -53,14 +54,16 @@ void Engine::gameLoop(){
 	if(Time::timeCount>=Time::frameLimit){
 		Time::update(Time::frameLimit);
 		input();
+		draw = true;
 		update();
 		Time::timeCount -=Time::frameLimit;
 	}
-	render();
-	gxManager->refresh();
-	Time::frameCount++;
-	Input->update();
-	cout<<Time::g_Delta<<endl;
+	if(draw){
+		render();
+		gxManager->refresh();
+		Time::frameCount++;
+		Input->update();
+	}
 }
 Engine::~Engine(){
 	delete gxManager;
@@ -74,15 +77,17 @@ void Engine::input(){
 
 void Engine::update(){
 	if(app->scene!=NULL)
-		app->scene->Input();
+		app->scene->Update();
 	app->update();
 }
 
 void Engine::render(){
 	gxManager->setClearColor(app->scene->getClearColor());
 	app->postRender();
-	if(app->scene!=NULL)
+	if(app->scene!=NULL){
+		app->scene->Render();
 		rEngine->drawScene(app->scene);
+	}
 }
 
 void Engine::init(){

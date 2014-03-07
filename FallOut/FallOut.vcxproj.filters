@@ -16,14 +16,14 @@
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{2d7c2fe3-7b00-452d-911c-6d88724ab57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{8eef589f-de47-4ca5-b8d7-1f3cd0b61fac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine Objects">
       <UniqueIdentifier>{19e27742-1e30-478b-b083-6652ce733537}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Helper">
       <UniqueIdentifier>{ad7bc34a-cf98-4c67-a716-ed2ee76ebd5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{8eef589f-de47-4ca5-b8d7-1f3cd0b61fac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +120,9 @@
     <ClInclude Include="Timing.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="VisualObject.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="Timing.cpp">
       <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBehavior.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,8 +2,11 @@
 #define CAMERA_H_
 
 #include"Math3D.h"
+#include"Component.h"
+#include"VisualObject.h"
 
-class Camera{
+class Camera:public VObject{
+	friend class Scene;
 public:
 	Camera(const vec3 pos = vec3(),const vec3 forw = vec3(0,0,1),const vec3 up = vec3(0,1,0));
 	
@@ -18,6 +21,8 @@ public:
 
 	mat4 getPositionRotation();
 	virtual mat4 getProjection();
+	Component* getCamComp();
+	void setCamComp(Component* val);
 
 	vec3 getForward();
 	vec3 getBack();
@@ -31,6 +36,7 @@ private:
 	vec3 position;
 	vec3 forward;
 	vec3 up;
+	Component* camComp;
 };
 
 class PerspectiveCamera: public Camera{

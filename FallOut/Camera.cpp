@@ -1,10 +1,12 @@
 #include"Camera.h"
 #include"Engine.h"
+#include"ObjectBehavior.h"
 
 Camera::Camera(const vec3 pos,const vec3 forward,const vec3 up){
 	this->position = pos;
 	this->forward = forward.Normalized();
 	this->up = up.Normalized();
+	camComp=NULL;
 }
 
 void Camera::move(const vec3 val){
@@ -12,18 +14,18 @@ void Camera::move(const vec3 val){
 }
 
 void Camera::rotateX(float val){
-	this->forward = forward.Rotate(vec3::RIGHT,val).Normalized();
-	up = up.Rotate(vec3::RIGHT,val).Normalized();
+	this->forward = forward.Rotate(getRight(),val).Normalized();
+	up = up.Rotate(getRight(),val).Normalized();
 }
 
 void Camera::rotateY(float val){
-	forward = forward.Rotate(vec3::UP,val).Normalized();
-	up = up.Rotate(vec3::UP,val).Normalized();
+	forward = forward.Rotate(getUp(),val).Normalized();
+	up = up.Rotate(getUp(),val).Normalized();
 }
 
 void Camera::rotateZ(float val){
-	forward = forward.Rotate(vec3::FORWARD,val).Normalized();
-	up = up.Rotate(vec3::FORWARD,val).Normalized();
+	forward = forward.Rotate(getForward(),val).Normalized();
+	up = up.Rotate(getForward(),val).Normalized();
 }
 
 void Camera::roll(float val){
@@ -80,6 +82,15 @@ vec3 Camera::getDown()
 vec3 Camera::getPosition()
 {
 	return position;
+}
+
+Component* Camera::getCamComp(){
+	return camComp;
+}
+void Camera::setCamComp(Component* val){
+	ObjectBehavior* obj = (ObjectBehavior*)val;
+	obj->setObject(this);
+	camComp = val;
 }
 
 PerspectiveCamera::PerspectiveCamera(const vec3 pos,const vec3 forward,const vec3 up,

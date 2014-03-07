@@ -46,11 +46,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;glew32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -97,6 +101,7 @@
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VisualObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -110,6 +115,7 @@
     <ClCompile Include="MaterialBasic.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ObjectBehavior.cpp" />
     <ClCompile Include="ObjectRenderer.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="OpenGLManager.cpp" />

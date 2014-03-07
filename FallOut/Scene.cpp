@@ -5,6 +5,19 @@ Scene::Scene(){
 }
 Scene::~Scene(){
 }
+
+void Scene::Input(){
+	if(cam->camComp)
+		cam->camComp->Input();
+}
+void Scene::Update(){
+	if(cam->camComp)
+		cam->camComp->Update();
+}
+void Scene::Render(){
+	if(cam->camComp)
+		cam->camComp->Render();
+}
 Camera* Scene::getCamera(){
 	return cam;
 }

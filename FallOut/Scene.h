@@ -8,6 +8,10 @@ public:
 	Scene();
 	~Scene();
 
+	void Input();
+	void Update();
+	void Render();
+
 	Camera* getCamera();
 	void setCamera(Camera* val);
 

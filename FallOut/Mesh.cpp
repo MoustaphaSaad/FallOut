@@ -4,7 +4,7 @@
 Mesh::Mesh(const string name,Geometry* geo,Material* mat):Resource(name,ResourceType::MESH){
 	this->geometry = geo;
 	this->material = mat;
-
+	subMesh = vector<Mesh*>();
 	vbo = Engine::getEngine()->getGXManager()->CreateVertexBuffer(geo->getVertices(),geo->getVerticesCount()*geo->getFormat()->vertexSize,true);
 	ibo = Engine::getEngine()->getGXManager()->CreateIndexBuffer(geo->getIndices(),geo->getIndicesCount()*sizeof(int),true);
 }
@@ -12,7 +12,7 @@ Mesh::Mesh(Geometry* geo,Material* mat):Resource(){
 	this->type = ResourceType::MESH;
 	this->geometry = geo;
 	this->material = mat;
-
+	subMesh = vector<Mesh*>();
 	vbo = Engine::getEngine()->getGXManager()->CreateVertexBuffer(geo->getVertices(),geo->getVerticesCount()*geo->getFormat()->vertexSize,true);
 	ibo = Engine::getEngine()->getGXManager()->CreateIndexBuffer(geo->getIndices(),geo->getIndicesCount()*sizeof(int),true);
 
@@ -39,4 +39,14 @@ void Mesh::setMaterial(Material* val){
 
 void Mesh::draw(){
 	Engine::getEngine()->getRenderer()->drawMesh(this);
+}
+
+void Mesh::addSubMesh(Mesh* val){
+	subMesh.push_back(val);
+}
+Mesh* Mesh::getSubMesh(int i){
+	return subMesh[i];
+}
+int Mesh::getSubMeshCount(){
+	return subMesh.size();
 }

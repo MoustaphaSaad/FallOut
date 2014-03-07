@@ -18,7 +18,8 @@ Shader::Shader(const string fileName):Resource(){
 	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateVertexShader(shaderText));
 	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateFragmentShader(shaderText));
 	m_Program = Engine::getEngine()->getGXManager()->CreateProgram(&m_Shaders[0],m_Shaders.size());
-	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program);
+	m_Structs = Engine::getEngine()->getGXManager()->CreateStructs(shaderText,m_Program);
+	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program,m_Structs);
 }
 
 Shader::Shader(const string name,const string fileName):Resource(name,ResourceType::SHADER){
@@ -31,7 +32,8 @@ Shader::Shader(const string name,const string fileName):Resource(name,ResourceTy
 	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateVertexShader(shaderText));
 	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateFragmentShader(shaderText));
 	m_Program = Engine::getEngine()->getGXManager()->CreateProgram(&m_Shaders[0],m_Shaders.size());
-	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program);
+	m_Structs = Engine::getEngine()->getGXManager()->CreateStructs(shaderText,m_Program);
+	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program,m_Structs);
 }
 Shader::~Shader(){
 	Engine::getEngine()->getGXManager()->DeleteShader(m_Program,&m_Shaders[0],m_Shaders.size());
@@ -109,8 +111,9 @@ string Shader::loadShader(const string fileName){
 				output.append(line + "\n");
 			else{
 				
-				string includeFileName = StringOp::Split(line,' ')[1];
-				includeFileName = includeFileName.substr(1,includeFileName.length() -2);
+				string includeFileName = StringOp::Split(line,'<')[1];
+				includeFileName.pop_back();
+				//includeFileName = includeFileName.substr(1,includeFileName.length() -2);
 
 				string toAppend = loadShader(includeFileName);
 				output.append(toAppend+"\n");

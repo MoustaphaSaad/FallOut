@@ -135,7 +135,7 @@ string removeFunction(const string txt,string funcName){
 	stack<char> stk;
 	bool started = false;
 	size_t i;
-	for(i=funcPosition+funcName.length();i<txt.length();i++){
+	for(i=funcPosition;i<txt.length();i++){
 		if(txt[i] == '{'){
 			stk.push('{');
 			started = true;
@@ -219,9 +219,22 @@ string UniformManagement(const string txt,unsigned int type){
 	return output;
 
 }
+string handleFunction(const string txt,const string key){
+	string output = txt;
+	string line;
+	stringstream ss(output);
+	while(getline(ss,line)){
+		size_t loc = line.find(key);
+		if(loc!=string::npos){
+			output = removeFunction(output,line);
+		}
+	}
+	return output;
+}
 unsigned int OpenGLManager::CreateVertexShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void FSmain()");
-	shaderTxt = removeFunction(shaderTxt,"vec4 ads()");
+	shaderTxt = handleFunction(shaderTxt,"fragment");
+	shaderTxt = StringOp::findReplaceAll(shaderTxt,"vertex","");
 	shaderTxt = prepareVS(shaderTxt);
 	shaderTxt = InOutManagement(shaderTxt,GL_VERTEX_SHADER);
 	shaderTxt = UniformManagement(shaderTxt,GL_VERTEX_SHADER);
@@ -229,6 +242,8 @@ unsigned int OpenGLManager::CreateVertexShader(const string txt){
 }
 unsigned int OpenGLManager::CreateFragmentShader(const string txt){
 	string shaderTxt = removeFunction(txt,"void VSmain()");
+	shaderTxt = handleFunction(shaderTxt,"vertex");
+	shaderTxt = StringOp::findReplaceAll(shaderTxt,"fragment","");
 	shaderTxt = prepareFS(shaderTxt);
 	shaderTxt = InOutManagement(shaderTxt,GL_FRAGMENT_SHADER);
 	shaderTxt = UniformManagement(shaderTxt,GL_FRAGMENT_SHADER);
@@ -265,7 +280,7 @@ unsigned int OpenGLManager::CreateProgram(unsigned int* shdrs,int size){
 
 	return program;
 }
-vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int program){
+vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int program,vector<ShaderStruct> strct){
 	vector<UniformData> output;
 	stringstream ss(txt);
 	string line;
@@ -274,13 +289,117 @@ vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int 
 		if(substrs.size()>0)
 			if(!substrs[0].compare("vuniform")||!substrs[0].compare("funiform")){
 				string name = substrs[2];
+				int arrnum=0;
+				string number;
+				bool isarr=false;
 				for(unsigned int i=0;i<name.size();i++){
-					if(name[i] == ';'||name[i] == ' ')
+					if(name[i] == ';'||name[i] == ' '){
 						name.erase(i,1);
+						i--;
+					}
+					if(name[i]==']'){
+						isarr=false;
+						name.erase(i,1);
+						i--;
+					}
+					if(isarr){
+						number.push_back(name[i]);
+						name.erase(i,1);
+						i--;
+					}
+					if(name[i]=='['){
+						isarr=true;
+						name.erase(i,1);
+						i--;
+					}
 				}
-				unsigned int location = glGetUniformLocation(program, name.c_str());
-				output.push_back(UniformData(location,substrs[1],name));
+				if(number.size()>0){
+					arrnum=atoi(number.c_str());
+					for(int i=0;i<arrnum;i++){
+						string temp=name;
+						temp+="[";
+						char* x = new char[30];
+						itoa(i,x,10);
+						temp+=x;
+						temp+="]";
+						int ix=-1;
+						for(int i=0;i<strct.size();i++){
+							if(substrs[1]==strct[i].name)
+								ix = i;
+						}
+						string ok="";
+						if(ix!=-1)
+							for(int i=0;i<strct[ix].Data.size();i++){
+								ok+=temp+".";
+								ok+=strct[ix].Data[i].Name;
+								unsigned int location = glGetUniformLocation(program, ok.c_str());
+								output.push_back(UniformData(location,substrs[1],ok));
+								ok="";
+							}
+					}
+				}else{
+					int ix=-1;
+					for(int i=0;i<strct.size();i++){
+						if(substrs[1]==strct[i].name)
+							ix = i;
+					}
+					string ok="";
+						if(ix!=-1)
+							for(int i=0;i<strct[ix].Data.size();i++){
+								ok+=name+".";
+								ok+=strct[ix].Data[i].Name;
+								unsigned int location = glGetUniformLocation(program, ok.c_str());
+								output.push_back(UniformData(location,substrs[1],ok));
+								ok="";
+							}else{
+								unsigned int location = glGetUniformLocation(program, name.c_str());
+								output.push_back(UniformData(location,substrs[1],name));
+							}
+				}
 			}
+	}
+	return output;
+}
+vector<ShaderStruct> OpenGLManager::CreateStructs(const string shdr,unsigned int program){
+	vector<ShaderStruct> output;
+	stringstream ss(shdr);
+	string line;
+	bool processing = false;
+	while(getline(ss,line)){
+		if(!line.compare("};"))
+			processing=false;
+		if(line.size()>1&&processing){
+			size_t ind =line.find("}");
+			string namex=StringOp::Split(line,' ')[1];
+			namex = StringOp::deleteChar(namex,';');
+			namex = StringOp::deleteChar(namex,'}');
+			namex = StringOp::deleteChar(namex,'\t');
+			if(ind!=string::npos){
+				processing = false;
+				
+				
+			}
+			string type = StringOp::Split(line,' ')[0];
+			type = StringOp::deleteChar(type,'\t');
+			UniformData xuni(-1,type,namex);
+			output.back().Data.push_back(xuni);
+		}
+
+		size_t idx = line.find("struct");
+		if(idx!=string::npos){
+			processing = true;
+			ShaderStruct st;
+			string name = StringOp::Split(line,' ')[1];
+			name = StringOp::deleteChar(name,' ');
+			name = StringOp::deleteChar(name,'{');
+			
+			st.name = name;
+			output.push_back(st);
+		}
+		
+		size_t ind =line.find("}");
+		if(ind !=string::npos)
+			processing=false;
 	}
 	return output;
 }

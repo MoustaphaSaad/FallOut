@@ -11,6 +11,7 @@ public:
 	static string findReplaceAll(const string txt,const string find,const string replace);
 	static string findReplaceFirst(const string txt,const string find,const string replace);
 	static string deleteLine(const string txt,const string find);
+	static string deleteChar(const string txt,const char c);
 };
 
 

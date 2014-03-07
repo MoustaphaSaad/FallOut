@@ -4,6 +4,7 @@
 #include"Geometry.h"
 #include"Material.h"
 #include<string>
+#include<vector>
 using namespace std;
 class Mesh:public Resource{
 	friend class RenderEngine;
@@ -19,10 +20,15 @@ public:
 	void setGeometry(Geometry val);
 	void setMaterial(Material* val);
 
+	void addSubMesh(Mesh* val);
+	Mesh* getSubMesh(int i);
+	int getSubMeshCount();
+
 	void draw();
 private:
 	Geometry* geometry;
 	Material* material;
+	vector<Mesh*> subMesh;
 	unsigned int vbo,ibo;
 };
 #endif

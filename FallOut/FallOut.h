@@ -18,6 +18,7 @@
 #include"RenderEngine.h"
 #include"Application.h"
 #include"Timing.h"
+#include"VisualObject.h"
 //Engine Objects
 #include"GameObject.h"
 #include"Component.h"

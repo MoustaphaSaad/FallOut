@@ -17,7 +17,7 @@ void Time::init(){
 	LARGE_INTEGER li;
 	if(!QueryPerformanceFrequency(&li))
 		cout<<"Error: Timing Can't be initialized"<<endl;
-	g_Freq = double(li.QuadPart)/1000.0;
+	g_Freq = double(li.QuadPart);
 	g_Delta = 0;
 	g_Elapsed = 0.0f;
 

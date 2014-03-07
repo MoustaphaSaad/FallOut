@@ -17,6 +17,18 @@ struct UniformData
         Name = UniformName;
     }
 };
+struct ShaderStruct{
+	vector<UniformData> Data;
+	string name;
+	ShaderStruct(string n,vector<UniformData> val){
+		name = n;
+		Data = val;
+	}
+	ShaderStruct(){
+		name="";
+		Data = vector<UniformData>();
+	}
+};
 class VertexFormat{
 public:
 	int vertexSize;

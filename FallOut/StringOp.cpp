@@ -44,3 +44,13 @@ string StringOp::deleteLine(const string txt,const string find){
 	}
 	return output;
 }
+string StringOp::deleteChar(const string txt,const char c){
+	string output = txt;
+	for(int i=0;i<output.size();i++){
+		if(output[i]==c){
+			output.erase(i,1);
+			i--;
+		}
+	}
+	return output;
+}

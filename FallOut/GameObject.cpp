@@ -56,6 +56,8 @@ void GameObject::setRenderComponent(Component* val){
 	RenderComponent = val;
 }
 void GameObject::setBehaviorComponent( Component* val){
+	ObjectBehavior* obj = (ObjectBehavior*)val;
+	obj->setObject(this);
 	BehaviorComponent = val;
 }
 Component GameObject::getRenderComponent(){

@@ -1,10 +1,11 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
+#include"VisualObject.h"
 #include"Transform.h"
 #include"Component.h"
 #include<vector>
 using namespace std;
-class GameObject{
+class GameObject:public VObject{
 	friend class RenderEngine;
 public:
 	GameObject(Transform* trans=new Transform());

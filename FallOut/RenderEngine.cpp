@@ -13,9 +13,16 @@ void RenderEngine::drawMesh(Mesh* obj){
 	if(!obj)
 		return;
 	if(obj->material){
-		obj->getMaterial()->getShader()->Bind();
+		obj->getMaterial()->use();
 	}
 	engine->getGXManager()->drawGeometry(obj->getGeometry(),obj->vbo,obj->ibo);
+
+	for(auto mesh : obj->subMesh){
+		if(mesh->material){
+			mesh->getMaterial()->use();
+		}
+		engine->getGXManager()->drawGeometry(mesh->getGeometry(),mesh->vbo,mesh->ibo);
+	}
 }
 
 void RenderEngine::drawGameObject(GameObject* obj){

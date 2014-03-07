@@ -1,10 +1,11 @@
 #include"MaterialBasic.h"
 #include"Shader.h"
 BasicMaterial::BasicMaterial(){
-	ambient = vec3(.25,.25,.25);
+	ambient = vec3(.1,.1,.1);
 	diffuse = vec3(.80,.8,.8);
 	specular = vec3(.6,.6,.6);
 	shine = .65;
+	Tex = NULL;
 }
 BasicMaterial::~BasicMaterial(){
 }
@@ -46,10 +47,12 @@ void BasicMaterial::setTexture(Texture* val){
 
 void BasicMaterial::use(){
 	shader->Bind();
-	shader->setUniform("ambient",ambient);
-	shader->setUniform("diffuse",diffuse);
-	shader->setUniform("specular",specular);
-	shader->setUniform("shininess",shine);
-	Tex->bind(0);
-	shader->setUniform("Tex",0);
+	shader->setUniform("Mat.ka",ambient);
+	shader->setUniform("Mat.kd",diffuse);
+	shader->setUniform("Mat.ks",specular);
+	shader->setUniform("Mat.shine",shine);
+	if(Tex!=NULL){
+		Tex->bind(0);
+		shader->setUniform("Tex",0);
+	}
 }
