@@ -43,7 +43,7 @@ void Shader::Bind(){
 	Engine::getEngine()->getGXManager()->BindShader(m_Program);
 }
 
-void Shader::Update(Material* material){
+void Shader::Update(Transformable* obj){
 
 
 }

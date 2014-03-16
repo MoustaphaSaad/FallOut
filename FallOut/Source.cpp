@@ -8,7 +8,7 @@ public:
 		mouseLocked = false;
 	}
 	void Input(){
-		Camera* cam = (Camera*)obj;
+		Camera* cam = (Camera*)parent;
 		float sensitivity = 0.005f;
 		float movAmt = (float)(Time::getDelta()*100);
 		float rotAmt = (float)(Time::getDelta());
@@ -66,7 +66,7 @@ public:
 };
 class Tu : public Application{
 public:
-	GameObject* obj;
+	GameObject* obj,*obj1;
 	double e;
 	Mesh* eo;
 	Tu():Application(){
@@ -74,8 +74,9 @@ public:
 	}
 	void init(){
 		scene->getCamera()->setCamComp(new CamBe());
-		Shader* shoho = resourceManager->createShader("basic","res/basic.glsl");
-		eo =resourceManager->createMesh("moka","res/sphere.obj");
+		Shader* shoho = new BasicShader();
+		
+		eo =resourceManager->createMesh("moka","res/moksa.obj");
 		eo->getMaterial()->setShader(shoho);
 		for(int i=0;i<eo->getSubMeshCount();i++){
 			eo->getSubMesh(i)->getMaterial()->setShader(shoho);
@@ -83,37 +84,36 @@ public:
 		obj = new GameObject(new Transform());
 		obj->setRenderComponent(new ObjectRenderer(eo));
 		obj->getTransform()->position.SetZ(10);
-		//obj->getTransform()->scale*=0.1;
 		scene->addChild(obj);
+
+		Mesh* msh = resourceManager->createMesh("koko","res/MultiO.obj");
+		msh->getMaterial()->setShader(shoho);
+		for(int i=0;i<msh->getSubMeshCount();i++){
+			msh->getSubMesh(i)->getMaterial()->setShader(shoho);
+		}
+		obj1 = new GameObject(new Transform());
+		obj1->setRenderComponent(new ObjectRenderer(msh));
+		obj1->getTransform()->position.SetX(5);
+		obj1->getTransform()->position.SetZ(10);
+		scene->addChild(obj1);
+
+	}
+	void setupScene(){
+		light* l = new light();
+		scene->addLight(l);
+		l = new light();
+		l->setPosition(vec3(3,3,13));
+		l->setLa(vec3(1,1,1));
+		scene->addLight(l);
 	}
 	void input(){
 		if(this->Input->getKey(27)==keyState::DOWN)
 			cout<<"weijf"<<endl;
 	}
 	void postRender(){
-		e+=Time::getDelta()/4;
-		Shader* shoho = (Shader*)resourceManager->getResource("basic");
-
-
-		//shoho->setUniform("lightPosition",vec3(0,10,-10));
-		shoho->setUniform("LIGHTNUM",2);
-		
-		shoho->setUniform("Lights[0].pos",vec3(0,-3,0));
-		shoho->setUniform("Lights[0].la",vec3(1,0,0));
-		shoho->setUniform("Lights[0].ld",vec3(1,0,0));
-		shoho->setUniform("Lights[0].ls",vec3(1,0,0));
-
-		shoho->setUniform("Lights[1].pos",vec3(0,3,0));
-		shoho->setUniform("Lights[1].la",vec3(0,1,0));
-		shoho->setUniform("Lights[1].ld",vec3(0,1,0));
-		shoho->setUniform("Lights[1].ls",vec3(0,1,0));
-
-		
-
-		shoho->setUniform("MVP",scene->getCamera()->getProjection()*scene->getCamera()->getPositionRotation()*obj->getTransform()->getMVP());
-		shoho->setUniform("MV",obj->getTransform()->getMVP());
+		e+=Time::getDelta();
 		obj->getTransform()->rotation.SetY((sin(e)*180));
-		//obj->getTransform()->position.SetX(sin(e));
+		obj->getTransform()->position.SetX(sin(e));
 		//scene->getCamera()->pitch(sin(e));
 	}
 };
@@ -123,5 +123,6 @@ int main(){
 	Tu* app = new Tu();
 	//e->setClearColor(vec3(0,0,0));
 	e->start(app);
+
 	return 0;
 }

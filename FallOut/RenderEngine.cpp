@@ -12,18 +12,14 @@ RenderEngine::~RenderEngine(){
 void RenderEngine::drawMesh(Mesh* obj){
 	if(!obj)
 		return;
-	if(obj->material){
-		obj->getMaterial()->use();
-	}
 	engine->getGXManager()->drawGeometry(obj->getGeometry(),obj->vbo,obj->ibo);
-
-	for(auto mesh : obj->subMesh){
-		if(mesh->material){
-			mesh->getMaterial()->use();
-		}
-		engine->getGXManager()->drawGeometry(mesh->getGeometry(),mesh->vbo,mesh->ibo);
+	for(int j=0;j<obj->getSubMeshCount();j++){
+			obj->getSubMesh(j)->getMaterial()->use();
+			Engine::getEngine()->getRenderer()->drawMesh(obj->getSubMesh(j));
 	}
 }
+
+
 
 void RenderEngine::drawGameObject(GameObject* obj){
 	if(!obj)

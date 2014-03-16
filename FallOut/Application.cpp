@@ -19,3 +19,7 @@ void Application::loadResources(){
 }
 void Application::postRender(){
 }
+
+Scene* Application::getScene(){
+	return scene;
+}

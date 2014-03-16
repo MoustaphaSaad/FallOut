@@ -12,16 +12,18 @@ varying vec3 Normal;
 varying vec2 ftexCoord;
 
 vuniform mat4 MVP;
-vuniform mat4 MV;
+vuniform mat4 Model;
 
 funiform sampler2D Tex;
 
 
 void VSmain()
 {
-	mat3 Nm = inverse(transpose(mat3(MV)));
-	Position = vec3(vec4(position,1)*MVP);
-	Normal = normalize(normal*Nm);
+	mat3 Nm = mat3(Model);
+	Nm = inverse(Nm);
+	Nm = transpose(Nm);
+	Position = vec3(Model*vec4(position,1));
+	Normal = normalize(Nm*normal);
 	ftexCoord = texCoord;
 	gl_Position = MVP*vec4(position,1.0);
 }

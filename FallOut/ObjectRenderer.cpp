@@ -1,8 +1,10 @@
 #include"ObjectRenderer.h"
 #include"Engine.h"
+#include"Shader.h"
 
 ObjectRenderer::ObjectRenderer(Mesh* m){
 	Meshes.push_back(m);
+	parent = NULL;
 }
 
 ObjectRenderer::ObjectRenderer(vector<Mesh*> m){
@@ -18,13 +20,11 @@ ObjectRenderer::~ObjectRenderer(){
 	Meshes.clear();
 }
 
-void ObjectRenderer::Input(){
-}
-
-void ObjectRenderer::Update(){
-}
 
 void ObjectRenderer::Render(){
-	for(int i=0;i<Meshes.size();i++)
+	for(int i=0;i<Meshes.size();i++){
+		Meshes[i]->getMaterial()->use();
+		Meshes[i]->getMaterial()->getShader()->Update(parent);
 		Engine::getEngine()->getRenderer()->drawMesh(Meshes[i]);
+	}
 }

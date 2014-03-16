@@ -84,12 +84,12 @@ vec3 Camera::getPosition()
 	return position;
 }
 
-Component* Camera::getCamComp(){
+Updatable* Camera::getCamComp(){
 	return camComp;
 }
-void Camera::setCamComp(Component* val){
+void Camera::setCamComp(Updatable* val){
 	ObjectBehavior* obj = (ObjectBehavior*)val;
-	obj->setObject(this);
+	obj->setParent(this);
 	camComp = val;
 }
 

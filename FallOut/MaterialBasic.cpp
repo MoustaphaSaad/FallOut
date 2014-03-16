@@ -1,5 +1,6 @@
 #include"MaterialBasic.h"
 #include"Shader.h"
+
 BasicMaterial::BasicMaterial(){
 	ambient = vec3(.1,.1,.1);
 	diffuse = vec3(.80,.8,.8);

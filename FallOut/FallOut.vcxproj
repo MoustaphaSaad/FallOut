@@ -71,6 +71,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="basicShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Display.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="GlobalStructs.h" />
     <ClInclude Include="InputGL.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="GXManager.h" />
     <ClInclude Include="MaterialBasic.h" />
@@ -111,6 +113,7 @@
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="InputGL.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialBasic.cpp" />
     <ClCompile Include="Math3D.cpp" />

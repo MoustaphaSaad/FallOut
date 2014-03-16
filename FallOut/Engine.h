@@ -12,6 +12,7 @@ class Engine{
 public:
 	static Engine* getEngine();
 	GXManager* getGXManager();
+	Application* getApplication();
 	RenderEngine* getRenderer();
 	void initiate(Display* d,GraphicsHandle h);
 	void start(Application* app);

@@ -15,6 +15,7 @@ public:
 	virtual void loadResources();
 	virtual void postRender();
 
+	Scene* getScene();
 protected:
 	Scene* scene;
 	ResourceManager* resourceManager;

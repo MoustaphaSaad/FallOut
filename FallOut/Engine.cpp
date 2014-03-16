@@ -110,3 +110,7 @@ void Engine::initMembers(GraphicsHandle h,Display* d){
 	resourceManager = ResourceManager::getInstance();
 	rEngine = new RenderEngine();
 }
+
+Application* Engine::getApplication(){
+	return app;
+}

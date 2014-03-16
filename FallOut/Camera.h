@@ -21,8 +21,8 @@ public:
 
 	mat4 getPositionRotation();
 	virtual mat4 getProjection();
-	Component* getCamComp();
-	void setCamComp(Component* val);
+	Updatable* getCamComp();
+	void setCamComp(Updatable* val);
 
 	vec3 getForward();
 	vec3 getBack();
@@ -36,7 +36,7 @@ private:
 	vec3 position;
 	vec3 forward;
 	vec3 up;
-	Component* camComp;
+	Updatable* camComp;
 };
 
 class PerspectiveCamera: public Camera{

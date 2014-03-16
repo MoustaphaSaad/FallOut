@@ -31,3 +31,5 @@
 #include"Camera.h"
 #include"Scene.h"
 #include"MaterialBasic.h"
+#include"Light.h"
+#include"basicShader.h"

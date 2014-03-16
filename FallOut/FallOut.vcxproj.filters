@@ -123,6 +123,12 @@
     <ClInclude Include="VisualObject.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="basicShader.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -201,6 +207,9 @@
       <Filter>Header Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ObjectBehavior.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>

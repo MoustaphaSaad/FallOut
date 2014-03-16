@@ -2,6 +2,7 @@
 #define SCENE_H
 #include"GameObject.h"
 #include"Camera.h"
+class light;
 class Scene:public GameObject{
 	friend class RenderEngine;
 public:
@@ -17,8 +18,13 @@ public:
 
 	void setClearColor(vec3 val);
 	vec3 getClearColor();
+
+	void addLight(light* val);
+	light* getLight(int val);
+	int getLightsCount();
 private:
 	Camera* cam;
+	vector<light*> ligths;
 	vec3 clearColor;
 };
 #endif

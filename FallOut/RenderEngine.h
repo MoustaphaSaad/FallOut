@@ -13,6 +13,7 @@ public:
 	void drawGameObject(GameObject* obj);
 	void drawScene(Scene* obj);
 private:
+	
 	Engine* engine;
 };
 #endif

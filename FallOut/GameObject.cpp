@@ -1,11 +1,9 @@
 #include"GameObject.h"
-#include"ObjectRenderer.h"
-#include"ObjectBehavior.h"
+
 #include"Engine.h"
 #include<algorithm>
 
-GameObject::GameObject(Transform* transform){
-	this->transform = transform;
+GameObject::GameObject(Transform* transform):Transformable(transform){
 	childList = vector<GameObject*>();
 	RenderComponent = new ObjectRenderer();
 	BehaviorComponent = new ObjectBehavior();
@@ -29,6 +27,7 @@ void GameObject::Render(){
 
 void GameObject::addChild(GameObject* child){
 	childList.push_back(child);
+	child->setParent(this);
 }
 void GameObject::removeChild(GameObject* child){
 	childList.erase(remove(childList.begin(),childList.end(),child),childList.end());
@@ -44,26 +43,18 @@ GameObject* GameObject::getChild(int ix){
 	return childList[ix];
 }
 
-Transform* GameObject::getTransform(){
-	return transform;
-}
-
-void GameObject::setTransform(Transform* transform){
-	this->transform = transform;
-}
-
-void GameObject::setRenderComponent(Component* val){
+void GameObject::setRenderComponent(ObjectRenderer* val){
+	val->setParent(this);
 	RenderComponent = val;
 }
-void GameObject::setBehaviorComponent( Component* val){
-	ObjectBehavior* obj = (ObjectBehavior*)val;
-	obj->setObject(this);
+void GameObject::setBehaviorComponent( ObjectBehavior* val){
+	val->setParent(this);
 	BehaviorComponent = val;
 }
-Component GameObject::getRenderComponent(){
+Renderable GameObject::getRenderComponent(){
 	return *RenderComponent;
 }
-Component GameObject::getBehaviorComponent(){
+Updatable GameObject::getBehaviorComponent(){
 	return *BehaviorComponent;
 }
 GameObject::~GameObject(){

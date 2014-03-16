@@ -15,8 +15,7 @@ void Scene::Update(){
 		cam->camComp->Update();
 }
 void Scene::Render(){
-	if(cam->camComp)
-		cam->camComp->Render();
+
 }
 Camera* Scene::getCamera(){
 	return cam;
@@ -30,4 +29,14 @@ void Scene::setClearColor(vec3 val){
 }
 vec3 Scene::getClearColor(){
 	return clearColor;
+}
+
+void Scene::addLight(light* val){
+	ligths.push_back(val);
+}
+light* Scene::getLight(int val){
+	return this->ligths[val];
+}
+int Scene::getLightsCount(){
+	return ligths.size();
 }

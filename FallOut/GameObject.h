@@ -2,10 +2,12 @@
 #define GAMEOBJECT_H
 #include"VisualObject.h"
 #include"Transform.h"
-#include"Component.h"
+#include"ObjectRenderer.h"
+#include"ObjectBehavior.h"
+
 #include<vector>
 using namespace std;
-class GameObject:public VObject{
+class GameObject:public Transformable,public Updatable,public Renderable{
 	friend class RenderEngine;
 public:
 	GameObject(Transform* trans=new Transform());
@@ -21,19 +23,16 @@ public:
 	int childrenCount();
 	GameObject* getChild(int ix);
 
-	Transform* getTransform();
+	void setRenderComponent( ObjectRenderer* val);
+	void setBehaviorComponent( ObjectBehavior* val);
 
-	void setTransform(Transform* trans);
-	void setRenderComponent( Component* val);
-	void setBehaviorComponent( Component* val);
-
-	Component getRenderComponent();
-	Component getBehaviorComponent();
+	Renderable getRenderComponent();
+	Updatable getBehaviorComponent();
 	~GameObject();
 	
 protected:
-	Transform* transform;
 	vector<GameObject*> childList;
-	Component *RenderComponent,*BehaviorComponent;
+	Renderable *RenderComponent;
+	Updatable *BehaviorComponent;
 };
 #endif

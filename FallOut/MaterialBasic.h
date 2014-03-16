@@ -2,7 +2,7 @@
 #define MATERIALBASIC_H_
 #include"RenderEngine.h"
 #include"Material.h"
-class BasicMaterial:Material{
+class BasicMaterial:public Material{
 	friend class RenderEngine;
 public:
 	BasicMaterial();
