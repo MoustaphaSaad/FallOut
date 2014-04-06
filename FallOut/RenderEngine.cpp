@@ -17,6 +17,8 @@ void RenderEngine::drawMesh(Mesh* obj){
 			obj->getSubMesh(j)->getMaterial()->use();
 			Engine::getEngine()->getRenderer()->drawMesh(obj->getSubMesh(j));
 	}
+	engine->getGXManager()->BindShader(0);
+	engine->getGXManager()->BindTexture(0,0);
 }
 
 

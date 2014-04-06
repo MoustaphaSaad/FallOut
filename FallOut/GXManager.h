@@ -37,6 +37,7 @@ public:
 	virtual unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic){return 0;}
 	virtual unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic){return 0;}
 	virtual unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type){return 0;}
+	virtual unsigned int MapBuffer(void* data, int dataSize, unsigned int buffer){ return 0; }
 
 	virtual void refresh(){}
 

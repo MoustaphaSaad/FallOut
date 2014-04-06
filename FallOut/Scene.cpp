@@ -13,6 +13,7 @@ void Scene::Input(){
 void Scene::Update(){
 	if(cam->camComp)
 		cam->camComp->Update();
+	GameObject::Update();
 }
 void Scene::Render(){
 

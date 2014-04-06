@@ -34,6 +34,7 @@ public:
 	unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic);
 	unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic);
 	unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type);
+	unsigned int MapBuffer(void* data, int dataSize, unsigned int buffer);
 
 	void refresh();
 

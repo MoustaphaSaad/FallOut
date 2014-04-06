@@ -20,6 +20,8 @@ public:
 	void setGeometry(Geometry val);
 	void setMaterial(Material* val);
 
+	void updateGeometry(Geometry* val);
+
 	void addSubMesh(Mesh* val);
 	Mesh* getSubMesh(int i);
 	int getSubMeshCount();

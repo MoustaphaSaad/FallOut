@@ -4,7 +4,7 @@
 #include"Vertex.h"
 class Geometry{
 public:
-	Geometry(IVertex* vertices,int* indices,int nbVertices,int nbIndices,VertexFormat* form);
+	Geometry(IVertex* vertices, int* indices, int nbVertices, int nbIndices, VertexFormat* form, bool calcN=false);
 	IVertex* getVertices();
 	int* getIndices();
 

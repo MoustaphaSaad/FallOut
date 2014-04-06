@@ -49,7 +49,7 @@ Mesh* ObjLoader::loadObj(const string resourceName,string fileName){
 			float diff;
 			Material* MeshMat = matHandle(resourceName,mat,fileName);
 			const aiVector3D Zero3D(0.0f,0.0f,0.0f);
-			const aiColor4D EmptyColor(0.0f,0.0f,0.0f,0.0f);
+			const aiColor4D EmptyColor(-1.0f,-1.0f,-1.0f,-1.0f);
 
 			for(unsigned int i=0;i<Lmesh->mNumVertices;i++){
 				const aiVector3D* pPos = &(Lmesh->mVertices[i]);

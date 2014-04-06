@@ -129,6 +129,9 @@
     <ClInclude Include="basicShader.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Cloth.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -212,5 +215,13 @@
     <ClCompile Include="Light.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\basic.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\light.glh">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

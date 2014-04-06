@@ -37,6 +37,10 @@ void Mesh::setMaterial(Material* val){
 	this->material = val;
 }
 
+void Mesh::updateGeometry(Geometry* val){
+	Engine::getEngine()->getGXManager()->MapBuffer(val->getVertices(), val->getVerticesCount()*val->getFormat()->vertexSize, vbo);
+}
+
 void Mesh::draw(){
 	Engine::getEngine()->getRenderer()->drawMesh(this);
 }

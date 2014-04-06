@@ -4,7 +4,7 @@
 BasicMaterial::BasicMaterial(){
 	ambient = vec3(.1,.1,.1);
 	diffuse = vec3(.80,.8,.8);
-	specular = vec3(.6,.6,.6);
+	specular = vec3(.9,.9,.9);
 	shine = .65;
 	Tex = NULL;
 }

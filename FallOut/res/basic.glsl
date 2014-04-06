@@ -10,6 +10,7 @@ attribute vec2 texCoord;
 varying vec3 Position;
 varying vec3 Normal;
 varying vec2 ftexCoord;
+varying vec3 Color;
 
 vuniform mat4 MVP;
 vuniform mat4 Model;
@@ -22,6 +23,7 @@ void VSmain()
 	mat3 Nm = mat3(Model);
 	Nm = inverse(Nm);
 	Nm = transpose(Nm);
+	Color = color;
 	Position = vec3(Model*vec4(position,1));
 	Normal = normalize(Nm*normal);
 	ftexCoord = texCoord;
@@ -30,19 +32,26 @@ void VSmain()
 
 void FSmain()
 {
-	vec4 tl = vec4(0);
+	vec4 tl;
+	if(LIGHTNUM>0)
+	tl = vec4(0);
+	else
+	tl = vec4(1,1,1,1);
+	//Calc the lights
 	for(int i=0;i<LIGHTNUM;i++){
 		vec4 ith = vec4(calcLight(i,Position,normalize(Normal)),1);
 		tl+=ith;
 	}
+	//check if there's a texture
 	vec4 texC = texture(Tex,ftexCoord);
 	if(texC.x > 0 && texC.y >0 && texC.z >0 && texC.w > 0)
 		tl *= texC;
-	if(gl_FrontFacing){
-		gl_FragColor = tl;
-	}else{
-		gl_FragColor = tl;
-	}
+
+	//Adding the lights
+	if(Color.x != -1)
+		tl = tl*Color;
+
+	gl_FragColor = tl;
 
 
 }

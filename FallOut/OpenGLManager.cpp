@@ -479,3 +479,11 @@ void OpenGLManager::drawGeometry(Geometry* geometry,unsigned int vbo,unsigned in
 	for(int i = 0; i < geometry->getFormat()->nElements; i++)
         glDisableVertexAttribArray(i);
 }
+
+unsigned int OpenGLManager::MapBuffer(void* data, int dataSize, unsigned int buffer){
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	void* dataGPU = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
+	memcpy(dataGPU, data, dataSize);
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	return 0;
+}

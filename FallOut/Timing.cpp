@@ -6,7 +6,7 @@ using namespace std;
 double Time::g_Freq=0;
 double Time::g_Delta=0;
 double Time::g_Elapsed=0;
-double Time::frameLimit=1.0/750;
+double Time::frameLimit=1.0/60;
 int Time::frameCount=0;
 double Time::frameTimeCount=0;
 double Time::timeCount=0;
@@ -21,7 +21,7 @@ void Time::init(){
 	g_Delta = 0;
 	g_Elapsed = 0.0f;
 
-	frameLimit =1.0/750;
+	frameLimit = 1.0 / 60;
 	frameCount=0;
 	frameTimeCount = 0.0;
 	timeCount = 0.0;

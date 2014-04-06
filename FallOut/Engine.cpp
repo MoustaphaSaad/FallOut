@@ -1,5 +1,7 @@
 #include"Engine.h"
 #include"FallOut.h"
+#include<algorithm>
+#include<iostream>
 Engine* Engine::engine = NULL;
 
 Engine::Engine(){
@@ -52,13 +54,16 @@ void Engine::gameLoop(){
 		Time::frameTimeCount = 0;
 	}
 	if(Time::timeCount>=Time::frameLimit){
-		Time::update(Time::frameLimit);
+		double delta = min(passedTime, (double)(1.0f / 60.0f));
+		Time::update(delta);
 		input();
 		draw = true;
 		update();
-		Time::timeCount -=Time::frameLimit;
+		
+		Time::timeCount -= delta;
+		Time::frameLimit = delta;
 	}
-	if(draw){
+	if(true){
 		render();
 		gxManager->refresh();
 		Time::frameCount++;

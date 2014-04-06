@@ -22,6 +22,10 @@ public:
 	Transformable* getParent(){
 		return parent;
 	}
+	Mesh* getMesh(int ix){
+		if (ix < Meshes.size())
+			return Meshes[ix];
+	}
 
 protected:
 	vector<Mesh*> Meshes;

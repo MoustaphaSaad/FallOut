@@ -19,7 +19,7 @@ funiform materialInfo Mat;
 fragment vec3 calcLight(int i,vec3 pos,vec3 norm){
 	vec3 lpos = Lights[i].pos;
 	float dist = length(pos-lpos);
-	float att = 1.0/(1.0+0.1*dist+0.01*dist*dist);
+	float att = 1.0/(1.0+0.01*dist+0.001*dist*dist);
 	vec3 ambient = Mat.ka*Lights[i].la;
 
 	vec3 surf2light=normalize(lpos-pos);

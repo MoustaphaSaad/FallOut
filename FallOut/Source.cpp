@@ -1,5 +1,6 @@
 #include<iostream>
 #include"FallOut.h"
+#include"Cloth.h"
 using namespace std;
 class CamBe : public ObjectBehavior{
 	bool mouseLocked;
@@ -10,7 +11,7 @@ public:
 	void Input(){
 		Camera* cam = (Camera*)parent;
 		float sensitivity = 0.005f;
-		float movAmt = (float)(Time::getDelta()*100);
+		float movAmt = (float)(Time::getDelta()*10);
 		float rotAmt = (float)(Time::getDelta());
 
 		if(input->getKey(27)==keyState::DOWN){
@@ -66,7 +67,7 @@ public:
 };
 class Tu : public Application{
 public:
-	GameObject* obj,*obj1;
+	GameObject* obj;
 	double e;
 	Mesh* eo;
 	Tu():Application(){
@@ -84,31 +85,32 @@ public:
 		obj = new GameObject(new Transform());
 		obj->setRenderComponent(new ObjectRenderer(eo));
 		obj->getTransform()->position.SetZ(10);
-		scene->addChild(obj);
+		obj->getTransform()->scale.SetX(.1);
+		//scene->addChild(obj);
 
-		Mesh* msh = resourceManager->createMesh("koko","res/MultiO.obj");
-		msh->getMaterial()->setShader(shoho);
-		for(int i=0;i<msh->getSubMeshCount();i++){
-			msh->getSubMesh(i)->getMaterial()->setShader(shoho);
-		}
-		obj1 = new GameObject(new Transform());
-		obj1->setRenderComponent(new ObjectRenderer(msh));
-		obj1->getTransform()->position.SetX(5);
-		obj1->getTransform()->position.SetZ(10);
-		scene->addChild(obj1);
+		Cloth* cl = new Cloth(3, 3, 20, 20);
+		cl->getTransform()->position.SetY(3);
+		cl->getTransform()->position.SetZ(10);
+		cl->getTransform()->position.SetX(-2);
+		scene->addChild(cl);
 
 	}
 	void setupScene(){
 		light* l = new light();
 		scene->addLight(l);
 		l = new light();
-		l->setPosition(vec3(3,3,13));
-		l->setLa(vec3(1,1,1));
+		l->setPosition(vec3(-3,3,5));
+		l->setLa(vec3(2,0,2));
+		
 		scene->addLight(l);
 	}
 	void input(){
 		if(this->Input->getKey(27)==keyState::DOWN)
 			cout<<"weijf"<<endl;
+		if (this->Input->getKey('m') == keyState::DOWN){
+			Mesh*moka = ObjLoader::loadObj("koko","res/MultiO.obj" );
+			eo->updateGeometry(moka->getGeometry());
+		}
 	}
 	void postRender(){
 		e+=Time::getDelta();

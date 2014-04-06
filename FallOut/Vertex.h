@@ -8,7 +8,7 @@ public:
 };
 class Vertex:public IVertex{
 public:
-	Vertex(vec3 pos = vec3(),vec3 norm = vec3(),vec3 co = vec3(),vec2 tex = vec2()){
+	Vertex(vec3 pos = vec3(),vec3 norm = vec3(0,0,0),vec3 co = vec3(-1,-1,-1),vec2 tex = vec2()){
 		position = pos;
 		normal = norm;
 		color = co;
