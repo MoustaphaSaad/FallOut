@@ -1,8 +1,8 @@
 #include"ObjectBehavior.h"
 #include"Engine.h"
-ObjectBehavior::ObjectBehavior(VObject* object){
+ObjectBehavior::ObjectBehavior(Transformable* object){
 	parent = object;
-	input = Engine::getEngine()->getInputManager();
+	input = Engine::getInstance()->getInputManager();
 }
 
 ObjectBehavior::~ObjectBehavior(){

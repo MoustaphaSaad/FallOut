@@ -6,19 +6,19 @@
 class ObjectBehavior:public Updatable{
 protected:
 	InputManager* input;
-	VObject* parent;
+	Transformable* parent;
 public:
-	ObjectBehavior(VObject* object=0);
+	ObjectBehavior(Transformable* object = 0);
 	~ObjectBehavior();
 
 
 	void Input(){}
 	void Update(){}
 
-	void setParent(VObject* prnt){
+	void setParent(Transformable* prnt){
 		parent = prnt;
 	}
-	VObject* getParent(){
+	Transformable* getParent(){
 		return parent;
 	}
 };

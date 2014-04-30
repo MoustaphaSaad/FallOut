@@ -10,7 +10,7 @@ class Engine{
 	friend class OpenGLManager;
 	friend class RenderEngine;
 public:
-	static Engine* getEngine();
+	static Engine* getInstance();
 	GXManager* getGXManager();
 	Application* getApplication();
 	RenderEngine* getRenderer();

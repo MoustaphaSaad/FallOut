@@ -25,6 +25,6 @@ void ObjectRenderer::Render(){
 	for(int i=0;i<Meshes.size();i++){
 		Meshes[i]->getMaterial()->use();
 		Meshes[i]->getMaterial()->getShader()->Update(parent);
-		Engine::getEngine()->getRenderer()->drawMesh(Meshes[i]);
+		Engine::getInstance()->getRenderer()->drawMesh(Meshes[i]);
 	}
 }

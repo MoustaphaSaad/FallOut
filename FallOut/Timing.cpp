@@ -1,5 +1,22 @@
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WIN64)
+#define OS_WINDOWS
+#elif defined(__linux__)
+#define OS_LINUX
+#elif __cplusplus >= 201103L
+#define OS_OTHER_CPP11
+#else
+#define OS_OTHER
+#endif
 #include"Timing.h"
+#ifdef OS_WINDOWS
 #include<Windows.h>
+#include<sys\timeb.h>
+#endif
+
+#ifdef OS_LINUX
+#include <sys/time.h>
+#endif
+
 #include<iostream>
 using namespace std;
 
@@ -14,10 +31,17 @@ double Time::lastTime=0;
 
 
 void Time::init(){
+#ifdef OS_WINDOWS
 	LARGE_INTEGER li;
 	if(!QueryPerformanceFrequency(&li))
 		cout<<"Error: Timing Can't be initialized"<<endl;
 	g_Freq = double(li.QuadPart);
+#endif
+#ifdef OS_LINUX
+	timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	g_Freq = double(ts.tv_sec);
+#endif
 	g_Delta = 0;
 	g_Elapsed = 0.0f;
 
@@ -34,10 +58,17 @@ void Time::update(double delta){
 }
 
 double Time::getTime(){
+#ifdef OS_WINDOWS
 	LARGE_INTEGER li;
 	if(!QueryPerformanceCounter(&li))
 		cout<<"Error: Timing Can't be initialized"<<endl;
 	return double(li.QuadPart)/g_Freq;
+#endif
+#ifdef OS_LINUX
+	timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	return (double)(((long)ts.tv_sec * 1000000000L) + ts.tv_nsec) / ((double)(1000000000L));
+#endif
 }
 double Time::getDelta(){
 	return g_Delta;

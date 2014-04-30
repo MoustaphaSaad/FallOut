@@ -58,7 +58,8 @@ Mesh* ResourceManager::createMesh(const string name,Geometry* geo,Material* mat)
 Texture* ResourceManager::createTexture(const string name,const string fileName){
 	Texture* obj;
 	if(!isExist(name)){
-		obj = new Texture(name,fileName);
+		obj = new Texture(fileName);
+		obj->setName(name);
 		RegisterResource(obj);
 	}else{
 		obj = (Texture*)getResource(name);
@@ -68,7 +69,8 @@ Texture* ResourceManager::createTexture(const string name,const string fileName)
 Texture* ResourceManager::createTexture(const string name,int w,int h,unsigned char* data){
 	Texture* obj;
 	if(!isExist(name)){
-		obj = new Texture(name,w,h,data);
+		obj = new Texture(w,h,data);
+		obj->setName(name);
 		RegisterResource(obj);
 	}else{
 		obj = (Texture*)getResource(name);

@@ -20,4 +20,16 @@ public:
 	vec2 texCoord;
 
 };
+class DefVertex2D :public IVertex{
+public:
+	DefVertex2D(vec2 pos = vec2(), vec3 co = vec3(-1, -1, -1), vec2 tc = vec2()){
+		position = pos;
+		color = co;
+		texCoord = tc;
+
+	}
+	vec2 position;
+	vec3 color;
+	vec2 texCoord;
+};
 #endif

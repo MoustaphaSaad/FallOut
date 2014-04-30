@@ -10,7 +10,7 @@
 //Core
 #include"Engine.h"
 #include"Display.h"
-#include"Math3D.h"
+
 #include"Transform.h"
 #include"Resources.h"
 #include"Texture.h"
@@ -19,6 +19,7 @@
 #include"Application.h"
 #include"Timing.h"
 #include"VisualObject.h"
+#include"Core.h"
 //Engine Objects
 #include"GameObject.h"
 #include"Component.h"

@@ -108,9 +108,6 @@
     <ClInclude Include="Math3D.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialBasic.h">
-      <Filter>Header Files\Engine Objects</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -131,6 +128,21 @@
     </ClInclude>
     <ClInclude Include="Cloth.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Atmosphere.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture3D.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GLSLTranslator.h">
+      <Filter>Header Files\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialBasic.h">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,12 +227,33 @@
     <ClCompile Include="Light.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GLSLTranslator.cpp">
+      <Filter>Header Files\Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basic.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\light.glh">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\basic2D.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Atmosphere.glh">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Sky.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Clouds.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Ocean.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

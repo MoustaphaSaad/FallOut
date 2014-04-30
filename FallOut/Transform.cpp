@@ -1,12 +1,12 @@
 #include"Transform.h"
 
-Transform::Transform(const vec3 pos,const vec3 rot , const vec3 scal ){
+Transform::Transform(const vec3 pos,const vec4 rot , const vec3 scal ){
 	this->position = pos;
 	this->rotation = rot;
 	this->scale = scal;
-	model = mat4();
-	MVP = mat4();
-	childModel = mat4();
+	model = mat4().InitIdentity();
+	MVP = mat4().InitIdentity();
+	childModel = mat4().InitIdentity();
 }
 
 mat4 Transform::getModel(bool calcModel){
@@ -28,9 +28,8 @@ void Transform::setChildModel(const mat4 childModel){
 }
 void Transform::CalcModel()
 {
-	mat4 translation = mat4::InitTranslation(position);
-	mat4 ScaleM = mat4::InitScale(scale);
-	mat4 rot = mat4::InitRotation(rotation);
+	mat4 translation = mat4().InitTranslation(position);
+	mat4 ScaleM = mat4().InitScale(scale);
 
-	model = childModel* translation * rot * ScaleM;
+	model = translation * rotation.ToRotationMatrix() * ScaleM;
 }

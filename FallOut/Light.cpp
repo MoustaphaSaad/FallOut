@@ -1,6 +1,6 @@
 #include"Light.h"
 light::light(vec3 pos,vec3 la,vec3 ld,vec3 ls){
-	position = pos;
+	transform->position = pos;
 	La = la;
 	Ld = ld;
 	Ls = ls;
@@ -19,11 +19,11 @@ vec3 light::getLs(){
 }
 
 vec3 light::getPosition(){
-	return position;
+	return transform->position;
 }
 
 void light::setPosition(vec3 val){
-	position = val;
+	transform->position = val;
 }
 void light::setLa(vec3 val){
 	La = val;

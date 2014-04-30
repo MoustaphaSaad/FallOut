@@ -30,7 +30,7 @@ Material* matHandle(const string resourceName,const aiMaterial* Imat,string file
 	}
 	aiString texPath;
 	if(AI_SUCCESS == Imat->GetTexture(aiTextureType_DIFFUSE,0,&texPath)){
-		Texture* tex = new Texture(resourceName+"Tex",absPath+texPath.data);
+		Texture* tex = new Texture(absPath+texPath.data);
 		out->setTexture(tex);
 	}
 	return (Material*)out;

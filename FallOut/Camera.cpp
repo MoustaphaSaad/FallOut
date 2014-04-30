@@ -2,86 +2,26 @@
 #include"Engine.h"
 #include"ObjectBehavior.h"
 
-Camera::Camera(const vec3 pos,const vec3 forward,const vec3 up){
-	this->position = pos;
-	this->forward = forward.Normalized();
-	this->up = up.Normalized();
+Camera::Camera(){
+	this->transform = new Transform();
 	camComp=NULL;
 }
 
-void Camera::move(const vec3 val){
-	this->position += val;
-}
-
-void Camera::rotateX(float val){
-	this->forward = forward.Rotate(getRight(),val).Normalized();
-	up = up.Rotate(getRight(),val).Normalized();
-}
-
-void Camera::rotateY(float val){
-	forward = forward.Rotate(getUp(),val).Normalized();
-	up = up.Rotate(getUp(),val).Normalized();
-}
-
-void Camera::rotateZ(float val){
-	forward = forward.Rotate(getForward(),val).Normalized();
-	up = up.Rotate(getForward(),val).Normalized();
-}
-
-void Camera::roll(float val){
-	up = up.Rotate(forward,val).Normalized();
-}
-
-void Camera::pitch(float val){
-	vec3 right = up.Cross(forward).Normalized();
-
-	forward = forward.Rotate(right,val).Normalized();
-	up = forward.Cross(right).Normalized();
-}
-
-void Camera::yaw(float val)
+void Camera::move(vec3 direction, float amt)
 {
-	forward = forward.Rotate(up,val).Normalized();
+	transform->position = (transform->position + (direction * amt));
 }
 
 mat4 Camera::getPositionRotation(){
-	return mat4::InitLookTo(position*-1,forward,up);
+	mat4 rotMat = transform->rotation.Conjugate().ToRotationMatrix();
+	mat4 transMat;
+	transMat.InitTranslation(transform->position*-1);
+	mat4 res = rotMat * transMat;
+	return res;
+	//return transform->getModel();
 }
 mat4 Camera::getProjection(){
 	return mat4();
-}
-
-vec3 Camera::getForward(){
-	return forward;
-}
-
-vec3 Camera::getBack(){
-	return up.Cross(forward).Normalized();
-}
-
-vec3 Camera::getRight()
-{
-	return up.Cross(forward).Normalized();
-}
-
-vec3 Camera::getLeft() 
-{
-	return forward.Cross(up).Normalized();
-}
-
-vec3 Camera::getUp() 
-{
-	return up;
-}
-
-vec3 Camera::getDown() 
-{
-	return up * -1;
-}
-
-vec3 Camera::getPosition()
-{
-	return position;
 }
 
 Updatable* Camera::getCamComp(){
@@ -94,7 +34,7 @@ void Camera::setCamComp(Updatable* val){
 }
 
 PerspectiveCamera::PerspectiveCamera(const vec3 pos,const vec3 forward,const vec3 up,
-									 float fov,float zNear,float zFar):Camera(pos,forward,up){
+									 float fov,float zNear,float zFar):Camera(){
 	this->FOV = fov;
 	this->zNear = zNear;
 	this->zFar = zFar;
@@ -111,5 +51,5 @@ float PerspectiveCamera::getZFar(){
 }
 
 mat4 PerspectiveCamera::getProjection(){
-	return mat4::InitPerspective(FOV,Engine::getEngine()->getDisplay()->getAspect(),zNear,zFar);
+	return mat4().InitPerspective(FOV,Engine::getInstance()->getDisplay()->getAspect(),zNear,zFar);
 }

@@ -10,7 +10,7 @@ Engine::Engine(){
 		display = NULL;
 		rEngine = NULL;
 }
-Engine* Engine::getEngine(){
+Engine* Engine::getInstance(){
 	if(!engine){
 		engine = new Engine();
 	}

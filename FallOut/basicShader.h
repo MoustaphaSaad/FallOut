@@ -15,12 +15,13 @@ public:
 	}
 
 	void Update(Transformable* obj){
-		Scene* scene = Engine::getEngine()->getApplication()->getScene();
-		View = Engine::getEngine()->getApplication()->getScene()->getCamera()->getPositionRotation();
-		Projection = Engine::getEngine()->getApplication()->getScene()->getCamera()->getProjection();
+		Scene* scene = Engine::getInstance()->getApplication()->getScene();
+		View = Engine::getInstance()->getApplication()->getScene()->getCamera()->getPositionRotation();
+		Projection = Engine::getInstance()->getApplication()->getScene()->getCamera()->getProjection();
 		Model = obj->getTransform()->getModel();
-		this->setUniform("MVP",Projection*View*Model);
-		this->setUniform("Model",Model);
+		mat4 res = Projection*View*Model;
+		this->setUniform("MVP",res.Transpose());
+		this->setUniform("Model",Model.Transpose());
 		this->setUniform("LIGHTNUM",scene->getLightsCount());
 		for(int i=0;i<scene->getLightsCount();i++){
 			string text = "Lights[";

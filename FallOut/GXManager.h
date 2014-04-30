@@ -16,32 +16,30 @@ public:
 	virtual void start(){}
 	virtual void clearBuffers(){}
 
-	virtual unsigned int CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture){ return -1;}
+	virtual unsigned int CreateTexture(int width, int height, void* data, bool linearFiltering, bool repeatTexture){ return -1; }
 	virtual void DeleteTexture(unsigned int texture){}
 	virtual void BindTexture(unsigned int texture, int unit){}
 
-	virtual unsigned int CreateVertexShader(const string txt){return 0;}
-	virtual unsigned int CreateFragmentShader(const string txt){return 0;}
-	virtual unsigned int CreateShader(const string txt,unsigned int){return 0;}
-	virtual unsigned int CreateProgram(unsigned int* shdrs,int size){return 0;}
-	virtual vector<UniformData> CreateUniforms(const string shdr,unsigned int program,vector<ShaderStruct> strct){return vector<UniformData>();}
-	virtual vector<ShaderStruct> CreateStructs(const string shdr,unsigned int program){return vector<ShaderStruct>();}
-	virtual void DeleteShader(unsigned int program,unsigned int* shaders,int size){}
+	virtual unsigned int CreateVertexShader(const string txt){ return 0; }
+	virtual unsigned int CreateFragmentShader(const string txt){ return 0; }
+	virtual unsigned int CreateShader(const string txt, unsigned int){ return 0; }
+	virtual unsigned int CreateProgram(unsigned int* shdrs, int size){ return 0; }
+	virtual void DeleteShader(unsigned int program, unsigned int* shaders, int size){}
 	virtual void BindShader(unsigned int p){}
 
-	virtual void setUniform(unsigned int loc,int value){}
-	virtual void setUniform(unsigned int loc,float value){}
-	virtual void setUniform(unsigned int loc,const vec3 value){}
-	virtual void setUniform(unsigned int loc,const mat4 value){}
+	virtual void setUniform(unsigned int loc, int value){}
+	virtual void setUniform(unsigned int loc, float value){}
+	virtual void setUniform(unsigned int loc, const vec3 value){}
+	virtual void setUniform(unsigned int loc, const mat4 value){}
 
-	virtual unsigned int CreateVertexBuffer(void* data,int dataSize,bool isStatic){return 0;}
-	virtual unsigned int CreateIndexBuffer(void* data,int dataSize,bool isStatic){return 0;}
-	virtual unsigned int CreateDataBuffer(void* data,int dataSize,bool isStatic,int type){return 0;}
+	virtual unsigned int CreateVertexBuffer(void* data, int dataSize, bool isStatic){ return 0; }
+	virtual unsigned int CreateIndexBuffer(void* data, int dataSize, bool isStatic){ return 0; }
+	virtual unsigned int CreateDataBuffer(void* data, int dataSize, bool isStatic, int type){ return 0; }
 	virtual unsigned int MapBuffer(void* data, int dataSize, unsigned int buffer){ return 0; }
 
 	virtual void refresh(){}
 
-	virtual void drawGeometry(Geometry* geo,unsigned int vbo,unsigned int ibo){}
+	virtual void drawGeometry(Geometry* geo, unsigned int vbo, unsigned int ibo){}
 	vec3 getClearColor(){
 		return clearColor;
 	}

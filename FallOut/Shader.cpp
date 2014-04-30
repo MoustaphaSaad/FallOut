@@ -5,6 +5,7 @@
 #include<vector>
 #include <iostream>
 #include"StringOp.h"
+#include"GLSLTranslator.h"
 using namespace std;
 
 Shader::Shader(const string fileName):Resource(){
@@ -15,11 +16,11 @@ Shader::Shader(const string fileName):Resource(){
 	m_Uniforms = vector<UniformData>();
 
 	string shaderText = loadShader(fileName);
-	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateVertexShader(shaderText));
-	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateFragmentShader(shaderText));
-	m_Program = Engine::getEngine()->getGXManager()->CreateProgram(&m_Shaders[0],m_Shaders.size());
-	m_Structs = Engine::getEngine()->getGXManager()->CreateStructs(shaderText,m_Program);
-	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program,m_Structs);
+	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateVertexShader(shaderText));
+	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateFragmentShader(shaderText));
+	m_Program = Engine::getInstance()->getGXManager()->CreateProgram(&m_Shaders[0], m_Shaders.size());
+	m_Structs = GLSL::CreateStructs(shaderText, m_Program);
+	m_Uniforms = GLSL::CreateUniforms(shaderText, m_Program, m_Structs);
 }
 
 Shader::Shader(const string name,const string fileName):Resource(name,ResourceType::SHADER){
@@ -29,18 +30,18 @@ Shader::Shader(const string name,const string fileName):Resource(name,ResourceTy
 	m_Uniforms = vector<UniformData>();
 
 	string shaderText = loadShader(fileName);
-	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateVertexShader(shaderText));
-	m_Shaders.push_back(Engine::getEngine()->getGXManager()->CreateFragmentShader(shaderText));
-	m_Program = Engine::getEngine()->getGXManager()->CreateProgram(&m_Shaders[0],m_Shaders.size());
-	m_Structs = Engine::getEngine()->getGXManager()->CreateStructs(shaderText,m_Program);
-	m_Uniforms = Engine::getEngine()->getGXManager()->CreateUniforms(shaderText,m_Program,m_Structs);
+	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateVertexShader(shaderText));
+	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateFragmentShader(shaderText));
+	m_Program = Engine::getInstance()->getGXManager()->CreateProgram(&m_Shaders[0], m_Shaders.size());
+	m_Structs = GLSL::CreateStructs(shaderText, m_Program);
+	m_Uniforms = GLSL::CreateUniforms(shaderText, m_Program, m_Structs);
 }
 Shader::~Shader(){
-	Engine::getEngine()->getGXManager()->DeleteShader(m_Program,&m_Shaders[0],m_Shaders.size());
+	Engine::getInstance()->getGXManager()->DeleteShader(m_Program, &m_Shaders[0], m_Shaders.size());
 }
 
 void Shader::Bind(){
-	Engine::getEngine()->getGXManager()->BindShader(m_Program);
+	Engine::getInstance()->getGXManager()->BindShader(m_Program);
 }
 
 void Shader::Update(Transformable* obj){
@@ -58,7 +59,7 @@ void Shader::setUniform(string name,int val){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
-	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+	Engine::getInstance()->getGXManager()->setUniform(uni->Location, val);
 }
 void Shader::setUniform(string name,float val){
 	UniformData *uni = NULL;
@@ -70,7 +71,7 @@ void Shader::setUniform(string name,float val){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
-	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+	Engine::getInstance()->getGXManager()->setUniform(uni->Location, val);
 }
 void Shader::setUniform(string name,vec3 val){
 	UniformData *uni = NULL;
@@ -82,7 +83,7 @@ void Shader::setUniform(string name,vec3 val){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
-	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+	Engine::getInstance()->getGXManager()->setUniform(uni->Location, val);
 }
 void Shader::setUniform(string name,mat4 val){
 	UniformData *uni = NULL;
@@ -94,7 +95,7 @@ void Shader::setUniform(string name,mat4 val){
 		printf("Error Uniform %s doesn't Exist\n",name.c_str());
 		return;
 	}
-	Engine::getEngine()->getGXManager()->setUniform(uni->Location,val);
+	Engine::getInstance()->getGXManager()->setUniform(uni->Location, val);
 }
 
 string Shader::loadShader(const string fileName){

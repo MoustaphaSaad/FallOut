@@ -22,7 +22,7 @@ void GameObject::Update(){
 	}
 }
 void GameObject::Render(){
-	Engine::getEngine()->getRenderer()->drawGameObject(this);
+	Engine::getInstance()->getRenderer()->drawGameObject(this);
 }
 
 void GameObject::addChild(GameObject* child){

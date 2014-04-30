@@ -1,6 +1,7 @@
 #ifndef CLOTH_H
 #define CLOTH_H
 #include"FallOut.h"
+#include"Core.h"
 #include<vector>
 #define DAMPING 0.01
 class Particle{
@@ -187,7 +188,7 @@ public:
 			objren->getMesh(0)->updateGeometry(gm);
 
 		}
-		Engine::getEngine()->getRenderer()->drawGameObject(this);
+		Fallout::getRenderer()->drawGameObject(this);
 	}
 	Cloth(int w, int h, int nw, int nh){
 		nWidth = nw;

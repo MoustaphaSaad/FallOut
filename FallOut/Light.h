@@ -1,11 +1,12 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 #include"Math3D.h"
-class light{
+#include"VisualObject.h"
+class light:public Transformable{
 private:
-	vec3 position,La,Ld,Ls;
+	vec3 La,Ld,Ls;
 public:
-	light(vec3 pos=vec3(),vec3 la=vec3(.5,.5,.5),vec3 ld=vec3(1,1,1),vec3 ls=vec3(1,1,1));
+	light(vec3 pos=vec3(0,0,0),vec3 la=vec3(.5,.5,.5),vec3 ld=vec3(1,1,1),vec3 ls=vec3(1,1,1));
 
 	vec3 getPosition();
 	vec3 getLa();

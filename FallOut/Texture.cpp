@@ -2,32 +2,35 @@
 #include"Engine.h"
 #include<iostream>
 using namespace std;
-Texture::Texture(const string ResourceName,const std::string fileName, bool linearFiltering, bool repeatTexture):Resource(ResourceName,ResourceType::TEXTURE)
+Texture::Texture(const std::string fileName, bool linearFiltering, bool repeatTexture) :Resource()
 {
 	this->type = ResourceType::TEXTURE;
-    int x, y, numComponents;
-    unsigned char* data = stbi_load(fileName.c_str(), &x, &y, &numComponents, 4);
+	int x, y, numComponents;
+	unsigned char* data = stbi_load(fileName.c_str(), &x, &y, &numComponents, 4);
 
-    if(data == NULL)
-		cerr<<"Can't Load Texture "<<fileName<<endl;
+	if (data == NULL)
+		cerr << "Can't Load Texture " << fileName << endl;
 
-	TextureID = Engine::getEngine()->getGXManager()->CreateTexture(x, y, data, linearFiltering, repeatTexture);
-    stbi_image_free(data);
-	
+	TextureID = Engine::getInstance()->getGXManager()->CreateTexture(x, y, data, linearFiltering, repeatTexture);
+	stbi_image_free(data);
+	width = x;
+	height = y;
 }
 
-Texture::Texture(const string ResourceName,int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture):Resource()
+Texture::Texture(int width, int height, void* data, bool linearFiltering, bool repeatTexture) :Resource()
 {
 	this->type = ResourceType::TEXTURE;
-	TextureID = Engine::getEngine()->getGXManager()->CreateTexture(width, height, data, linearFiltering, repeatTexture);
+	TextureID = Engine::getInstance()->getGXManager()->CreateTexture(width, height, data, linearFiltering, repeatTexture);
+	this->width = width;
+	this->height = height;
 }
 
 Texture::~Texture()
 {
-	Engine::getEngine()->getGXManager()->DeleteTexture(TextureID);
+	Engine::getInstance()->getGXManager()->DeleteTexture(TextureID);
 }
 
 void Texture::bind(int unit) const
 {
-	Engine::getEngine()->getGXManager()->BindTexture(TextureID, unit);
+	Engine::getInstance()->getGXManager()->BindTexture(TextureID, unit);
 }

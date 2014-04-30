@@ -48,4 +48,15 @@ public:
 		vertexSize = sizeof(vec3)+sizeof(vec3)+sizeof(vec3)+sizeof(vec2);
 	}
 };
+class DefVertex2DDesc : public VertexFormat{
+public:
+	DefVertex2DDesc(){
+		nElements = 3;
+		Sizes = vector<int>();
+		Sizes.push_back(sizeof(vec2));
+		Sizes.push_back(sizeof(vec3));
+		Sizes.push_back(sizeof(vec2));
+		vertexSize = sizeof(vec2)+sizeof(vec3)+sizeof(vec2);
+	}
+};
 #endif

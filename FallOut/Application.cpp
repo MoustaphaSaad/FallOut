@@ -1,7 +1,7 @@
 #include"Application.h"
 Application::Application(){
 	scene = new Scene();
-	Engine = Engine::getEngine();
+	Engine = Engine::getInstance();
 	Input = Engine->getInputManager();
 	rEngine = Engine->getRenderer();
 	resourceManager = ResourceManager::getInstance();

@@ -5,16 +5,16 @@ Mesh::Mesh(const string name,Geometry* geo,Material* mat):Resource(name,Resource
 	this->geometry = geo;
 	this->material = mat;
 	subMesh = vector<Mesh*>();
-	vbo = Engine::getEngine()->getGXManager()->CreateVertexBuffer(geo->getVertices(),geo->getVerticesCount()*geo->getFormat()->vertexSize,true);
-	ibo = Engine::getEngine()->getGXManager()->CreateIndexBuffer(geo->getIndices(),geo->getIndicesCount()*sizeof(int),true);
+	vbo = Engine::getInstance()->getGXManager()->CreateVertexBuffer(geo->getVertices(), geo->getVerticesCount()*geo->getFormat()->vertexSize, true);
+	ibo = Engine::getInstance()->getGXManager()->CreateIndexBuffer(geo->getIndices(), geo->getIndicesCount()*sizeof(int), true);
 }
 Mesh::Mesh(Geometry* geo,Material* mat):Resource(){
 	this->type = ResourceType::MESH;
 	this->geometry = geo;
 	this->material = mat;
 	subMesh = vector<Mesh*>();
-	vbo = Engine::getEngine()->getGXManager()->CreateVertexBuffer(geo->getVertices(),geo->getVerticesCount()*geo->getFormat()->vertexSize,true);
-	ibo = Engine::getEngine()->getGXManager()->CreateIndexBuffer(geo->getIndices(),geo->getIndicesCount()*sizeof(int),true);
+	vbo = Engine::getInstance()->getGXManager()->CreateVertexBuffer(geo->getVertices(), geo->getVerticesCount()*geo->getFormat()->vertexSize, true);
+	ibo = Engine::getInstance()->getGXManager()->CreateIndexBuffer(geo->getIndices(), geo->getIndicesCount()*sizeof(int), true);
 
 }
 
@@ -38,11 +38,11 @@ void Mesh::setMaterial(Material* val){
 }
 
 void Mesh::updateGeometry(Geometry* val){
-	Engine::getEngine()->getGXManager()->MapBuffer(val->getVertices(), val->getVerticesCount()*val->getFormat()->vertexSize, vbo);
+	Engine::getInstance()->getGXManager()->MapBuffer(val->getVertices(), val->getVerticesCount()*val->getFormat()->vertexSize, vbo);
 }
 
 void Mesh::draw(){
-	Engine::getEngine()->getRenderer()->drawMesh(this);
+	Engine::getInstance()->getRenderer()->drawMesh(this);
 }
 
 void Mesh::addSubMesh(Mesh* val){

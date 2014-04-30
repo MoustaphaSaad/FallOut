@@ -3,7 +3,7 @@
 #include"Engine.h"
 #include"Scene.h"
 RenderEngine::RenderEngine(){
-	engine = Engine::getEngine();
+	engine = Engine::getInstance();
 }
 RenderEngine::~RenderEngine(){
 	delete engine;
@@ -15,7 +15,7 @@ void RenderEngine::drawMesh(Mesh* obj){
 	engine->getGXManager()->drawGeometry(obj->getGeometry(),obj->vbo,obj->ibo);
 	for(int j=0;j<obj->getSubMeshCount();j++){
 			obj->getSubMesh(j)->getMaterial()->use();
-			Engine::getEngine()->getRenderer()->drawMesh(obj->getSubMesh(j));
+			Engine::getInstance()->getRenderer()->drawMesh(obj->getSubMesh(j));
 	}
 	engine->getGXManager()->BindShader(0);
 	engine->getGXManager()->BindTexture(0,0);

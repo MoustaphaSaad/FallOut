@@ -5,37 +5,20 @@
 #include"Component.h"
 #include"VisualObject.h"
 
-class Camera:public VObject{
+class Camera:public Transformable{
 	friend class Scene;
 public:
-	Camera(const vec3 pos = vec3(),const vec3 forw = vec3(0,0,1),const vec3 up = vec3(0,1,0));
+	Camera();
 	
-	void move(const vec3 val);
-	void rotateX(float val);
-	void rotateY(float val);
-	void rotateZ(float val);
-
-	void roll(float val);
-	void pitch(float val);
-	void yaw(float val);
+	void move(const vec3 dir,float val);
 
 	mat4 getPositionRotation();
 	virtual mat4 getProjection();
 	Updatable* getCamComp();
 	void setCamComp(Updatable* val);
 
-	vec3 getForward();
-	vec3 getBack();
-	vec3 getRight();
-	vec3 getLeft();
-	vec3 getUp();
-	vec3 getDown();
-	vec3 getPosition();
 
 private:
-	vec3 position;
-	vec3 forward;
-	vec3 up;
 	Updatable* camComp;
 };
 

@@ -9,8 +9,10 @@
 #include"Shader.h"
 #include"Mesh.h"
 #include"ObjectRenderer.h"
+#include"GLSLTranslator.h"
 #include"InputGL.h"
 #include<GL\freeglut.h>
+#include"Core.h"
 using namespace std;
 OpenGLManager::OpenGLManager(Display* d):GXManager(){
 	initiate(d);
@@ -42,11 +44,11 @@ void OpenGLManager::start(){
 	glutMainLoop();
 }
 void OpenGLManager::reshapeFunc(int w,int h){
-	Engine::getEngine()->getDisplay()->width = w;
-	Engine::getEngine()->getDisplay()->height = h;
+	Fallout::getEngine()->getDisplay()->width = w;
+	Fallout::getEngine()->getDisplay()->height = h;
 }
 void OpenGLManager::clearBuffers(){
-	vec3 val = Engine::getEngine()->getGXManager()->getClearColor();
+	vec3 val = Fallout::getEngine()->getGXManager()->getClearColor();
 	glClearColor(val.GetX(),val.GetY(),val.GetZ(),1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -56,17 +58,17 @@ void OpenGLManager::refresh(){
 	glutPostRedisplay();
 }
 void OpenGLManager::Idle(){
-	Engine::getEngine()->gameLoop();
+	Fallout::getEngine()->gameLoop();
 }
 void OpenGLManager::display(){
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_RGBA);
 	glEnable(GL_DOUBLE);
 	clearBuffers();
-	Engine::getEngine()->render();
+	Fallout::getEngine()->render();
 	glutSwapBuffers();
 }
-unsigned int OpenGLManager::CreateTexture(int width, int height, unsigned char* data, bool linearFiltering, bool repeatTexture)
+unsigned int OpenGLManager::CreateTexture(int width, int height, void* data, bool linearFiltering, bool repeatTexture)
 {
 	unsigned int texture = 0;
     
@@ -130,124 +132,11 @@ void CheckShaderError(GLuint shader,GLuint flag,bool isProgram, const string msg
 		printf((msg+" "+error+"\n").c_str());
 	}
 }
-string removeFunction(const string txt,string funcName){
-	size_t funcPosition = txt.find(funcName);
-	stack<char> stk;
-	bool started = false;
-	size_t i;
-	for(i=funcPosition;i<txt.length();i++){
-		if(txt[i] == '{'){
-			stk.push('{');
-			started = true;
-		}else if(txt[i] == '}'){
-			stk.pop();
-		}
-		if(stk.empty() && started)
-			break;
-	}
-	string output = txt;
-	output.erase(funcPosition,i-funcPosition+1);
-	return output;
-}
-string prepareVS(const string txt){
-	string output = txt;
-	int i=0;
-	while(true){
-		string prev = output;
-		string rep = "layout(location =";
-		//char *x=new char[30];
-		//_itoa(i,x,10);
-		//rep.append(x);
-		rep+=i+48;
-		rep += " ) in";
-		output = StringOp::findReplaceFirst(output,"attribute",rep);
-		if(!prev.compare(output))
-			break;
-		i++;
-	}
-	output = StringOp::findReplaceAll(output,"varying","out");
-	output = StringOp::findReplaceAll(output,"VSmain()","main()");
-	return output;
-}
-string prepareFS(const string txt){
-	string output = txt;
-	while(true){
-		string prev = output;
-		output = StringOp::deleteLine(output,"attribute");
-		if(!prev.compare(output))
-			break;
-	}
-	output = StringOp::findReplaceAll(output,"varying","in");
-	output = StringOp::findReplaceAll(output,"FSmain()","main()");
-	return output;
-}
-string InOutManagement(const string txt,unsigned int type){
-	string output = txt;
-	if(type == GL_VERTEX_SHADER){
-		output = StringOp::findReplaceAll(output,"vout","out");
-		output = StringOp::findReplaceAll(output,"vin","in");
-		output = StringOp::deleteLine(output,"fout");
-		output = StringOp::deleteLine(output,"fin");
-	}else if(type == GL_FRAGMENT_SHADER){
-		output = StringOp::findReplaceAll(output,"fout","out");
-		output = StringOp::findReplaceAll(output,"fin","in");
-		output = StringOp::deleteLine(output,"vout");
-		output = StringOp::deleteLine(output,"vin");
-	}
-	return output;
-
-}
-string UniformManagement(const string txt,unsigned int type){
-	string output = txt;
-	if(type == GL_VERTEX_SHADER){
-		output = StringOp::findReplaceAll(output,"vuniform","uniform");
-		while(true){
-			string prev = output;
-			output = StringOp::deleteLine(output,"funiform");
-			if(output == prev)
-				break;
-		}
-	}else if(type == GL_FRAGMENT_SHADER){
-		output = StringOp::findReplaceAll(output,"funiform","uniform");
-		while(true){
-			string prev = output;
-			output = StringOp::deleteLine(output,"vuniform");
-			if(output == prev)
-				break;
-		}
-	}
-	return output;
-
-}
-string handleFunction(const string txt,const string key){
-	string output = txt;
-	string line;
-	stringstream ss(output);
-	while(getline(ss,line)){
-		size_t loc = line.find(key);
-		if(loc!=string::npos){
-			output = removeFunction(output,line);
-		}
-	}
-	return output;
-}
 unsigned int OpenGLManager::CreateVertexShader(const string txt){
-	string shaderTxt = removeFunction(txt,"void FSmain()");
-	shaderTxt = handleFunction(shaderTxt,"fragment");
-	shaderTxt = StringOp::findReplaceAll(shaderTxt,"vertex","");
-	shaderTxt = prepareVS(shaderTxt);
-	shaderTxt = InOutManagement(shaderTxt,GL_VERTEX_SHADER);
-	shaderTxt = UniformManagement(shaderTxt,GL_VERTEX_SHADER);
-	return CreateShader(shaderTxt,GL_VERTEX_SHADER);
+	return CreateShader(GLSL::process(txt, Shaders::VERTEX), GL_VERTEX_SHADER);
 }
 unsigned int OpenGLManager::CreateFragmentShader(const string txt){
-	string shaderTxt = removeFunction(txt,"void VSmain()");
-	shaderTxt = handleFunction(shaderTxt,"vertex");
-	shaderTxt = StringOp::findReplaceAll(shaderTxt,"fragment","");
-	shaderTxt = prepareFS(shaderTxt);
-	shaderTxt = InOutManagement(shaderTxt,GL_FRAGMENT_SHADER);
-	shaderTxt = UniformManagement(shaderTxt,GL_FRAGMENT_SHADER);
-	return CreateShader(shaderTxt,GL_FRAGMENT_SHADER);
+	return CreateShader(GLSL::process(txt, Shaders::FRAGMENT), GL_FRAGMENT_SHADER);
 }
 unsigned int OpenGLManager::CreateShader(const string txt,unsigned int type){
 	GLuint shader = glCreateShader(type);
@@ -280,130 +169,6 @@ unsigned int OpenGLManager::CreateProgram(unsigned int* shdrs,int size){
 
 	return program;
 }
-vector<UniformData> OpenGLManager::CreateUniforms(const string txt,unsigned int program,vector<ShaderStruct> strct){
-	vector<UniformData> output;
-	stringstream ss(txt);
-	string line;
-	while(getline(ss,line)){
-		vector<string> substrs = StringOp::Split(line,' ');
-		if(substrs.size()>0)
-			if(!substrs[0].compare("vuniform")||!substrs[0].compare("funiform")){
-				string name = substrs[2];
-				int arrnum=0;
-				string number;
-				bool isarr=false;
-				for(unsigned int i=0;i<name.size();i++){
-					if(name[i] == ';'||name[i] == ' '){
-						name.erase(i,1);
-						i--;
-					}
-					if(name[i]==']'){
-						isarr=false;
-						name.erase(i,1);
-						i--;
-					}
-					if(isarr){
-						number.push_back(name[i]);
-						name.erase(i,1);
-						i--;
-					}
-					if(name[i]=='['){
-						isarr=true;
-						name.erase(i,1);
-						i--;
-					}
-				}
-				if(number.size()>0){
-					arrnum=atoi(number.c_str());
-					for(int i=0;i<arrnum;i++){
-						string temp=name;
-						temp+="[";
-						char* x = new char[30];
-						itoa(i,x,10);
-						temp+=x;
-						temp+="]";
-						int ix=-1;
-						for(int i=0;i<strct.size();i++){
-							if(substrs[1]==strct[i].name)
-								ix = i;
-						}
-						string ok="";
-						if(ix!=-1)
-							for(int i=0;i<strct[ix].Data.size();i++){
-								ok+=temp+".";
-								ok+=strct[ix].Data[i].Name;
-								unsigned int location = glGetUniformLocation(program, ok.c_str());
-								output.push_back(UniformData(location,substrs[1],ok));
-								ok="";
-							}
-					}
-				}else{
-					int ix=-1;
-					for(int i=0;i<strct.size();i++){
-						if(substrs[1]==strct[i].name)
-							ix = i;
-					}
-					string ok="";
-						if(ix!=-1)
-							for(int i=0;i<strct[ix].Data.size();i++){
-								ok+=name+".";
-								ok+=strct[ix].Data[i].Name;
-								unsigned int location = glGetUniformLocation(program, ok.c_str());
-								output.push_back(UniformData(location,substrs[1],ok));
-								ok="";
-							}else{
-								unsigned int location = glGetUniformLocation(program, name.c_str());
-								output.push_back(UniformData(location,substrs[1],name));
-							}
-				}
-			}
-	}
-	return output;
-}
-vector<ShaderStruct> OpenGLManager::CreateStructs(const string shdr,unsigned int program){
-	vector<ShaderStruct> output;
-	stringstream ss(shdr);
-	string line;
-	bool processing = false;
-	while(getline(ss,line)){
-		if(!line.compare("};"))
-			processing=false;
-		if(line.size()>1&&processing){
-			size_t ind =line.find("}");
-			string namex=StringOp::Split(line,' ')[1];
-			namex = StringOp::deleteChar(namex,';');
-			namex = StringOp::deleteChar(namex,'}');
-			namex = StringOp::deleteChar(namex,'\t');
-			if(ind!=string::npos){
-				processing = false;
-				
-				
-			}
-			string type = StringOp::Split(line,' ')[0];
-			type = StringOp::deleteChar(type,'\t');
-			UniformData xuni(-1,type,namex);
-			output.back().Data.push_back(xuni);
-		}
-
-		size_t idx = line.find("struct");
-		if(idx!=string::npos){
-			processing = true;
-			ShaderStruct st;
-			string name = StringOp::Split(line,' ')[1];
-			name = StringOp::deleteChar(name,' ');
-			name = StringOp::deleteChar(name,'{');
-			
-			st.name = name;
-			output.push_back(st);
-		}
-		
-		size_t ind =line.find("}");
-		if(ind !=string::npos)
-			processing=false;
-	}
-	return output;
-}
-
 void OpenGLManager::DeleteShader(unsigned int program,unsigned int* shaders,int size){
 	for(int i = 0; i < size; i++)
     {
