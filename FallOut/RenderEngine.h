@@ -11,7 +11,9 @@ public:
 
 	void drawMesh(Mesh* obj);
 	void drawGameObject(GameObject* obj);
+	void drawGameObject(GameObject* obj,Shader* shdr);
 	void drawScene(Scene* obj);
+	void drawScene(Scene* obj,Shader* shdr);
 private:
 	
 	Engine* engine;

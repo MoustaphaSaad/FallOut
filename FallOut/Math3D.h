@@ -43,7 +43,13 @@ public:
 	inline T LengthSq() const { return this->Dot(*this); }
 	inline T Length() const { return sqrt(LengthSq()); }
 	inline Vector<T, D> Normalized() const { return *this / Length(); }
-	inline Vector<T, D> Lerp(const Vector<T, D>& r, T lerpFactor) const { return (r - *this) * lerpFactor + *this; }
+	inline Vector<T, D> Lerp(const Vector<T, D>& r, T lerpFactor) const {
+		//return (r - *this) * lerpFactor + *this; 
+		Vector<T, D> CD;
+		CD = r*-1;
+		Vector<T, D> res = ((CD - (*this))*lerpFactor + (*this));
+		return res.Normalized();
+	}
 
 	inline Vector<T, D> operator+(const Vector<T, D>& r) const
 	{
@@ -778,6 +784,56 @@ public:
 		(*this)[1] = y;
 		(*this)[2] = z;
 		(*this)[3] = w;
+	}
+
+	Quaternion(mat4 rot){
+		float trace = rot[0][0] + rot[1][ 1] + rot[2][ 2];
+
+		if (trace > 0)
+		{
+			float s = 0.5f / (float)sqrt(trace + 1.0f);
+			(*this)[3] = 0.25f / s;
+			(*this)[0] = (rot[1][2] - rot[2][1]) * s;
+			(*this)[1] = (rot[2][0] - rot[0][2]) * s;
+			(*this)[2] = (rot[0][1] - rot[1][0]) * s;
+		}
+		else
+		{
+			if (rot[0][0] > rot[1][1] && rot[0][0] > rot[2][2])
+			{
+				float s = 2.0f * (float)sqrt(1.0f + rot[0][0] - rot[1][1] - rot[2][2]);
+				(*this)[3] = (rot[1][2] - rot[2][1]) / s;
+				(*this)[0] = 0.25f * s;
+				(*this)[1] = (rot[1][0] + rot[0][1]) / s;
+				(*this)[2] = (rot[2][0] + rot[0][2]) / s;
+			}
+			else if (rot[1][1] > rot[2][2])
+			{
+				float s = 2.0f * (float)sqrt(1.0f + rot[1][1] - rot[0][0]- rot[2][2]);
+				(*this)[3] = (rot[2][0] - rot[0][2]) / s;
+				(*this)[0] = (rot[1][0] + rot[0][1]) / s;
+				(*this)[1] = 0.25f * s;
+				(*this)[2] = (rot[2][1] + rot[1][2]) / s;
+			}
+			else
+			{
+				float s = 2.0f * (float)sqrt(1.0f + rot[2][2] - rot[0][0] - rot[1][1]);
+				(*this)[3] = (rot[0][1] - rot[1][0]) / s;
+				(*this)[0] = (rot[2][0] + rot[0][2]) / s;
+				(*this)[1] = (rot[1][2] + rot[2][1]) / s;
+				(*this)[2] = 0.25f * s;
+			}
+		}
+		float x, y, z, w;
+		x = (*this)[0];
+		y = (*this)[1];
+		z = (*this)[2];
+		w = (*this)[3];
+		float length = (float)sqrt(x*x + y*y + z*z + w*w);
+		(*this)[0] /= length;
+		(*this)[1] /= length;
+		(*this)[2] /= length;
+		(*this)[3] /= length;
 	}
 
 	Quaternion(const Vector4<float>& r)

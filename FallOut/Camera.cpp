@@ -38,6 +38,7 @@ PerspectiveCamera::PerspectiveCamera(const vec3 pos,const vec3 forward,const vec
 	this->FOV = fov;
 	this->zNear = zNear;
 	this->zFar = zFar;
+	
 }
 
 float PerspectiveCamera::getFOV(){
@@ -51,5 +52,5 @@ float PerspectiveCamera::getZFar(){
 }
 
 mat4 PerspectiveCamera::getProjection(){
-	return mat4().InitPerspective(FOV,Engine::getInstance()->getDisplay()->getAspect(),zNear,zFar);
+	return mat4().InitPerspective(FOV, Engine::getInstance()->getDisplay()->getAspect(), zNear, zFar);
 }

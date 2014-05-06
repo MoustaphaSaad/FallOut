@@ -34,3 +34,15 @@ void light::setLd(vec3 val){
 void light::setLs(vec3 val){
 	Ls = val;
 }
+
+DirectionalLight::DirectionalLight(vec3 pos, vec3 dir, vec3 la, vec3 ld, vec3 ls):light(pos,la,ld,ls){
+	transform->rotation = transform->getLookAtRot(dir, transform->rotation.GetUp());
+}
+
+vec3 DirectionalLight::getDirection(){
+	return transform->rotation.GetForward();
+}
+
+void DirectionalLight::setDirection(vec3 dir){
+	transform->rotation = transform->getLookAtRot(dir, transform->rotation.GetUp());
+}

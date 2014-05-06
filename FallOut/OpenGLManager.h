@@ -14,6 +14,7 @@ public:
 	static void reshapeFunc(int w, int h);
 
 	unsigned int CreateTexture(int width, int height, void* data, bool linearFiltering, bool repeatTexture);
+	unsigned int CreateDepthTexture(int width, int height, void* data);
 	void DeleteTexture(unsigned int texture);
 	void BindTexture(unsigned int texture, int unit);
 

@@ -15,6 +15,7 @@ public:
 	~ObjectRenderer();
 
 	virtual void Render();
+	virtual void Render(Shader* shdr);
 
 	void setParent(Transformable* prnt){
 		parent = prnt;

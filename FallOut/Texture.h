@@ -14,10 +14,13 @@ public:
 
 	int getWidth();
 	int getHeight();
+	unsigned int getID(){
+		return TextureID;
+	}
 
 	~Texture();
 	Texture(const Texture& texture) :Resource(texture.name, ResourceType::TEXTURE){ this->type = ResourceType::TEXTURE; }
-private:
+protected:
 	void operator=(const Texture& texture){}
 	unsigned int TextureID;
 	int width, height;

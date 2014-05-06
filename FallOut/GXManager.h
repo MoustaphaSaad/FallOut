@@ -7,6 +7,7 @@
 #include<vector>
 #include<GL\glew.h>
 using namespace std;
+enum Buffer{FRAMEBUFFER,TEXTURE2D,TEXTURE3D,TEXTURE1D,ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 class GXManager{
 public:
 	GXManager(){
@@ -17,6 +18,7 @@ public:
 	virtual void clearBuffers(){}
 
 	virtual unsigned int CreateTexture(int width, int height, void* data, bool linearFiltering, bool repeatTexture){ return -1; }
+	virtual unsigned int CreateDepthTexture(int width, int height, void* data){ return -1; }
 	virtual void DeleteTexture(unsigned int texture){}
 	virtual void BindTexture(unsigned int texture, int unit){}
 
@@ -26,6 +28,7 @@ public:
 	virtual unsigned int CreateProgram(unsigned int* shdrs, int size){ return 0; }
 	virtual void DeleteShader(unsigned int program, unsigned int* shaders, int size){}
 	virtual void BindShader(unsigned int p){}
+	
 
 	virtual void setUniform(unsigned int loc, int value){}
 	virtual void setUniform(unsigned int loc, float value){}

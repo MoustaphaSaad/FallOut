@@ -144,6 +144,15 @@
     <ClInclude Include="MaterialBasic.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthTexture.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -233,6 +242,9 @@
     <ClCompile Include="GLSLTranslator.cpp">
       <Filter>Header Files\Helper</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basic.glsl">
@@ -254,6 +266,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\Ocean.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\simple.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

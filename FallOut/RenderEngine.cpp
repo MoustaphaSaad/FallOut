@@ -32,11 +32,28 @@ void RenderEngine::drawGameObject(GameObject* obj){
 	if(obj->RenderComponent!=NULL)
 		obj->RenderComponent->Render();
 }
+void RenderEngine::drawGameObject(GameObject* obj,Shader* shdr){
+	if (!obj)
+		return;
+	for (auto it : obj->childList){
+		it->Render(shdr);
+	}
+	if (obj->RenderComponent != NULL)
+		obj->RenderComponent->Render(shdr);
+}
 void RenderEngine::drawScene(Scene* obj){
 	if(!obj)
 		return;
 	engine->setClearColor(obj->clearColor);
 	for (auto it : obj->childList){
 		it->Render();
+	}
+}
+void RenderEngine::drawScene(Scene* obj,Shader* shdr){
+	if (!obj)
+		return;
+	engine->setClearColor(obj->clearColor);
+	for (auto it : obj->childList){
+		it->Render(shdr);
 	}
 }

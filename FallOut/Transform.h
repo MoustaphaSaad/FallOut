@@ -16,6 +16,9 @@ public:
 	{
 		rotation = Quaternion((Quaternion(axis, angle) * rotation).Normalized());
 	}
+	vec4 Transform::getLookAtRot(vec3 point, vec3 up){
+		return vec4(mat4().InitRotationFromDirection((point - position).Normalized(), up).Transpose());
+	}
 	void setChildModel(const mat4 childModel);
 
 private:

@@ -34,3 +34,5 @@
 #include"MaterialBasic.h"
 #include"Light.h"
 #include"basicShader.h"
+#include"DepthTexture.h"
+#include"SimpleShader.h"

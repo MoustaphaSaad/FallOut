@@ -14,6 +14,9 @@ public:
 
 	mat4 getPositionRotation();
 	virtual mat4 getProjection();
+	virtual mat4 getProjection(float aspect){
+		return mat4().InitIdentity();
+	}
 	Updatable* getCamComp();
 	void setCamComp(Updatable* val);
 

@@ -24,6 +24,9 @@ void GameObject::Update(){
 void GameObject::Render(){
 	Engine::getInstance()->getRenderer()->drawGameObject(this);
 }
+void GameObject::Render(Shader* shdr){
+	Engine::getInstance()->getRenderer()->drawGameObject(this, shdr);
+}
 
 void GameObject::addChild(GameObject* child){
 	childList.push_back(child);

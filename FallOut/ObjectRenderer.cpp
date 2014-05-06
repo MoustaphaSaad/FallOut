@@ -28,3 +28,11 @@ void ObjectRenderer::Render(){
 		Engine::getInstance()->getRenderer()->drawMesh(Meshes[i]);
 	}
 }
+
+void ObjectRenderer::Render(Shader* shdr){
+	for (int i = 0; i<Meshes.size(); i++){
+		shdr->Bind();
+		shdr->Update(parent);
+		Engine::getInstance()->getRenderer()->drawMesh(Meshes[i]);
+	}
+}

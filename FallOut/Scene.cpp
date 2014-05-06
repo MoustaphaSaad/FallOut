@@ -1,7 +1,9 @@
 #include"Scene.h"
+#include"Core.h"
 Scene::Scene(){
 	cam=new PerspectiveCamera();
 	clearColor = vec3(0,0,0);
+	dirLight = NULL;
 }
 Scene::~Scene(){
 }
@@ -9,6 +11,7 @@ Scene::~Scene(){
 void Scene::Input(){
 	if(cam->camComp)
 		cam->camComp->Input();
+	//GameObject::Input();
 }
 void Scene::Update(){
 	if(cam->camComp)
@@ -16,7 +19,7 @@ void Scene::Update(){
 	GameObject::Update();
 }
 void Scene::Render(){
-
+	//GameObject::Render();
 }
 Camera* Scene::getCamera(){
 	return cam;

@@ -19,9 +19,13 @@ public:
 		View = Engine::getInstance()->getApplication()->getScene()->getCamera()->getPositionRotation();
 		Projection = Engine::getInstance()->getApplication()->getScene()->getCamera()->getProjection();
 		Model = obj->getTransform()->getModel();
-		mat4 res = Projection*View*Model;
-		this->setUniform("MVP",res.Transpose());
+		this->setUniform("View",View.Transpose());
+		this->setUniform("Projection", Projection.Transpose());
 		this->setUniform("Model",Model.Transpose());
+		this->setUniform("shadowMatrix", Fallout::getEngine()->shadowMatrix.Transpose());
+		this->setUniform("shadowTex", 1);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D,Fallout::getEngine()->dtex);
 		this->setUniform("LIGHTNUM",scene->getLightsCount());
 		for(int i=0;i<scene->getLightsCount();i++){
 			string text = "Lights[";
@@ -32,6 +36,16 @@ public:
 			this->setUniform(text+".ld",scene->getLight(i)->getLd());
 			this->setUniform(text+".ls",scene->getLight(i)->getLs());
 		}
+		if (scene->dirLight != NULL){
+			string name = "dirLight";
+			this->setUniform(name + ".pos", scene->dirLight->getPosition());
+			this->setUniform(name + ".la", scene->dirLight->getLa());
+			this->setUniform(name + ".ld", scene->dirLight->getLd());
+			this->setUniform(name + ".ls", scene->dirLight->getLs());
+			this->setUniform(name + ".dir", scene->dirLight->getDirection());
+		}
+
+		this->setUniform("Epos", scene->getCamera()->getTransform()->position);
 
 	}
 

@@ -57,3 +57,7 @@ void BasicMaterial::use(){
 		shader->setUniform("Tex",0);
 	}
 }
+
+void BasicMaterial::use(Shader* shdr){
+	shader->Bind();
+}

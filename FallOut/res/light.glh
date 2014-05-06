@@ -5,6 +5,14 @@ struct lightInfo{
 	vec3 ls;
 };
 
+struct DirLight{
+	vec3 pos;
+	vec3 dir;
+	vec3 la;
+	vec3 ld;
+	vec3 ls;
+};
+
 struct materialInfo{
 	vec3 ka;
 	vec3 kd;
@@ -30,8 +38,29 @@ fragment vec3 calcLight(int i,vec3 pos,vec3 norm){
 	vec3 surf2view=normalize(-pos);
 	vec3 reflection = reflect(-surf2light,N);
 
-	float scont = pow(max(0.0,dot(surf2view,reflection)),Mat.shine);
+	float scont = pow(max(0.0,dot(surf2view,-reflection)),Mat.shine);
 	vec3 specular = scont*Lights[i].ls*Mat.ks;
 
 	return (ambient+diffuse+specular)*att;
+}
+
+fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos){
+	float df = dot(normal,-light.dir);
+
+	vec4 dc = vec4(0,0,0,0);
+	vec4 ds = vec4(0,0,0,0);
+
+	if(df>0){
+		dc = vec4(light.ld,1.0)*df*Mat.kd;
+		vec3 dirToE = normalize(epos - pos);
+		vec3 hd = normalize(dirToE - light.dir);
+
+		float sf = dot(hd,normal);
+
+		if(sf >0)
+		{
+			ds = vec4(light.ls,1.0)*sf*Mat.ks;
+		}
+	}
+	return dc + ds+(light.la*Mat.ka);
 }

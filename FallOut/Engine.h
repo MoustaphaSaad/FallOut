@@ -20,6 +20,8 @@ public:
 	Display* getDisplay();
 	InputManager* getInputManager();
 	~Engine();
+	GLuint FBO, renderT, depth,dtex,rtexs;
+	mat4 shadowMatrix;
 private:
 	Engine();
 	void init();
@@ -28,6 +30,7 @@ private:
 	void update();
 	void render();
 	void gameLoop();
+	void ShadowPhase();
 
 	Application* app;
 	GXManager* gxManager;

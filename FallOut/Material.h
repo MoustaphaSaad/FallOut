@@ -11,6 +11,7 @@ public:
 	~Material();
 
 	virtual void use(){}
+	virtual void use(Shader* shdr){}
 	
 	Shader* getShader();
 	void setShader(Shader* shader);

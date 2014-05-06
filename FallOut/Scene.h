@@ -3,6 +3,7 @@
 #include"GameObject.h"
 #include"Camera.h"
 class light;
+class DirectionalLight;
 class Scene:public GameObject{
 	friend class RenderEngine;
 public:
@@ -22,6 +23,7 @@ public:
 	void addLight(light* val);
 	light* getLight(int val);
 	int getLightsCount();
+	DirectionalLight* dirLight;
 private:
 	Camera* cam;
 	vector<light*> ligths;

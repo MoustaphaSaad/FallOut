@@ -12,7 +12,7 @@ public:
 	void Input(){
 		Camera* cam = (Camera*)parent;
 		float sensitivity = 0.5f;
-		float movAmt = (float)(Time::getDelta()*50);
+		float movAmt = (float)(Time::getDelta()*10);
 		float rotAmt = (float)(Time::getDelta());
 
 		if(input->getKey(Keys::KEY_ESCAPE)==keyState::DOWN){
@@ -67,54 +67,102 @@ public:
 	GameObject* obj;
 	double e;
 	Mesh* eo;
+	light * lolo,*lolo2;
+	GameObject* monkey;
 	Tu():Application(){
 		e=0;
 	}
+	
 	void init(){
+		
+
 		scene->getCamera()->setCamComp(new CamBe());
 		Shader* shoho = new BasicShader();
 		
-		eo =resourceManager->createMesh("moka","res/moksa.obj");
+		eo =resourceManager->createMesh("moka","res/Plane.obj");
 		eo->getMaterial()->setShader(shoho);
 		for(int i=0;i<eo->getSubMeshCount();i++){
 			eo->getSubMesh(i)->getMaterial()->setShader(shoho);
 		}
 		obj = new GameObject(new Transform());
 		obj->setRenderComponent(new ObjectRenderer(eo));
-		obj->getTransform()->position.SetZ(10);
+		//obj->getTransform()->position.SetZ(10);
 		//obj->getTransform()->scale.SetX(.1);
-		//scene->addChild(obj);
+		scene->addChild(obj);
 
-		Cloth* cl = new Cloth(3, 3, 5, 5);
+		Mesh* m = ObjLoader::loadObj("moksa", "res/BlankMonkey.obj");
+		m->getMaterial()->setShader(shoho);
+		for (int i = 0; i<m->getSubMeshCount(); i++){
+			m->getSubMesh(i)->getMaterial()->setShader(shoho);
+		}
+		GameObject* aobj = new GameObject(new Transform());
+		aobj->setRenderComponent(new ObjectRenderer(m));
+		aobj->getTransform()->position.SetX(3);
+		aobj->getTransform()->position.SetY(2);
+		scene->addChild(aobj);
+
+		monkey = new GameObject();
+		monkey->setRenderComponent(new ObjectRenderer(m));
+		monkey->getTransform()->position.SetY(1);
+		scene->addChild(monkey);
+
+		Cloth* cl = new Cloth(3, 3, 10, 10);
 		cl->getTransform()->position.SetY(3);
-		cl->getTransform()->position.SetZ(10);
+		cl->getTransform()->position.SetZ(3);
 		cl->getTransform()->position.SetX(-2);
-		//scene->addChild(cl);
-		Atmosphere* at = new Atmosphere();
-		scene->addChild(at);
+		scene->addChild(cl);
+		//Atmosphere* at = new Atmosphere();
+		//scene->addChild(at);
 
 		//scene->getCamera()->getTransform()->Rotate(vec3(1, 0, 0), .5);
-		//scene->getCamera()->getTransform()->position.SetX(5);
-		//scene->getCamera()->getTransform()->position.SetZ(-10);
+		scene->getCamera()->getTransform()->position.SetX(15);
+		scene->getCamera()->getTransform()->position.SetY(15);
 	}
 	void setupScene(){
 		light* l = new light();
-		scene->addLight(l);
+		//scene->addLight(l);
 		l = new light();
-		l->setPosition(vec3(-3,3,5));
-		l->setLa(vec3(2,0,2));
-		
-		scene->addLight(l);
+		l->setPosition(vec3(0,10,0));
+		l->setLa(vec3(.5,.5,.5));
+	
+		//scene->addLight(l);
+
+		l = new light();
+		l->setPosition(vec3(5, 1, 0));
+		l->setLd(vec3(1, .5, .5));
+		//scene->addLight(l);
+		lolo = l;
+
+		l = new light();
+		l->setPosition(vec3(-5, 1, 0));
+		l->setLd(vec3(.5, .5, 1));
+		//scene->addLight(l);
+		lolo2 = l;
+
+		scene->dirLight = new DirectionalLight(vec3(15, 15, 0), vec3(0, 0, 0),vec3(1,1,1),vec3(.75,.75,.75));
 	}
 	void input(){
 		if(this->Input->getKey(27)==keyState::DOWN)
 			cout<<"weijf"<<endl;
 	}
+	void update(){
+		
+		vec4 newRot = monkey->getTransform()->getLookAtRot(scene->getCamera()->getTransform()->position, vec3(0,1,0));
+		auto finale = monkey->getTransform()->rotation.Lerp(newRot, Time::getDelta());
+		monkey->getTransform()->rotation = vec4(finale);
+	}
 	void postRender(){
 		e+=Time::getDelta();
+		lolo->setPosition(vec3(cos(e)*5,1,sin(e)*4));
+		lolo2->setPosition(vec3(sin(e)*5, 1, cos(e) * 4));
 		//obj->getTransform()->rotation = Quaternion(obj->getTransform()->rotation.GetUp(), sin(e));
-		//obj->getTransform()->position.SetX(sin(e));
+		monkey->getTransform()->position.SetX(sin(e));
 		//scene->getCamera()->getTransform()->rotation = Quaternion(scene->getCamera()->getTransform()->rotation.GetRight(), sin(e));
+		//glActiveTexture(GL_TEXTURE1);
+		//glBindTexture(GL_TEXTURE_2D, Fallout::getEngine()->rtexs);
+		//eo->getMaterial()->getShader()->setUniform("Tex", 1);
+		//obj->Render();
+		//glBindTexture(GL_TEXTURE_2D, 0);
 	}
 };
 int main(){

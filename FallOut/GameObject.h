@@ -15,6 +15,7 @@ public:
 	virtual void Input();
 	virtual void Update();
 	virtual void Render();
+	virtual void Render(Shader* shdr);
 
 	void addChild(GameObject* child);
 	void removeChild(GameObject* child);

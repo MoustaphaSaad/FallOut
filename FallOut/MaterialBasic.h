@@ -24,6 +24,7 @@ public:
 	Texture* getTexture();
 
 	void use();
+	void use(Shader* shdr);
 private:
 	vec3 ambient;
 	vec3 diffuse;

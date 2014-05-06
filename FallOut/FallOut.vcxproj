@@ -77,9 +77,11 @@
     <ClInclude Include="Cloth.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DepthTexture.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FallOut.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GlobalStructs.h" />
@@ -101,6 +103,7 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="StringOp.h" />
     <ClInclude Include="Texture.h" />
@@ -115,6 +118,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GLSLTranslator.cpp" />
@@ -148,6 +152,7 @@
     <None Include="res\Clouds.glsl" />
     <None Include="res\light.glh" />
     <None Include="res\Ocean.glsl" />
+    <None Include="res\simple.glsl" />
     <None Include="res\Sky.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
