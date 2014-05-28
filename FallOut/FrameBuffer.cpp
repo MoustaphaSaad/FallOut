@@ -1,35 +1,56 @@
 #include "FrameBuffer.h"
-#include "Core.h"
-#include<gl\glew.h>
+#include"DepthTexture.h"
+#include"Engine.h"
+FrameBuffer::FrameBuffer() :Buffer(BufferType::FRAMEBUFFER){
+	addBuffer(new Buffer(BufferType::RENDERBUFFER));
+	addBuffer(new Buffer(BufferType::DEPTHBUFFER));
+	addDepthTexture(new DepthTexture());
+	addTexture(new Texture(Engine::getInstance()->getDisplay()->width, Engine::getInstance()->getDisplay()->height));
+}
+FrameBuffer::FrameBuffer(int w,int h):Buffer(BufferType::FRAMEBUFFER){
+	addBuffer(new Buffer(BufferType::RENDERBUFFER,w,h));
+	addBuffer(new Buffer(BufferType::DEPTHBUFFER,w,h));
+	addDepthTexture(new DepthTexture(w,h));
+	addTexture(new Texture(w, h));
+}
+void FrameBuffer::addBuffer(Buffer* b){
+	if (b->getType() == BufferType::DEPTHBUFFER)
+		DepthBuffer = b;
+	else if (b->getType() == BufferType::RENDERBUFFER)
+		RenderBuffer = b;
 
-FrameBuffer::FrameBuffer(){
-	Uid = 0;
-	textures = vector<Texture*>();
-	Width = 1024;
-	Height = 1024;
+	Engine::getInstance()->getGXManager()->addBuffertoFB(b->getType(), this->ID, b->getID());
+}
+void FrameBuffer::addDepthTexture(Texture* txt){
+	mDepthTexture = txt;
+	Engine::getInstance()->getGXManager()->addDepthTexturetoFB(txt, ID);
+}
+void FrameBuffer::addTexture(Texture* txt){
+	RenderTexture = txt;
+	Engine::getInstance()->getGXManager()->addTexturetoFB(txt, ID);
+}
+void FrameBuffer::bind(){
+	Buffer::bind();
+	RenderBuffer->bind();
+	DepthBuffer->bind();
+}
+void FrameBuffer::unbindFB(){
+	this->unbind(BufferType::FRAMEBUFFER);
+	RenderBuffer->unbind(RenderBuffer->getType());
+	DepthBuffer->unbind(DepthBuffer->getType());	
+	RenderTexture->unbind();
+	mDepthTexture->unbind();
 }
 
-FrameBuffer::FrameBuffer(vector<Texture*> t){
-	Uid = 0;
-	textures = t;
-	Width = 1024;
-	Height = 1024;
+Texture* FrameBuffer::getDepth(){
+	return mDepthTexture;
 }
-
-FrameBuffer::~FrameBuffer(){
-	for each(Texture* tx in textures)
-		delete tx;
-	textures.clear();
-	delete drawBuffers;
+Texture* FrameBuffer::getRenderTexture(){
+	return RenderTexture;
 }
-
-void FrameBuffer::clear(){
-	Fallout::getGXManager()->clearBuffers();
+Buffer* FrameBuffer::getRenderBuffer(){
+	return RenderBuffer;
 }
-
-void FrameBuffer::init(){
-	glGenFramebuffers(1, &Uid);
-	glBindFramebuffer(GL_FRAMEBUFFER, Uid);
-
-
+Buffer* FrameBuffer::getDepthBuffer(){
+	return DepthBuffer;
 }

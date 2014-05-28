@@ -6,16 +6,17 @@
 #include"ObjectBehavior.h"
 
 #include<vector>
+#include<map>
 using namespace std;
-class GameObject:public Transformable,public Updatable,public Renderable{
+struct TimeStep;
+class GameObject:public Transformable,public GameComponent{
 	friend class RenderEngine;
 public:
 	GameObject(Transform* trans=new Transform());
 
 	virtual void Input();
-	virtual void Update();
+	virtual void Update(TimeStep time);
 	virtual void Render();
-	virtual void Render(Shader* shdr);
 
 	void addChild(GameObject* child);
 	void removeChild(GameObject* child);
@@ -24,16 +25,13 @@ public:
 	int childrenCount();
 	GameObject* getChild(int ix);
 
-	void setRenderComponent( ObjectRenderer* val);
-	void setBehaviorComponent( ObjectBehavior* val);
+	void addComponent(string name,GameComponent* component);
+	GameComponent* getComponent(string name);
 
-	Renderable getRenderComponent();
-	Updatable getBehaviorComponent();
 	~GameObject();
 	
 protected:
 	vector<GameObject*> childList;
-	Renderable *RenderComponent;
-	Updatable *BehaviorComponent;
+	map<string, GameComponent*> GCmap;
 };
 #endif

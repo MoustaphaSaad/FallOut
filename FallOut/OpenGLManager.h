@@ -8,7 +8,7 @@ public:
 	void initiate(Display* d);
 
 	void start();
-	static void clearBuffers();
+	void clearBuffers();
 	static void display();
 	static void Idle();
 	static void reshapeFunc(int w, int h);
@@ -34,6 +34,13 @@ public:
 	unsigned int CreateIndexBuffer(void* data, int dataSize, bool isStatic);
 	unsigned int CreateDataBuffer(void* data, int dataSize, bool isStatic, int type);
 	unsigned int MapBuffer(void* data, int dataSize, unsigned int buffer);
+
+	unsigned int createBuffer(BufferType type, unsigned int w, unsigned int h);
+	void deleteBuffer(BufferType type, unsigned int h);
+	void bindBuffer(BufferType type, unsigned int h);
+	void addBuffertoFB(BufferType type, unsigned int fb, unsigned int b);
+	void addDepthTexturetoFB(Texture*txt,unsigned int h);
+	void addTexturetoFB(Texture*txt,unsigned int h);
 
 	void refresh();
 

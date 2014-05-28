@@ -10,7 +10,8 @@ public:
 	Texture(const string fileName, bool linearFiltering = true, bool repeatTexture = true);
 	Texture(int width = 0, int height = 0, void* data = 0, bool linearFiltering = true, bool repeatTexture = true);
 
-	void bind(int uint = 0) const;
+	void bind(int uint = 0) const; 
+	static void unbind(int unit = 0);
 
 	int getWidth();
 	int getHeight();

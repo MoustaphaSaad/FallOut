@@ -1,32 +1,25 @@
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
+#include"Buffer.h"
 #include"Texture.h"
-#include"Shader.h"
 #include<vector>
 using namespace std;
-
-class FrameBuffer{
+class FrameBuffer:public Buffer{
 public:
 	FrameBuffer();
-	FrameBuffer(vector<Texture*> t);
-	~FrameBuffer();
-
-	void clear();
-	void init();
+	FrameBuffer(int w,int h);
+	void addBuffer(Buffer* b);
+	void addDepthTexture(Texture* txt);
+	void addTexture(Texture* txt);
 	void bind();
-	void unbind();
-	void resize(unsigned int width, unsigned int height);
-	void resizeViewport();
+	void unbindFB();
 
-	void bindTransmitTextures(Shader* shader);
-	Texture* getTexture(unsigned int ix);
-
-	unsigned int getWidth();
-	unsigned int getHeight();
+	Texture* getDepth();
+	Texture* getRenderTexture();
+	Buffer* getRenderBuffer();
+	Buffer* getDepthBuffer();
 protected:
-	unsigned int Uid, Width, Height;
-	unsigned int DepthBuffer, size, *drawBuffers;
-	vector<Texture*> textures;
-
+	Buffer* RenderBuffer, *DepthBuffer;
+	Texture* RenderTexture, *mDepthTexture;
 };
 #endif

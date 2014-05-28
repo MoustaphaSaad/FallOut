@@ -1,5 +1,5 @@
-#ifndef SHADER_H_
-#define SHADER_H_
+#ifndef SHADER_H
+#define SHADER_H
 #include"Transform.h"
 #include"Engine.h"
 #include"Resource.h"
@@ -20,6 +20,7 @@ public:
 	void setUniform(string name,vec3 val);
 	void setUniform(string name,mat4 val);
 	void Bind();
+	static void unbind();
 	~Shader();
 
 private:

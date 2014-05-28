@@ -1,25 +1,23 @@
 #include"Scene.h"
 #include"Core.h"
+#include"Timing.h"
 Scene::Scene(){
-	cam=new PerspectiveCamera();
+	cam=new PerspectiveCamera(vec3(0,0,0),vec3(0,0,1),vec3(0,1,0),ToRadians(45.0f),1,100);
 	clearColor = vec3(0,0,0);
 	dirLight = NULL;
+	childList.push_back(cam);
 }
 Scene::~Scene(){
 }
 
 void Scene::Input(){
-	if(cam->camComp)
-		cam->camComp->Input();
-	//GameObject::Input();
+	GameObject::Input();
 }
-void Scene::Update(){
-	if(cam->camComp)
-		cam->camComp->Update();
-	GameObject::Update();
+void Scene::Update(TimeStep time){
+	GameObject::Update(time);
 }
 void Scene::Render(){
-	//GameObject::Render();
+	GameObject::Render();
 }
 Camera* Scene::getCamera(){
 	return cam;

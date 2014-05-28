@@ -2,58 +2,78 @@
 #include"Shader.h"
 #include"Engine.h"
 #include"Scene.h"
+#include"SimpleShader.h"
+#include"Light.h"
+
+//TODO Clear First;
 RenderEngine::RenderEngine(){
 	engine = Engine::getInstance();
+	FB = new FrameBuffer();
+	shadowShader = new SimpleShader();
 }
 RenderEngine::~RenderEngine(){
 	delete engine;
 }
 
-void RenderEngine::drawMesh(Mesh* obj){
-	if(!obj)
+void RenderEngine::Draw(Transformable* sender, Mesh* mesh){
+
+	if (!sender || !mesh)
 		return;
-	engine->getGXManager()->drawGeometry(obj->getGeometry(),obj->vbo,obj->ibo);
-	for(int j=0;j<obj->getSubMeshCount();j++){
-			obj->getSubMesh(j)->getMaterial()->use();
-			Engine::getInstance()->getRenderer()->drawMesh(obj->getSubMesh(j));
+	//Drawing Mesh
+	if(state == RenderState::Normal){
+		mesh->getMaterial()->getShader()->Bind();
+		mesh->getMaterial()->use();
+		mesh->getMaterial()->getShader()->Update(sender);
+	}else if(state == RenderState::Shadow){
+
+		shadowShader->Bind();
+		shadowShader->Update(sender);
+
 	}
-	engine->getGXManager()->BindShader(0);
-	engine->getGXManager()->BindTexture(0,0);
+	Engine::getInstance()->getGXManager()->drawGeometry(mesh->getGeometry(), mesh->vbo, mesh->ibo);
+
+	//Drawing Childern
+	for (int i = 0; i < mesh->getSubMeshCount(); i++)
+		Draw(sender, mesh->getSubMesh(i));
 }
 
+void RenderEngine::render(Scene* scene){
+	state = RenderState::Normal;
+	scene->Render();
+}
+void RenderEngine::shadowPhase(Scene* scene){
+	FB->bind();
+	Engine::getInstance()->gxManager->clearBuffers();
 
+	state = RenderState::Shadow;
+	Application* app = Engine::getInstance()->getApplication();
+	vec3 tPos = app->getScene()->getCamera()->getTransform()->position;
+	vec4 tRot = app->getScene()->getCamera()->getTransform()->rotation;
+	if (app->getScene()->dirLight != NULL){
+		app->getScene()->getCamera()->getTransform()->position = app->getScene()->dirLight->getPosition();
+		app->getScene()->getCamera()->getTransform()->rotation = app->getScene()->getCamera()->getTransform()->getLookAtRot(app->getScene()->dirLight->getDirection(), app->getScene()->dirLight->getTransform()->rotation.GetUp());
+	}
 
-void RenderEngine::drawGameObject(GameObject* obj){
-	if(!obj)
-		return;
-	for (auto it : obj->childList){
-		it->Render();
-	}
-	if(obj->RenderComponent!=NULL)
-		obj->RenderComponent->Render();
+	float arr[4][4] = {
+		0.5f, 0, 0, 0,
+		0, 0.5f, 0, 0,
+		0, 0, 0.5f, 0,
+		0.5f, 0.5f, 0.5f, 1.0f
+	};
+
+	mat4 scaleBias(arr);	
+	int lim=15;
+	mat4 ortho = mat4().InitOrthographic(lim,-lim,lim,-lim,0.1,-50);
+
+	//shadowMatrix = scaleBias*app->getScene()->getCamera()->getProjection()*app->getScene()->getCamera()->getPositionRotation();
+	shadowMatrix = scaleBias*ortho*app->getScene()->getCamera()->getPositionRotation();
+
+	scene->Render();
+	
+	app->getScene()->getCamera()->getTransform()->position = tPos;
+	app->getScene()->getCamera()->getTransform()->rotation = tRot;
+	FB->unbindFB();
 }
-void RenderEngine::drawGameObject(GameObject* obj,Shader* shdr){
-	if (!obj)
-		return;
-	for (auto it : obj->childList){
-		it->Render(shdr);
-	}
-	if (obj->RenderComponent != NULL)
-		obj->RenderComponent->Render(shdr);
-}
-void RenderEngine::drawScene(Scene* obj){
-	if(!obj)
-		return;
-	engine->setClearColor(obj->clearColor);
-	for (auto it : obj->childList){
-		it->Render();
-	}
-}
-void RenderEngine::drawScene(Scene* obj,Shader* shdr){
-	if (!obj)
-		return;
-	engine->setClearColor(obj->clearColor);
-	for (auto it : obj->childList){
-		it->Render(shdr);
-	}
+Texture* RenderEngine::getDepth(){
+	return FB->getDepth();
 }

@@ -44,11 +44,11 @@ public:
 	inline T Length() const { return sqrt(LengthSq()); }
 	inline Vector<T, D> Normalized() const { return *this / Length(); }
 	inline Vector<T, D> Lerp(const Vector<T, D>& r, T lerpFactor) const {
-		//return (r - *this) * lerpFactor + *this; 
-		Vector<T, D> CD;
-		CD = r*-1;
-		Vector<T, D> res = ((CD - (*this))*lerpFactor + (*this));
-		return res.Normalized();
+		return (r - *this) * lerpFactor + *this; 
+		//Vector<T, D> CD;
+		//CD = r*-1;
+		//Vector<T, D> res = ((CD - (*this))*lerpFactor + (*this));
+		//return res.Normalized();
 	}
 
 	inline Vector<T, D> operator+(const Vector<T, D>& r) const

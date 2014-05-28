@@ -6,23 +6,18 @@
 #include<vector>
 using namespace std;
 
-class ObjectRenderer : public Renderable{
-	Transformable* parent;
+class DefaultRenderer : public GameComponent{
+	friend class GameObject;
 public:
-	ObjectRenderer(Mesh* m);
-	ObjectRenderer(vector<Mesh*> m);
-	ObjectRenderer();
-	~ObjectRenderer();
+	DefaultRenderer(Transformable* parent, Mesh* m);
+	DefaultRenderer(Transformable* parent, vector<Mesh*> m);
+	DefaultRenderer();
+	~DefaultRenderer();
 
+	virtual void Input(){}
+	virtual void Update(){}
 	virtual void Render();
-	virtual void Render(Shader* shdr);
 
-	void setParent(Transformable* prnt){
-		parent = prnt;
-	}
-	Transformable* getParent(){
-		return parent;
-	}
 	Mesh* getMesh(int ix){
 		if (ix < Meshes.size())
 			return Meshes[ix];

@@ -47,14 +47,14 @@ void BasicMaterial::setTexture(Texture* val){
 }
 
 void BasicMaterial::use(){
-	shader->Bind();
 	shader->setUniform("Mat.ka",ambient);
 	shader->setUniform("Mat.kd",diffuse);
 	shader->setUniform("Mat.ks",specular);
 	shader->setUniform("Mat.shine",shine);
 	if(Tex!=NULL){
+		shader->setUniform("Tex", 0);
 		Tex->bind(0);
-		shader->setUniform("Tex",0);
+		
 	}
 }
 

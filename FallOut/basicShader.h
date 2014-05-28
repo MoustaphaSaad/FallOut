@@ -1,8 +1,9 @@
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef BASICSHADER_H
+#define BASICSHADER_H
 #include"Shader.h"
 #include"Camera.h"
 #include"Application.h"
+#include"DepthTexture.h"
 class BasicShader:public Shader{
 public:
 	
@@ -22,10 +23,10 @@ public:
 		this->setUniform("View",View.Transpose());
 		this->setUniform("Projection", Projection.Transpose());
 		this->setUniform("Model",Model.Transpose());
-		this->setUniform("shadowMatrix", Fallout::getEngine()->shadowMatrix.Transpose());
+		this->setUniform("shadowMatrix", Fallout::getRenderer()->getShadowMatrix().Transpose());
 		this->setUniform("shadowTex", 1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D,Fallout::getEngine()->dtex);
+
+		Fallout::getRenderer()->getDepth()->bind(1);
 		this->setUniform("LIGHTNUM",scene->getLightsCount());
 		for(int i=0;i<scene->getLightsCount();i++){
 			string text = "Lights[";

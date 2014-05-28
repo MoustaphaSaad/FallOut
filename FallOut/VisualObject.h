@@ -2,22 +2,7 @@
 #define VISUALOBJECT_H
 #include"Transform.h"
 class Transformable;
-class VObject{
-protected:
-	VObject* parent;
-public:
-	VObject(){
-	}
-	~VObject(){
-	}
-	VObject* getParent(){
-		return parent;
-	}
-	void setParent(VObject* prnt){
-		parent = prnt;
-	}
-};
-class Transformable:public VObject{
+class Transformable{
 protected:
 	Transform* transform;
 public:

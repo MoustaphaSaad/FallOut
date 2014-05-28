@@ -3,23 +3,17 @@
 #include"Component.h"
 #include"VisualObject.h"
 #include"InputManager.h"
-class ObjectBehavior:public Updatable{
+class ObjectBehavior:public GameComponent{
+	friend class GameObject;
 protected:
 	InputManager* input;
-	Transformable* parent;
 public:
-	ObjectBehavior(Transformable* object = 0);
+	ObjectBehavior(Transformable* object);
 	~ObjectBehavior();
 
 
-	void Input(){}
-	void Update(){}
-
-	void setParent(Transformable* prnt){
-		parent = prnt;
-	}
-	Transformable* getParent(){
-		return parent;
-	}
+	virtual void Input(){}
+	virtual void Update(){}
+	virtual void Render(){}
 };
 #endif

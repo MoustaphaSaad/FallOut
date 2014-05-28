@@ -1,15 +1,14 @@
 #include"Camera.h"
 #include"Engine.h"
 #include"ObjectBehavior.h"
-
+#include"Timing.h"
 Camera::Camera(){
 	this->transform = new Transform();
-	camComp=NULL;
 }
 
 void Camera::move(vec3 direction, float amt)
 {
-	transform->position = (transform->position + (direction * amt));
+	transform->position = transform->position.Lerp((transform->position + (direction * amt)), Time::getDelta()*3);
 }
 
 mat4 Camera::getPositionRotation(){
@@ -23,16 +22,15 @@ mat4 Camera::getPositionRotation(){
 mat4 Camera::getProjection(){
 	return mat4();
 }
-
-Updatable* Camera::getCamComp(){
-	return camComp;
+void Camera::Input(){
+	GameObject::Input();
 }
-void Camera::setCamComp(Updatable* val){
-	ObjectBehavior* obj = (ObjectBehavior*)val;
-	obj->setParent(this);
-	camComp = val;
+void Camera::Update(TimeStep time){
+	GameObject::Update(time);
 }
-
+void Camera::Render(){
+	GameObject::Render();
+}
 PerspectiveCamera::PerspectiveCamera(const vec3 pos,const vec3 forward,const vec3 up,
 									 float fov,float zNear,float zFar):Camera(){
 	this->FOV = fov;
@@ -53,4 +51,14 @@ float PerspectiveCamera::getZFar(){
 
 mat4 PerspectiveCamera::getProjection(){
 	return mat4().InitPerspective(FOV, Engine::getInstance()->getDisplay()->getAspect(), zNear, zFar);
+}
+
+void PerspectiveCamera::Input(){
+	GameObject::Input();
+}
+void PerspectiveCamera::Update(TimeStep time){
+	GameObject::Update(time);
+}
+void PerspectiveCamera::Render(){
+	GameObject::Render();
 }

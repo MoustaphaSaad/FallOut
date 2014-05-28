@@ -125,3 +125,7 @@ string Shader::loadShader(const string fileName){
 	}
 	return output;
 }
+
+void Shader::unbind(){
+	Engine::getInstance()->getGXManager()->BindShader(0);
+}

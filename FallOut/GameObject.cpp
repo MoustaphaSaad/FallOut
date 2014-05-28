@@ -1,31 +1,31 @@
 #include"GameObject.h"
 
 #include"Engine.h"
+#include"Timing.h"
 #include<algorithm>
 
-GameObject::GameObject(Transform* transform):Transformable(transform){
+GameObject::GameObject(Transform* transform) :Transformable(transform), GameComponent(ComponentType::XNONE){
 	childList = vector<GameObject*>();
-	RenderComponent = new ObjectRenderer();
-	BehaviorComponent = new ObjectBehavior();
+	GCmap = map<string, GameComponent*>();
 }
 
 void GameObject::Input(){
-	BehaviorComponent->Input();
-	for (auto it : childList){
-		it->Input();
-	}
+	for (auto object : GCmap)
+		object.second->Input();
+	for (auto child : childList)
+		child->Input();
 }
-void GameObject::Update(){
-	BehaviorComponent->Update();
-	for (auto it : childList){
-		it->Update();
-	}
+void GameObject::Update(TimeStep time){
+	for (auto object : GCmap)
+		object.second->Update(time);
+	for (auto child : childList)
+		child->Update(time);
 }
 void GameObject::Render(){
-	Engine::getInstance()->getRenderer()->drawGameObject(this);
-}
-void GameObject::Render(Shader* shdr){
-	Engine::getInstance()->getRenderer()->drawGameObject(this, shdr);
+	for (auto object : GCmap)
+		object.second->Render();
+	for (auto child : childList)
+		child->Render();
 }
 
 void GameObject::addChild(GameObject* child){
@@ -46,22 +46,15 @@ GameObject* GameObject::getChild(int ix){
 	return childList[ix];
 }
 
-void GameObject::setRenderComponent(ObjectRenderer* val){
-	val->setParent(this);
-	RenderComponent = val;
+void GameObject::addComponent(string name,GameComponent* component){
+	GCmap.insert(make_pair(name, component));
 }
-void GameObject::setBehaviorComponent( ObjectBehavior* val){
-	val->setParent(this);
-	BehaviorComponent = val;
-}
-Renderable GameObject::getRenderComponent(){
-	return *RenderComponent;
-}
-Updatable GameObject::getBehaviorComponent(){
-	return *BehaviorComponent;
+GameComponent* GameObject::getComponent(string name){
+	if (GCmap.find(name) != GCmap.end())
+		return GCmap[name];
+	return NULL;
 }
 GameObject::~GameObject(){
 	childList.clear();
-	delete RenderComponent;
-	delete BehaviorComponent;
+	GCmap.clear();
 }

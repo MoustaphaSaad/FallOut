@@ -2,37 +2,26 @@
 #include"Engine.h"
 #include"Shader.h"
 
-ObjectRenderer::ObjectRenderer(Mesh* m){
+DefaultRenderer::DefaultRenderer(Transformable* parent, Mesh* m) :GameComponent(ComponentType::RENDERER, parent){
 	Meshes.push_back(m);
-	parent = NULL;
 }
 
-ObjectRenderer::ObjectRenderer(vector<Mesh*> m){
+DefaultRenderer::DefaultRenderer(Transformable* parent, vector<Mesh*> m) : GameComponent(ComponentType::RENDERER, parent){
 	Meshes = vector<Mesh*>(m);
 }
 
-ObjectRenderer::ObjectRenderer(){
+DefaultRenderer::DefaultRenderer() : GameComponent(ComponentType::RENDERER){
 	Meshes = vector<Mesh*>();
 }
-ObjectRenderer::~ObjectRenderer(){
+DefaultRenderer::~DefaultRenderer(){
 	for(int i=0;i<Meshes.size();i++)
 		delete Meshes[i];
 	Meshes.clear();
 }
 
 
-void ObjectRenderer::Render(){
+void DefaultRenderer::Render(){
 	for(int i=0;i<Meshes.size();i++){
-		Meshes[i]->getMaterial()->use();
-		Meshes[i]->getMaterial()->getShader()->Update(parent);
-		Engine::getInstance()->getRenderer()->drawMesh(Meshes[i]);
-	}
-}
-
-void ObjectRenderer::Render(Shader* shdr){
-	for (int i = 0; i<Meshes.size(); i++){
-		shdr->Bind();
-		shdr->Update(parent);
-		Engine::getInstance()->getRenderer()->drawMesh(Meshes[i]);
+		Engine::getInstance()->getRenderer()->Draw(parent,Meshes[i]);
 	}
 }

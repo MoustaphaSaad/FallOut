@@ -1,9 +1,10 @@
 #include"Light.h"
-light::light(vec3 pos,vec3 la,vec3 ld,vec3 ls){
+light::light(vec3 pos,vec3 la,vec3 ld,vec3 ls, float inten){
 	transform->position = pos;
 	La = la;
 	Ld = ld;
 	Ls = ls;
+	intensity = inten;
 }
 
 vec3 light::getLa(){
@@ -21,6 +22,9 @@ vec3 light::getLs(){
 vec3 light::getPosition(){
 	return transform->position;
 }
+float light::getIntensity(){
+	return intensity;
+}
 
 void light::setPosition(vec3 val){
 	transform->position = val;
@@ -33,6 +37,9 @@ void light::setLd(vec3 val){
 }
 void light::setLs(vec3 val){
 	Ls = val;
+}
+void light::setIntensity(float val){
+	intensity = val;
 }
 
 DirectionalLight::DirectionalLight(vec3 pos, vec3 dir, vec3 la, vec3 ld, vec3 ls):light(pos,la,ld,ls){

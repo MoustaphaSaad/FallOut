@@ -23,13 +23,17 @@ void OpenGLManager::initiate(Display* d){
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_RGBA | GLUT_DOUBLE );
 	glutInitWindowSize(d->width,d->height);
 	glutCreateWindow(d->title.c_str());
-	glutInitContextVersion(4, 1);
+	glutInitContextVersion(4, 3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 	if (glewInit()) {
 		cerr << "Unable to initialize GLEW ... exiting" << endl;
 		exit(EXIT_FAILURE);
 	}
-		
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH);
+	glEnable(GL_RGBA);
+	glEnable(GL_DOUBLE);
+	glDisable(GL_CULL_FACE);
 }
 void OpenGLManager::start(){
 	glClearColor(clearColor.GetX(),clearColor.GetY(),clearColor.GetZ(),1);
@@ -50,21 +54,17 @@ void OpenGLManager::reshapeFunc(int w,int h){
 void OpenGLManager::clearBuffers(){
 	vec3 val = Fallout::getEngine()->getGXManager()->getClearColor();
 	glClearColor(val.GetX(),val.GetY(),val.GetZ(),1);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClear(GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 }
 void OpenGLManager::refresh(){
 	glutPostRedisplay();
 }
 void OpenGLManager::Idle(){
-	//Fallout::getEngine()->gameLoop();
-	display();
+	Fallout::getEngine()->gameLoop();
+	//display();
 }
 void OpenGLManager::display(){
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_RGBA);
-	glEnable(GL_DOUBLE);
 	Fallout::getEngine()->gameLoop();
 	glutSwapBuffers();
 }
@@ -89,7 +89,7 @@ unsigned int OpenGLManager::CreateTexture(int width, int height, void* data, boo
 	glBindTexture(GL_TEXTURE_2D, texture);
         
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
         
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
@@ -103,12 +103,12 @@ unsigned int OpenGLManager::CreateDepthTexture(int width, int height, void* data
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, 256, 256, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, data);
+	
 
 	return texture;
 }
@@ -116,6 +116,7 @@ unsigned int OpenGLManager::CreateDepthTexture(int width, int height, void* data
 void OpenGLManager::DeleteTexture(unsigned int texture)
 {
 	glDeleteTextures(1, &texture);
+	
 }
 void OpenGLManager::BindTexture(unsigned int texture, int unit)
 {
@@ -266,4 +267,63 @@ unsigned int OpenGLManager::MapBuffer(void* data, int dataSize, unsigned int buf
 	memcpy(dataGPU, data, dataSize);
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	return 0;
+}
+
+unsigned int OpenGLManager::createBuffer(BufferType type,unsigned int w,unsigned int h){
+	unsigned int id;
+	if (type == BufferType::RENDERBUFFER){
+		glGenRenderbuffers(1, &id);
+		glBindRenderbuffer(GL_RENDERBUFFER, id);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8,w,h );
+	}
+	else if (type == BufferType::DEPTHBUFFER){
+		glGenRenderbuffers(1, &id);
+		glBindRenderbuffer(GL_DEPTH_BUFFER, id);
+		glRenderbufferStorage(GL_DEPTH_BUFFER, GL_DEPTH_COMPONENT, w, h);
+	}
+	else if(type == BufferType::FRAMEBUFFER){
+		glGenFramebuffers(1, &id);
+
+	}
+	return id;
+
+}
+void OpenGLManager::deleteBuffer(BufferType type, unsigned int h){
+	if (type == BufferType::DEPTHBUFFER || type == BufferType::RENDERBUFFER)
+		glDeleteRenderbuffers(1, &h);
+	if (type == BufferType::FRAMEBUFFER)
+		glDeleteFramebuffers(1, &h);
+
+}
+void OpenGLManager::bindBuffer(BufferType type, unsigned int h){
+	if (type == BufferType::DEPTHBUFFER)
+		glBindRenderbuffer(GL_DEPTH_BUFFER, h);
+	else if (type == BufferType::FRAMEBUFFER)
+		glBindFramebuffer(GL_FRAMEBUFFER, h);
+	else if (type == BufferType::RENDERBUFFER)
+		glBindRenderbuffer(GL_RENDERBUFFER, h);
+}
+
+void OpenGLManager::addBuffertoFB(BufferType type, unsigned int fb, unsigned int b){
+	glBindFramebuffer(GL_FRAMEBUFFER, fb);
+	if (type == BufferType::DEPTHBUFFER)
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_DEPTH_BUFFER, b);
+	else if (type == BufferType::RENDERBUFFER)
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, b);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void OpenGLManager::addDepthTexturetoFB(Texture*txt,unsigned int h){
+	glBindFramebuffer(GL_FRAMEBUFFER, h);
+	txt->bind();
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, txt->getID(),0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+void OpenGLManager::addTexturetoFB(Texture*txt,unsigned int h){
+	glBindFramebuffer(GL_FRAMEBUFFER, h);
+	txt->bind();
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, txt->getID(), 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

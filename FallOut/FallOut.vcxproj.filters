@@ -126,12 +126,6 @@
     <ClInclude Include="basicShader.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Cloth.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Atmosphere.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture3D.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
@@ -151,6 +145,9 @@
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
     <ClInclude Include="SimpleShader.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -243,6 +240,12 @@
       <Filter>Header Files\Helper</Filter>
     </ClCompile>
     <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleShader.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>

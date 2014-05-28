@@ -41,10 +41,6 @@ void Mesh::updateGeometry(Geometry* val){
 	Engine::getInstance()->getGXManager()->MapBuffer(val->getVertices(), val->getVerticesCount()*val->getFormat()->vertexSize, vbo);
 }
 
-void Mesh::draw(){
-	Engine::getInstance()->getRenderer()->drawMesh(this);
-}
-
 void Mesh::addSubMesh(Mesh* val){
 	subMesh.push_back(val);
 }

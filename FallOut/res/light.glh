@@ -3,6 +3,7 @@ struct lightInfo{
 	vec3 la;
 	vec3 ld;
 	vec3 ls;
+	float intensity;
 };
 
 struct DirLight{
@@ -11,6 +12,7 @@ struct DirLight{
 	vec3 la;
 	vec3 ld;
 	vec3 ls;
+	float intensity;
 };
 
 struct materialInfo{
@@ -20,38 +22,34 @@ struct materialInfo{
 	float shine;
 };
 
-funiform lightInfo Lights[10];
-funiform int LIGHTNUM;
-funiform materialInfo Mat;
-
-fragment vec3 calcLight(int i,vec3 pos,vec3 norm){
-	vec3 lpos = Lights[i].pos;
+fragment vec3 calcLight(lightInfo light,vec3 pos,vec3 norm,materialInfo Mat){
+	vec3 lpos = light.pos;
 	float dist = length(pos-lpos);
 	float att = 1.0/(1.0+0.01*dist+0.001*dist*dist);
-	vec3 ambient = Mat.ka*Lights[i].la;
+	vec3 ambient = Mat.ka*light.la;
 
 	vec3 surf2light=normalize(lpos-pos);
 	vec3 N = normalize(norm);
 	float dcont = max(0.0,dot(N,surf2light));
-	vec3 diffuse=dcont*(Mat.kd*Lights[i].ld);
+	vec3 diffuse=dcont*(Mat.kd*light.ld);
 
 	vec3 surf2view=normalize(-pos);
 	vec3 reflection = reflect(-surf2light,N);
 
 	float scont = pow(max(0.0,dot(surf2view,-reflection)),Mat.shine);
-	vec3 specular = scont*Lights[i].ls*Mat.ks;
+	vec3 specular = scont*light.ls*Mat.ks;
 
 	return (ambient+diffuse+specular)*att;
 }
 
-fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos){
+fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos,materialInfo Mat){
 	float df = dot(normal,-light.dir);
 
 	vec4 dc = vec4(0,0,0,0);
 	vec4 ds = vec4(0,0,0,0);
 
 	if(df>0){
-		dc = vec4(light.ld,1.0)*df*Mat.kd;
+		dc = vec4(light.ld,1.0)*df*vec4(Mat.kd,1.0);
 		vec3 dirToE = normalize(epos - pos);
 		vec3 hd = normalize(dirToE - light.dir);
 
@@ -59,8 +57,8 @@ fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos){
 
 		if(sf >0)
 		{
-			ds = vec4(light.ls,1.0)*sf*Mat.ks;
+			ds = vec4(light.ls,1.0)*sf*vec4(Mat.ks,1.0);
 		}
 	}
-	return dc + ds+(light.la*Mat.ka);
+	return dc + ds+vec4((light.la*Mat.ka),1.0);
 }

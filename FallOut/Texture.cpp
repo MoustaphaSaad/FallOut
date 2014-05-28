@@ -34,3 +34,6 @@ void Texture::bind(int unit) const
 {
 	Engine::getInstance()->getGXManager()->BindTexture(TextureID, unit);
 }
+void Texture::unbind(int unit){
+	Engine::getInstance()->getGXManager()->BindTexture(0, unit);
+}

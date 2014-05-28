@@ -5,12 +5,16 @@ attribute vec3 normal;
 attribute vec3 color;
 attribute vec2 texCoord;
 
-vuniform mat4 MVP;
+vuniform mat4 Projection;
+vuniform mat4 View;
+vuniform mat4 Model;
+varying vec3 Pos;
 
 void VSmain(){
-	gl_Position = MVP*vec4(position,1.0);
+	Pos = position;
+	gl_Position = Projection*View*Model*vec4(position,1.0);
 }
 
 void FSmain(){
-	gl_FragColor = vec4(1.0);
+	gl_FragColor = vec4(Pos.z*1.0,0,0,1);
 }

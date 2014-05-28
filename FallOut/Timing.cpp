@@ -28,6 +28,7 @@ int Time::frameCount=0;
 double Time::frameTimeCount=0;
 double Time::timeCount=0;
 double Time::lastTime=0;
+FPS Time::type = FPS::LIMITED;
 
 
 void Time::init(){
@@ -55,6 +56,12 @@ void Time::init(){
 void Time::update(double delta){
 	g_Delta = delta;
 	g_Elapsed += delta;
+}
+void Time::setType(FPS val){
+	Time::type = val;
+}
+FPS Time::getType(){
+	return type;
 }
 
 double Time::getTime(){

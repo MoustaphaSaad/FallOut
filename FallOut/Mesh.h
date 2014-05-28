@@ -26,7 +26,6 @@ public:
 	Mesh* getSubMesh(int i);
 	int getSubMeshCount();
 
-	void draw();
 private:
 	Geometry* geometry;
 	Material* material;

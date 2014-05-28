@@ -4,6 +4,7 @@
 #include"Camera.h"
 class light;
 class DirectionalLight;
+struct TimeStep;
 class Scene:public GameObject{
 	friend class RenderEngine;
 public:
@@ -11,7 +12,7 @@ public:
 	~Scene();
 
 	void Input();
-	void Update();
+	void Update(TimeStep time);
 	void Render();
 
 	Camera* getCamera();
@@ -24,7 +25,7 @@ public:
 	light* getLight(int val);
 	int getLightsCount();
 	DirectionalLight* dirLight;
-private:
+protected:
 	Camera* cam;
 	vector<light*> ligths;
 	vec3 clearColor;

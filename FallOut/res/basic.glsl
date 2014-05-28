@@ -26,6 +26,10 @@ funiform sampler2D Tex;
 funiform sampler2DShadow shadowTex;
 funiform vec3 Epos;
 
+funiform lightInfo Lights[10];
+funiform int LIGHTNUM;
+funiform materialInfo Mat;
+
 
 void VSmain()
 {
@@ -44,35 +48,35 @@ void VSmain()
 
 void FSmain()
 {
-	vec4 sh = shadow_coord/shadow_coord.w;
-	sh.z *= 0.9999;
-	float f = textureProj(shadowTex, sh);
+	//vec4 sh = shadow_coord/shadow_coord.w;
+	//sh.z *= 0.999;
+	float f = textureProj(shadowTex, shadow_coord);
 	vec4 tl;
-	if(LIGHTNUM>0)
 	tl = vec4(0);
-	else
-	tl = vec4(0,0,0,1);
+
 	
 	//Calc the lights
 	for(int i=0;i<LIGHTNUM;i++){
-		vec4 ith = vec4(calcLight(i,Position,normalize(Normal)),1);
+		vec4 ith = vec4(calcLight(Lights[i],Position,normalize(Normal),Mat),1);
 		tl+=ith;
 	}
 	//check if there's a texture
 	vec4 texC = texture(Tex,ftexCoord);
-	if(texC.x > 0 && texC.y >0 && texC.z >0 && texC.w > 0)
-		tl *= texC;
+	//if(texC.x > 0 && texC.y >0 && texC.z >0 && texC.w > 0)
+		tl += texC;
 
 	//Adding the lights
 	if(Color.x != -1)
-		tl = tl+Color;
+		tl = tl*vec4(Color,1);
 
-	vec4 DirC= CalcDirLight(dirLight,Position,normalize(Normal),vec3(mf*vec4(Epos,1)));
-	if(DirC.x !=0 && DirC.y !=0 && DirC.z !=0 && DirC.w !=0){
-		tl+=f*DirC;
-	}
+	vec4 DirC= CalcDirLight(dirLight,Position,normalize(Normal),vec3(mf*vec4(Epos,1)),Mat);
+	tl+=vec4((dirLight.la*Mat.ka),1);
+	tl+=(f*DirC);
 
-	gl_FragColor = tl;
+
+
+
+	gl_FragColor = vec4(clamp(tl,vec4(0,0,0,1),vec4(1,1,1,1)).xyz,1.0);
 
 
 }

@@ -3,6 +3,8 @@
 #include"Resources.h"
 #include"OpenGLManager.h"
 #include"RenderEngine.h"
+#include"FrameBuffer.h"
+class DepthTexture;
 class Application;
 enum GraphicsHandle{ OpenGL,DirectX};
 class InputManager;
@@ -20,14 +22,12 @@ public:
 	Display* getDisplay();
 	InputManager* getInputManager();
 	~Engine();
-	GLuint FBO, renderT, depth,dtex,rtexs;
-	mat4 shadowMatrix;
 private:
 	Engine();
 	void init();
 	void initMembers(GraphicsHandle h,Display* d);
 	void input();
-	void update();
+	void update(TimeStep time);
 	void render();
 	void gameLoop();
 	void ShadowPhase();
@@ -39,5 +39,6 @@ private:
 	Display* display;
 	ResourceManager* resourceManager;
 	RenderEngine* rEngine;
+	
 };
 #endif

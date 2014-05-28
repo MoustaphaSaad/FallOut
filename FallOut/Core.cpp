@@ -15,3 +15,6 @@ ResourceManager* Fallout::getResourceManager(){
 GXManager* Fallout::getGXManager(){
 	return getEngine()->getGXManager();
 }
+Application* Fallout::getApplication(){
+	return getEngine()->getApplication();
+}
