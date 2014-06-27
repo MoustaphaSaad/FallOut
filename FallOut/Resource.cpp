@@ -1,25 +1,27 @@
 #include"Resource.h"
 #include"Engine.h"
-Resource::Resource(const string name,ResourceType t){
+using namespace Fallout;
+Resource::Resource(const string name,Resource::Type t){
 		this->name = name;
 		this->type = t;
+		ResourceManager::getInstance()->RegisterResource(this);
 }
 Resource::Resource(){
 	this->name = "";
-	this->type = ResourceType::UNDEFINED;
+	this->type = Resource::Type::UNDEFINED;
 }
 Resource::~Resource(){
 }
 string Resource::getName(){
 	return name;
 }
-ResourceType Resource::getType(){
+Resource::Type Resource::getType(){
 	return type;
 }
 
 void Resource::setName(string val){
 	this->name = val;
 }
-void Resource::setType(ResourceType val){
+void Resource::setType(Resource::Type val){
 	this->type = val;
 }

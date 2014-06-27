@@ -4,9 +4,10 @@
 #include"GlobalStructs.h"
 #include<stack>
 using namespace std;
-enum Shaders{VERTEX,FRAGMENT};
+namespace Fallout{
 class GLSL{
 public:
+	enum Shaders{VERTEX,FRAGMENT};
 	static string removeFunction(const string txt, string funcName);
 	static string removeFunctionCategory(const string txt, const string key);
 	static string InOutManagement(const string txt, Shaders type);
@@ -15,4 +16,5 @@ public:
 	static vector<ShaderStruct> CreateStructs(const string shdr, unsigned int program);
 	static string process(string txt,Shaders type);
 };
+}
 #endif

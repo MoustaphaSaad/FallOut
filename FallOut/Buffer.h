@@ -1,21 +1,28 @@
 #ifndef BUFFER_H
 #define BUFFER_H
-enum BufferType{
-	FRAMEBUFFER, RENDERBUFFER, DEPTHBUFFER
-};
+#include<memory>
+using namespace std;
+namespace Fallout{
+	class Buffer;
+	typedef tr1::shared_ptr<Buffer> BufferPtr;
 class Buffer{
 protected:
 	unsigned int ID, width, height;
-	BufferType type;
 public:
-	Buffer(BufferType t, unsigned int x, unsigned int y);
-	Buffer(BufferType t);
+	enum Type{
+	FRAMEBUFFER, RENDERBUFFER, DEPTHBUFFER
+	};
+	Buffer(Type t, unsigned int x, unsigned int y);
+	Buffer(Type t);
 	~Buffer();
-	static void unbind(BufferType t);
+	static void unbind(Type t);
 	virtual void bind();
 	unsigned int getID();
 	unsigned int getWidth();
 	unsigned int getHeight();
-	BufferType getType();
+	Type getType();
+protected:
+	Type type;
 };
+}
 #endif

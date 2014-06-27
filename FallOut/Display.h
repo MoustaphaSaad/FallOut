@@ -1,7 +1,11 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 #include<string>
+#include<memory>
 using namespace std;
+namespace Fallout{
+	struct Display;
+	typedef tr1::shared_ptr<Display> DisplayPtr;
 struct Display
 {
 public:
@@ -20,5 +24,7 @@ public:
 	float getAspect(){
 		return (float)width/(float)height;
 	}
+	static void BindTarget();
 };
+}
 #endif

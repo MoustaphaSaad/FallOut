@@ -4,7 +4,7 @@
 #include<sstream>
 #include<GL\glew.h>
 using namespace std;
-
+using namespace Fallout;
 string GLSL::removeFunction(const string txt, string funcName){
 	size_t funcPosition = txt.find(funcName);
 	stack<char> stk;
@@ -79,8 +79,10 @@ string GLSL::UniformManagement(const string txt, Shaders type){
 }
 
 vector<UniformData> GLSL::CreateUniforms(const string txt, unsigned int program, vector<ShaderStruct> strct){
+	string shdr2 = StringOp::findReplaceAll(txt,"\r\n","\n");
 	vector<UniformData> output;
-	stringstream ss(txt);
+	stringstream ss(shdr2);
+	int samplerID =0;
 	string line;
 	while (getline(ss, line)){
 		vector<string> substrs = StringOp::Split(line, ' ');
@@ -126,13 +128,19 @@ vector<UniformData> GLSL::CreateUniforms(const string txt, unsigned int program,
 							ix = i;
 					}
 					string ok = "";
-					if (ix != -1)
+					if (ix != -1){
 					for (int i = 0; i<strct[ix].Data.size(); i++){
 						ok += temp + ".";
 						ok += strct[ix].Data[i].Name;
 						unsigned int location = glGetUniformLocation(program, ok.c_str());
 						output.push_back(UniformData(location, substrs[1], ok));
 						ok = "";
+					}
+					}else{
+						unsigned int location = glGetUniformLocation(program, temp.c_str());
+						if(StringOp::Contains(substrs[1],"sampler"))
+							glUniform1i(location,samplerID++);
+						output.push_back(UniformData(location, substrs[1], temp));
 					}
 				}
 			}
@@ -153,6 +161,8 @@ vector<UniformData> GLSL::CreateUniforms(const string txt, unsigned int program,
 				}
 				else{
 					unsigned int location = glGetUniformLocation(program, name.c_str());
+					if(StringOp::Contains(substrs[1],"sampler"))
+							glUniform1i(location,samplerID++);
 					output.push_back(UniformData(location, substrs[1], name));
 				}
 			}
@@ -160,12 +170,14 @@ vector<UniformData> GLSL::CreateUniforms(const string txt, unsigned int program,
 	}
 	return output;
 }
-vector<ShaderStruct> GLSL::CreateStructs(const string shdr, unsigned int program){
+vector<ShaderStruct> GLSL::CreateStructs( string shdr, unsigned int program){
+	string shdr2 = StringOp::findReplaceAll(shdr,"\r\n","\n");
 	vector<ShaderStruct> output;
-	stringstream ss(shdr);
+	stringstream ss(shdr2);
 	string line;
 	bool processing = false;
 	while (getline(ss, line)){
+		//line = StringOp::clear(line,"\r");
 		if (!line.compare("};"))
 			processing = false;
 		if (line.size()>1 && processing){
@@ -205,7 +217,7 @@ vector<ShaderStruct> GLSL::CreateStructs(const string shdr, unsigned int program
 }
 
 string GLSL::process(string txt, Shaders type){
-
+	txt = StringOp::findReplaceAll(txt,"\r","\n");
 	if (type == Shaders::VERTEX){
 		string output = txt;
 		output = removeFunction(output, "void FSmain()");

@@ -5,8 +5,10 @@
 #include<vector>
 #include<string>
 using namespace std;
+namespace Fallout{
 class ObjLoader{
 public:
-	static Mesh* loadObj(const string resourceName,string filename);
+	static Mesh* loadObj(string filename);
 };
+}
 #endif

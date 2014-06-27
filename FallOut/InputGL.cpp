@@ -1,5 +1,6 @@
 #include"InputGL.h"
 #include<GL\freeglut.h>
+using namespace Fallout;
 void InputGL::keyboardDownFunc(unsigned char k,int x,int y){
 	Keys.push_back(make_pair(k,keyState::DOWN));
 }

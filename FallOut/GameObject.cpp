@@ -3,8 +3,8 @@
 #include"Engine.h"
 #include"Timing.h"
 #include<algorithm>
-
-GameObject::GameObject(Transform* transform) :Transformable(transform), GameComponent(ComponentType::XNONE){
+using namespace Fallout;
+GameObject::GameObject(Transform* transform) :Transformable(transform), GameComponent(){
 	childList = vector<GameObject*>();
 	GCmap = map<string, GameComponent*>();
 }
@@ -31,6 +31,7 @@ void GameObject::Render(){
 void GameObject::addChild(GameObject* child){
 	childList.push_back(child);
 	child->setParent(this);
+	child->getTransform()->setParentTransform(transform);
 }
 void GameObject::removeChild(GameObject* child){
 	childList.erase(remove(childList.begin(),childList.end(),child),childList.end());
@@ -47,6 +48,7 @@ GameObject* GameObject::getChild(int ix){
 }
 
 void GameObject::addComponent(string name,GameComponent* component){
+	component->parent = this;
 	GCmap.insert(make_pair(name, component));
 }
 GameComponent* GameObject::getComponent(string name){

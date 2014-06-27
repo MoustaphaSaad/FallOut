@@ -1,4 +1,5 @@
 #include"InputManager.h"
+using namespace  Fallout;
 vector<pair<unsigned char, keyState> > InputManager::Keys = vector<pair<unsigned char, keyState> >();
 vector<pair<unsigned char, keyState> > InputManager::Mouse = vector<pair<unsigned char, keyState> >();
 vec2 InputManager::mousePosition = vec2();

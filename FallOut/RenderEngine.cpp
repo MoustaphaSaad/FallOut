@@ -4,18 +4,22 @@
 #include"Scene.h"
 #include"SimpleShader.h"
 #include"Light.h"
-
+#include"ObjLoader.h"
+#include"MaterialBasic.h"
+using namespace Fallout;
 //TODO Clear First;
 RenderEngine::RenderEngine(){
 	engine = Engine::getInstance();
-	FB = new FrameBuffer();
-	shadowShader = new SimpleShader();
+	shadowShader = new ShadowShader();
+
 }
 RenderEngine::~RenderEngine(){
 	delete engine;
+
+	delete shadowShader;
 }
 
-void RenderEngine::Draw(Transformable* sender, Mesh* mesh){
+void RenderEngine::Draw(Transformable* sender, Mesh* mesh,Shader* shdr){
 
 	if (!sender || !mesh)
 		return;
@@ -23,18 +27,29 @@ void RenderEngine::Draw(Transformable* sender, Mesh* mesh){
 	if(state == RenderState::Normal){
 		mesh->getMaterial()->getShader()->Bind();
 		mesh->getMaterial()->use();
-		mesh->getMaterial()->getShader()->Update(sender);
+		mesh->getMaterial()->getShader()->Update(sender,mesh->getMaterial());
 	}else if(state == RenderState::Shadow){
 
 		shadowShader->Bind();
 		shadowShader->Update(sender);
+		if(!sender->Composer->castShadow)
+			return;
 
+	}else if(state == RenderState::Custom){
+		/*if(shdr == NULL)
+			shdr = mesh->getMaterial()->getShader();
+		shdr->Bind();
+		mesh->getMaterial()->use();
+		shdr->Update(sender);*/
 	}
 	Engine::getInstance()->getGXManager()->drawGeometry(mesh->getGeometry(), mesh->vbo, mesh->ibo);
 
 	//Drawing Childern
 	for (int i = 0; i < mesh->getSubMeshCount(); i++)
 		Draw(sender, mesh->getSubMesh(i));
+
+	Shader::unbind();
+	Texture::unbind();
 }
 
 void RenderEngine::render(Scene* scene){
@@ -42,38 +57,44 @@ void RenderEngine::render(Scene* scene){
 	scene->Render();
 }
 void RenderEngine::shadowPhase(Scene* scene){
-	FB->bind();
-	Engine::getInstance()->gxManager->clearBuffers();
-
+	if(scene == NULL)
+		return;
 	state = RenderState::Shadow;
-	Application* app = Engine::getInstance()->getApplication();
-	vec3 tPos = app->getScene()->getCamera()->getTransform()->position;
-	vec4 tRot = app->getScene()->getCamera()->getTransform()->rotation;
-	if (app->getScene()->dirLight != NULL){
-		app->getScene()->getCamera()->getTransform()->position = app->getScene()->dirLight->getPosition();
-		app->getScene()->getCamera()->getTransform()->rotation = app->getScene()->getCamera()->getTransform()->getLookAtRot(app->getScene()->dirLight->getDirection(), app->getScene()->dirLight->getTransform()->rotation.GetUp());
+	for(int i=0;i<scene->DirLights.size();i++){
+
+		scene->DirLights[i]->shadow->ShadowBuffer->bind();
+		engine->gxManager->clearBuffers();
+
+
+		mat4 scaleBias = mat4().InitScale(vec3(0.5,0.5,0.5)) * mat4().InitTranslation(vec3(1,1,1));
+		int lim = scene->DirLights[i]->shadow->Radius;
+		mat4 ortho = mat4().InitOrthographic(lim,-lim,lim,-lim,lim,-lim);
+		scene->DirLights[i]->shadow->shadowMatrix= scaleBias*ortho*scene->DirLights[i]->getPositionRotation(scene->getCamera());
+		shadowShader->Light = scene->DirLights[i];
+		scene->Render();
+
+
+		scene->DirLights[i]->shadow->ShadowBuffer->unbindFB();
 	}
+	Display::BindTarget();
 
-	float arr[4][4] = {
-		0.5f, 0, 0, 0,
-		0, 0.5f, 0, 0,
-		0, 0, 0.5f, 0,
-		0.5f, 0.5f, 0.5f, 1.0f
-	};
+}
 
-	mat4 scaleBias(arr);	
-	int lim=15;
-	mat4 ortho = mat4().InitOrthographic(lim,-lim,lim,-lim,0.1,-50);
+void RenderEngine::renderToBuffer(FrameBuffer* buffer,Scene* scene,Shader* shdr){
+	if(scene==NULL)
+		scene = Engine::getInstance()->getApplication()->getScene();
 
-	//shadowMatrix = scaleBias*app->getScene()->getCamera()->getProjection()*app->getScene()->getCamera()->getPositionRotation();
-	shadowMatrix = scaleBias*ortho*app->getScene()->getCamera()->getPositionRotation();
+	if(scene == NULL)
+		return;
+
+	buffer->bind();
+	Engine::getInstance()->gxManager->clearBuffers();
+	if(shdr == NULL)
+		state = RenderState::Normal;
+	else
+		state = RenderState::Custom;
 
 	scene->Render();
-	
-	app->getScene()->getCamera()->getTransform()->position = tPos;
-	app->getScene()->getCamera()->getTransform()->rotation = tRot;
-	FB->unbindFB();
-}
-Texture* RenderEngine::getDepth(){
-	return FB->getDepth();
+	buffer->unbindFB();
+	Display::BindTarget();
 }

@@ -1,6 +1,6 @@
 #ifndef TIMING_H
 #define TIMING_H
-enum FPS{UNLIMITED,LIMITED};
+namespace Fallout{
 struct TimeStep{
 	double delta;
 	double ElapsedTime;
@@ -17,8 +17,9 @@ class Time{
 	static double frameLimit;
 	static int frameCount;
 	static double frameTimeCount, timeCount, lastTime, ElapsedTime;
-	static FPS type;
+
 public:
+	enum FPS{UNLIMITED,LIMITED};
 	static void init();
 	static double getTime();
 	static void setType(FPS val);
@@ -34,5 +35,9 @@ public:
 
 	static double getDelta();
 	static double getElapsedTime();
+private:
+	static FPS type;
 };
+}
+
 #endif

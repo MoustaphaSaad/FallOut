@@ -4,12 +4,15 @@
 #include"Transform.h"
 #include"ObjectRenderer.h"
 #include"ObjectBehavior.h"
-
+#include"VisualComposer.h"
 #include<vector>
 #include<map>
+#include<memory>
 using namespace std;
+namespace Fallout{
 struct TimeStep;
 class GameObject:public Transformable,public GameComponent{
+	typedef tr1::shared_ptr<GameObject> GameObjectPtr;
 	friend class RenderEngine;
 public:
 	GameObject(Transform* trans=new Transform());
@@ -29,9 +32,9 @@ public:
 	GameComponent* getComponent(string name);
 
 	~GameObject();
-	
 protected:
 	vector<GameObject*> childList;
 	map<string, GameComponent*> GCmap;
 };
+}
 #endif

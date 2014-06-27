@@ -1,16 +1,20 @@
 #ifndef VISUALOBJECT_H
 #define VISUALOBJECT_H
 #include"Transform.h"
-class Transformable;
+#include"VisualComposer.h"
+namespace Fallout{
 class Transformable{
 protected:
 	Transform* transform;
 public:
+	visualComposer* Composer;
 	Transformable(Transform* trans = new Transform()){
 		transform = trans;
+		Composer = new visualComposer();
 	}
 	~Transformable(){
 		delete transform;
+		delete Composer;
 	}
 
 	void setTransform(Transform* trans){
@@ -20,4 +24,5 @@ public:
 		return transform;
 	}
 };
+}
 #endif

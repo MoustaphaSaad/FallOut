@@ -37,3 +37,6 @@
 #include"DepthTexture.h"
 #include"SimpleShader.h"
 #include"Buffer.h"
+#include"FreeLook.h"
+#include"FreeMove.h"
+//Tools

@@ -1,7 +1,7 @@
 #include "StringOp.h"
 #include<iostream>
 #include<sstream>
-
+using namespace Fallout;
 vector<string> StringOp::Split(const string s,char delimeter){
 	vector<string> elems;
 	stringstream ss(s);
@@ -51,6 +51,22 @@ string StringOp::deleteChar(const string txt,const char c){
 			output.erase(i,1);
 			i--;
 		}
+	}
+	return output;
+}
+bool StringOp::Contains(const string txt, const string sub){
+	size_t find = txt.find(sub);
+	if(find !=string::npos)
+		return true;
+	else
+		return false;
+}
+string StringOp::clear(const string txt,const string sub){
+	string output = txt;
+	size_t find = output.find(sub);
+	while(find != string::npos){
+		output.erase(find,sub.size());
+		find = output.find(sub);
 	}
 	return output;
 }

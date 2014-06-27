@@ -14,13 +14,15 @@
 #include<GL\freeglut.h>
 #include"Core.h"
 using namespace std;
+using namespace Fallout;
 OpenGLManager::OpenGLManager(Display* d):GXManager(){
+	clearColor = vec3();
 	initiate(d);
 }
 void OpenGLManager::initiate(Display* d){
 	int argc=0;
 	glutInit(&argc, NULL);
-	glutInitDisplayMode(GLUT_DEPTH|GLUT_RGBA | GLUT_DOUBLE );
+	glutInitDisplayMode(GLUT_DEPTH|GLUT_RGBA | GLUT_DOUBLE |GLUT_STENCIL );
 	glutInitWindowSize(d->width,d->height);
 	glutCreateWindow(d->title.c_str());
 	glutInitContextVersion(4, 3);
@@ -33,7 +35,8 @@ void OpenGLManager::initiate(Display* d){
 	glEnable(GL_DEPTH);
 	glEnable(GL_RGBA);
 	glEnable(GL_DOUBLE);
-	glDisable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE_MODE);
+	glEnable(GL_MULTISAMPLE);
 }
 void OpenGLManager::start(){
 	glClearColor(clearColor.GetX(),clearColor.GetY(),clearColor.GetZ(),1);
@@ -50,6 +53,7 @@ void OpenGLManager::start(){
 void OpenGLManager::reshapeFunc(int w,int h){
 	Fallout::getEngine()->getDisplay()->width = w;
 	Fallout::getEngine()->getDisplay()->height = h;
+	glViewport(0, 0, (GLsizei)w, (GLsizei)h); 
 }
 void OpenGLManager::clearBuffers(){
 	vec3 val = Fallout::getEngine()->getGXManager()->getClearColor();
@@ -93,6 +97,8 @@ unsigned int OpenGLManager::CreateTexture(int width, int height, void* data, boo
         
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     
 	return texture;
@@ -103,9 +109,15 @@ unsigned int OpenGLManager::CreateDepthTexture(int width, int height, void* data
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	  // Remove artifact on the edges of the shadowmap
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_COMPARE_MODE_ARB,GL_COMPARE_R_TO_TEXTURE_ARB);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, data);
 	
@@ -143,16 +155,16 @@ void CheckShaderError(GLuint shader,GLuint flag,bool isProgram, const string msg
 		if(isProgram)
 			glGetProgramInfoLog(shader,sizeof(error),NULL,error);
 		else
-			glGetShaderInfoLog(shader,sizeof(error),NULL,error);
+			glGetShaderInfoLog(shader,sizeof(error),NULL,error);		
 
 		printf((msg+" "+error+"\n").c_str());
 	}
 }
 unsigned int OpenGLManager::CreateVertexShader(const string txt){
-	return CreateShader(GLSL::process(txt, Shaders::VERTEX), GL_VERTEX_SHADER);
+	return CreateShader(GLSL::process(txt, GLSL::Shaders::VERTEX), GL_VERTEX_SHADER);
 }
 unsigned int OpenGLManager::CreateFragmentShader(const string txt){
-	return CreateShader(GLSL::process(txt, Shaders::FRAGMENT), GL_FRAGMENT_SHADER);
+	return CreateShader(GLSL::process(txt, GLSL::Shaders::FRAGMENT), GL_FRAGMENT_SHADER);
 }
 unsigned int OpenGLManager::CreateShader(const string txt,unsigned int type){
 	GLuint shader = glCreateShader(type);
@@ -269,46 +281,48 @@ unsigned int OpenGLManager::MapBuffer(void* data, int dataSize, unsigned int buf
 	return 0;
 }
 
-unsigned int OpenGLManager::createBuffer(BufferType type,unsigned int w,unsigned int h){
+unsigned int OpenGLManager::createBuffer(Buffer::Type type,unsigned int w,unsigned int h){
 	unsigned int id;
-	if (type == BufferType::RENDERBUFFER){
+	if (type == Buffer::Type::RENDERBUFFER){
 		glGenRenderbuffers(1, &id);
 		glBindRenderbuffer(GL_RENDERBUFFER, id);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8,w,h );
 	}
-	else if (type == BufferType::DEPTHBUFFER){
+	else if (type == Buffer::Type::DEPTHBUFFER){
 		glGenRenderbuffers(1, &id);
 		glBindRenderbuffer(GL_DEPTH_BUFFER, id);
 		glRenderbufferStorage(GL_DEPTH_BUFFER, GL_DEPTH_COMPONENT, w, h);
 	}
-	else if(type == BufferType::FRAMEBUFFER){
+	else if(type == Buffer::Type::FRAMEBUFFER){
 		glGenFramebuffers(1, &id);
 
 	}
 	return id;
 
 }
-void OpenGLManager::deleteBuffer(BufferType type, unsigned int h){
-	if (type == BufferType::DEPTHBUFFER || type == BufferType::RENDERBUFFER)
+void OpenGLManager::deleteBuffer(Buffer::Type type, unsigned int h){
+	if (type == Buffer::Type::DEPTHBUFFER || type == Buffer::Type::RENDERBUFFER)
 		glDeleteRenderbuffers(1, &h);
-	if (type == BufferType::FRAMEBUFFER)
+	if (type == Buffer::Type::FRAMEBUFFER)
 		glDeleteFramebuffers(1, &h);
 
 }
-void OpenGLManager::bindBuffer(BufferType type, unsigned int h){
-	if (type == BufferType::DEPTHBUFFER)
+void OpenGLManager::bindBuffer(Buffer::Type type, unsigned int h,int x,int y){
+	if (type == Buffer::Type::DEPTHBUFFER)
 		glBindRenderbuffer(GL_DEPTH_BUFFER, h);
-	else if (type == BufferType::FRAMEBUFFER)
+	else if (type == Buffer::Type::FRAMEBUFFER)
 		glBindFramebuffer(GL_FRAMEBUFFER, h);
-	else if (type == BufferType::RENDERBUFFER)
+	else if (type == Buffer::Type::RENDERBUFFER)
 		glBindRenderbuffer(GL_RENDERBUFFER, h);
+
+	glViewport(0,0,x,y);
 }
 
-void OpenGLManager::addBuffertoFB(BufferType type, unsigned int fb, unsigned int b){
+void OpenGLManager::addBuffertoFB(Buffer::Type type, unsigned int fb, unsigned int b){
 	glBindFramebuffer(GL_FRAMEBUFFER, fb);
-	if (type == BufferType::DEPTHBUFFER)
+	if (type == Buffer::Type::DEPTHBUFFER)
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_DEPTH_BUFFER, b);
-	else if (type == BufferType::RENDERBUFFER)
+	else if (type == Buffer::Type::RENDERBUFFER)
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, b);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -316,14 +330,14 @@ void OpenGLManager::addBuffertoFB(BufferType type, unsigned int fb, unsigned int
 void OpenGLManager::addDepthTexturetoFB(Texture*txt,unsigned int h){
 	glBindFramebuffer(GL_FRAMEBUFFER, h);
 	txt->bind();
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, txt->getID(),0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,GL_TEXTURE_2D, txt->getID(),0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 void OpenGLManager::addTexturetoFB(Texture*txt,unsigned int h){
 	glBindFramebuffer(GL_FRAMEBUFFER, h);
 	txt->bind();
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, txt->getID(), 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, txt->getID(), 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

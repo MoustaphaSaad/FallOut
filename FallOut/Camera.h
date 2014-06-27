@@ -4,13 +4,15 @@
 #include"Math3D.h"
 #include"Component.h"
 #include"GameObject.h"
-
+#include<memory>
+using namespace std;
+namespace Fallout{
+	class Camera;
+	typedef tr1::shared_ptr<Camera> CameraPtr;
 class Camera:public GameObject{
 	friend class Scene;
 public:
 	Camera();
-	
-	void move(const vec3 dir,float val);
 
 	virtual void Input();
 	virtual void Update(TimeStep time);
@@ -18,6 +20,7 @@ public:
 
 	mat4 getPositionRotation();
 	virtual mat4 getProjection();
+	virtual mat4 getOrtho();
 	virtual mat4 getProjection(float aspect){
 		return mat4().InitIdentity();
 	}
@@ -34,8 +37,6 @@ public:
 	void Input();
 	void Update(TimeStep time);
 	void Render();
-
-
 	mat4 getProjection();
 
 	float getFOV();
@@ -44,4 +45,6 @@ public:
 private:
 	float FOV,zNear,zFar;
 };
+
+}
 #endif

@@ -1,12 +1,13 @@
 #include"Buffer.h"
 #include"Engine.h"
-Buffer::Buffer(BufferType t, unsigned int x, unsigned int y) {
+using namespace Fallout;
+Buffer::Buffer(Type t, unsigned int x, unsigned int y) {
 	type = t;
 	width = x;
 	height = y;
 	ID = Engine::getInstance()->getGXManager()->createBuffer(type,x,y);
 }
-Buffer::Buffer(BufferType t) {
+Buffer::Buffer(Type t) {
 	type = t;
 	width = Engine::getInstance()->getDisplay()->width;
 	height = Engine::getInstance()->getDisplay()->height;
@@ -18,7 +19,7 @@ Buffer::~Buffer(){
 }
 
 void Buffer::bind(){
-	Engine::getInstance()->getGXManager()->bindBuffer(type, ID);
+	Engine::getInstance()->getGXManager()->bindBuffer(type, ID,width,height);
 }
 
 unsigned int Buffer::getID(){
@@ -33,9 +34,9 @@ unsigned int Buffer::getWidth(){
 	return width;
 }
 
-BufferType Buffer::getType(){
+Buffer::Type Buffer::getType(){
 	return type;
 }
-void Buffer::unbind(BufferType type){
-	Engine::getInstance()->getGXManager()->bindBuffer(type, 0);
+void Buffer::unbind(Type type){
+	Engine::getInstance()->getGXManager()->bindBuffer(type, 0,Engine::getInstance()->getDisplay()->width,Engine::getInstance()->getDisplay()->height);
 }

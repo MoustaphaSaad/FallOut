@@ -3,28 +3,28 @@
 #include"GameObject.h"
 #include"Mesh.h"
 #include"FrameBuffer.h"
-class SimpleShader;
+namespace Fallout{
+class ShadowShader;
 class Scene;
 class Engine;
-enum RenderState{Normal,Shadow};
+
 class RenderEngine{
 	friend class Engine;
+	friend class IPU;
 public:
+	enum RenderState{Normal,Shadow,Custom};
 	RenderEngine();
 	~RenderEngine();
 
-	void Draw(Transformable* sender, Mesh* mesh);
+	void Draw(Transformable* sender, Mesh* mesh,Shader* shdr=NULL);
 	void render(Scene* scene);
-	void shadowPhase(Scene* scene);
-	Texture* getDepth();
-	mat4 getShadowMatrix(){
-		return shadowMatrix;
-	}
+	void renderToBuffer(FrameBuffer* buffer,Scene* scene = NULL,Shader* shdr = NULL);
 private:
-	FrameBuffer *FB;
-	mat4 shadowMatrix;
+	void shadowPhase(Scene* scene);
 	RenderState state;
-	SimpleShader* shadowShader;
+
+	ShadowShader* shadowShader;
 	Engine* engine;
 };
+}
 #endif

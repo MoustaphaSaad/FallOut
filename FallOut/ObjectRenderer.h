@@ -5,12 +5,12 @@
 #include"Mesh.h"
 #include<vector>
 using namespace std;
-
+namespace Fallout{
 class DefaultRenderer : public GameComponent{
 	friend class GameObject;
 public:
-	DefaultRenderer(Transformable* parent, Mesh* m);
-	DefaultRenderer(Transformable* parent, vector<Mesh*> m);
+	DefaultRenderer(GameObject* parent, Mesh* m);
+	DefaultRenderer(GameObject* parent, vector<Mesh*> m);
 	DefaultRenderer();
 	~DefaultRenderer();
 
@@ -26,4 +26,5 @@ public:
 protected:
 	vector<Mesh*> Meshes;
 };
+}
 #endif

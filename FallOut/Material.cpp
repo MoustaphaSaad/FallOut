@@ -1,13 +1,15 @@
 #include"Material.h"
 #include"Engine.h"
-Material::Material(const string name):Resource(name,ResourceType::MATERIAL){
+#include"GameObject.h"
+using namespace Fallout;
+Material::Material(const string name):Resource(name,Resource::Type::MATERIAL){
 	this->shader = NULL;
 }
-Material::Material(const string name,Shader* s):Resource(name,ResourceType::MATERIAL){
+Material::Material(const string name,Shader* s):Resource(name,Resource::Type::MATERIAL){
 	shader = s;
 }
 Material::Material():Resource(){
-	this->type = ResourceType::MATERIAL;
+	this->type = Resource::Type::MATERIAL;
 	this->shader = NULL;
 }
 Material::~Material(){

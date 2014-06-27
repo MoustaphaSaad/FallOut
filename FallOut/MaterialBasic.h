@@ -2,9 +2,15 @@
 #define MATERIALBASIC_H_
 #include"RenderEngine.h"
 #include"Material.h"
+#include<memory>
+using namespace std;
+namespace Fallout{
+	class BasicMaterial;
+	typedef tr1::shared_ptr<BasicMaterial> BasicMaterialPtr;
 class BasicMaterial:public Material{
 	friend class RenderEngine;
 public:
+
 	BasicMaterial();
 	~BasicMaterial();
 
@@ -23,6 +29,15 @@ public:
 	void setTexture(Texture* val);
 	Texture* getTexture();
 
+	void setNormalTexture(Texture* val);
+	Texture* getNormaleTexture();
+
+	bool hasNormalMap(){
+		if(NormalTex != NULL)
+			return true;
+		return false;
+	}
+
 	void use();
 	void use(Shader* shdr);
 private:
@@ -30,6 +45,8 @@ private:
 	vec3 diffuse;
 	vec3 specular;
 	Texture* Tex;
+	Texture* NormalTex;
 	float shine;
 };
+}
 #endif

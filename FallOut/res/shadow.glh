@@ -1,0 +1,83 @@
+bool InRange(float val,float minVal, float maxVal){
+	if(val>=minVal && val<=maxVal)
+		return true;
+	return false;
+}
+float linstep(float low,float h,float v){
+	return clamp((v-low)/(h-low),0.0,1.0);
+}
+float SampleVSM(sampler2D dMap,vec4 coor){
+	vec2 moments = texture2D(dMap,coor.xy).xy;
+	float p = step(coor.z,moments.x);
+	float var = max(moments.y-(moments.x*moments.x),0.0013999);
+	float d = coor.z - moments.x;
+	float  pMax = linstep(0.2,1.0,var/(var+d*d));
+	//float  pMax = max(var/(var+d*d),0.2);
+
+	return min(max(p,pMax),1);
+}
+float sampleRSM(sampler2D Dmap,vec2 coor,float compare){
+	return step(compare, texture2D(Dmap, coor).r);
+}
+float SampleShadowMapLinear(sampler2D shadowMap, vec2 coords, float compare, vec2 texelSize)
+{
+	vec2 pixelPos = coords/texelSize + vec2(0.5);
+	vec2 fracPart = fract(pixelPos);
+	vec2 startTexel = (pixelPos - fracPart) * texelSize;
+	/*
+	float blTexel = sampleRSM(shadowMap, startTexel, compare);
+	float brTexel = sampleRSM(shadowMap, startTexel + vec2(texelSize.x, 0.0), compare);
+	float tlTexel = sampleRSM(shadowMap, startTexel + vec2(0.0, texelSize.y), compare);
+	float trTexel = sampleRSM(shadowMap, startTexel + texelSize, compare);
+	*/
+	float blTexel = texture2D(shadowMap, startTexel).r;
+	float brTexel = texture2D(shadowMap, startTexel - vec2(texelSize.x, 0.0)).r;
+	float tlTexel = texture2D(shadowMap, startTexel - vec2(0.0, texelSize.y)).r;
+	float trTexel = texture2D(shadowMap, startTexel - texelSize).r;
+
+	float mixA = mix(blTexel, tlTexel, fracPart.y);
+	float mixB = mix(brTexel, trTexel, fracPart.y);
+	
+	return mix(mixA, mixB, fracPart.x);
+}
+float SampleShadowMapPCF(sampler2D shadowMap, vec2 coords, float compare, vec2 texelSize)
+{
+	const float NUM_SAMPLES = 3.0f;
+	const float SAMPLES_START = (NUM_SAMPLES-1.0f)/2.0f;
+	const float NUM_SAMPLES_SQUARED = NUM_SAMPLES*NUM_SAMPLES;
+
+	float result = 0.0f;
+	for(float y = -SAMPLES_START; y <= SAMPLES_START; y += 1.0f)
+	{
+		for(float x = -SAMPLES_START; x <= SAMPLES_START; x += 1.0f)
+		{
+			vec2 coordsOffset = vec2(x,y);
+			result += sampleRSM(shadowMap, coords+coordsOffset, compare);
+		}
+	}
+	return result/NUM_SAMPLES_SQUARED;
+}
+float minePCF(sampler2D Dmap,vec2 tc, float compare){
+	float c1 = sampleRSM(Dmap, tc, compare);
+	float c2 = sampleRSM(Dmap, tc+vec2(1,0), compare);
+	float c3 = sampleRSM(Dmap, tc+vec2(1,1), compare);
+	float c4 = sampleRSM(Dmap, tc+vec2(0,1), compare);
+	return (c1+c2+c3+c4)/4;
+}
+float calcShadow(sampler2D Dmap, vec4 coor){
+	
+	vec4 sh = vec4((coor.xyz/coor.w),1);
+	sh.z-=0.05;
+	if(InRange(sh.z,0,1) && InRange(sh.x,0,1) && InRange(sh.y,0,1)){
+		return sampleRSM(Dmap,sh.xy,sh.z);
+	}else{
+		return 1.0;
+	}
+}
+
+vec4 shadowDebug(sampler2D Dmap,vec4 coor){
+	vec4 sh = vec4((coor.xyz/coor.w),1);
+	float val = SampleVSM(Dmap,sh);
+	return vec4(val);
+	//return texture2D(Dmap,coor.xy);
+}

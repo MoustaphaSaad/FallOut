@@ -1,16 +1,16 @@
 #include"ObjectRenderer.h"
 #include"Engine.h"
 #include"Shader.h"
-
-DefaultRenderer::DefaultRenderer(Transformable* parent, Mesh* m) :GameComponent(ComponentType::RENDERER, parent){
+using namespace Fallout;
+DefaultRenderer::DefaultRenderer(GameObject* parent, Mesh* m) :GameComponent(){
 	Meshes.push_back(m);
 }
 
-DefaultRenderer::DefaultRenderer(Transformable* parent, vector<Mesh*> m) : GameComponent(ComponentType::RENDERER, parent){
+DefaultRenderer::DefaultRenderer(GameObject* parent, vector<Mesh*> m) : GameComponent(){
 	Meshes = vector<Mesh*>(m);
 }
 
-DefaultRenderer::DefaultRenderer() : GameComponent(ComponentType::RENDERER){
+DefaultRenderer::DefaultRenderer() : GameComponent(){
 	Meshes = vector<Mesh*>();
 }
 DefaultRenderer::~DefaultRenderer(){

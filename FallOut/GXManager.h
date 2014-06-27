@@ -8,7 +8,9 @@
 #include<vector>
 #include<GL\glew.h>
 using namespace std;
+namespace Fallout{
 class Texture;
+
 class GXManager{
 public:
 	GXManager(){
@@ -30,10 +32,10 @@ public:
 	virtual void DeleteShader(unsigned int program, unsigned int* shaders, int size){}
 	virtual void BindShader(unsigned int p){}
 
-	virtual unsigned int createBuffer(BufferType type, unsigned int w, unsigned int h){ return 0; }
-	virtual void deleteBuffer(BufferType type, unsigned int h){ return; }
-	virtual void bindBuffer(BufferType type, unsigned int h){ return; }
-	virtual void addBuffertoFB(BufferType type, unsigned int fb, unsigned int b){ return; }
+	virtual unsigned int createBuffer(Buffer::Type type, unsigned int w, unsigned int h){ return 0; }
+	virtual void deleteBuffer(Buffer::Type type, unsigned int h){ return; }
+	virtual void bindBuffer(Buffer::Type type, unsigned int h,int x,int y){ return; }
+	virtual void addBuffertoFB(Buffer::Type type, unsigned int fb, unsigned int b){ return; }
 	virtual void addDepthTexturetoFB(Texture*txt,unsigned int h){ return; }
 	virtual void addTexturetoFB(Texture*txt,unsigned int h){ return; }
 	
@@ -60,5 +62,6 @@ public:
 protected:
 	vec3 clearColor;
 };
+}
 
 #endif

@@ -1,10 +1,10 @@
 #include"Scene.h"
 #include"Core.h"
 #include"Timing.h"
+using namespace Fallout;
 Scene::Scene(){
 	cam=new PerspectiveCamera(vec3(0,0,0),vec3(0,0,1),vec3(0,1,0),ToRadians(45.0f),1,100);
 	clearColor = vec3(0,0,0);
-	dirLight = NULL;
 	childList.push_back(cam);
 }
 Scene::~Scene(){
@@ -41,4 +41,11 @@ light* Scene::getLight(int val){
 }
 int Scene::getLightsCount(){
 	return ligths.size();
+}
+
+void Scene::addDirLight(DirectionalLight* val){
+	DirLights.push_back(val);
+}
+DirectionalLight* Scene::getDirLight(int val){
+	return DirLights[val];
 }

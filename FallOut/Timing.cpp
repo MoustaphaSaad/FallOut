@@ -19,6 +19,7 @@
 
 #include<iostream>
 using namespace std;
+using namespace Fallout;
 
 double Time::g_Freq=0;
 double Time::g_Delta=0;
@@ -28,7 +29,7 @@ int Time::frameCount=0;
 double Time::frameTimeCount=0;
 double Time::timeCount=0;
 double Time::lastTime=0;
-FPS Time::type = FPS::LIMITED;
+Time::FPS Time::type = FPS::LIMITED;
 
 
 void Time::init(){
@@ -60,7 +61,7 @@ void Time::update(double delta){
 void Time::setType(FPS val){
 	Time::type = val;
 }
-FPS Time::getType(){
+Time::FPS Time::getType(){
 	return type;
 }
 

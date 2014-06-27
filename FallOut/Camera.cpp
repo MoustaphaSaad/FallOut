@@ -2,13 +2,9 @@
 #include"Engine.h"
 #include"ObjectBehavior.h"
 #include"Timing.h"
+using namespace Fallout;
 Camera::Camera(){
 	this->transform = new Transform();
-}
-
-void Camera::move(vec3 direction, float amt)
-{
-	transform->position = transform->position.Lerp((transform->position + (direction * amt)), Time::getDelta()*3);
 }
 
 mat4 Camera::getPositionRotation(){
@@ -21,6 +17,9 @@ mat4 Camera::getPositionRotation(){
 }
 mat4 Camera::getProjection(){
 	return mat4();
+}
+mat4 Camera::getOrtho(){
+	return mat4().InitOrthographic(-1,1,-1,1,0,1);
 }
 void Camera::Input(){
 	GameObject::Input();
@@ -48,7 +47,6 @@ float PerspectiveCamera::getZNear(){
 float PerspectiveCamera::getZFar(){
 	return zFar;
 }
-
 mat4 PerspectiveCamera::getProjection(){
 	return mat4().InitPerspective(FOV, Engine::getInstance()->getDisplay()->getAspect(), zNear, zFar);
 }

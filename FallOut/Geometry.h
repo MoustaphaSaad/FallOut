@@ -2,9 +2,15 @@
 #define GOEMETRY_H_
 #include"GlobalStructs.h"
 #include"Vertex.h"
+#include<memory>
+using namespace std;
+
+namespace Fallout{
+	class Geometry;
+	typedef tr1::shared_ptr<Geometry> GeometryPtr;
 class Geometry{
 public:
-	Geometry(IVertex* vertices, int* indices, int nbVertices, int nbIndices, VertexFormat* form, bool calcN=false);
+	Geometry(IVertex* vertices, int* indices, int nbVertices, int nbIndices, VertexFormat* form);
 	IVertex* getVertices();
 	int* getIndices();
 
@@ -13,11 +19,6 @@ public:
 
 	VertexFormat* getFormat();
 
-	void setPrimitive(unsigned int glenum);
-	unsigned int getPrimitive();
-
-	bool hasNormals();
-	bool hasTexCoords();
 
 private:
 	IVertex* verticesTab;
@@ -25,12 +26,9 @@ private:
 	int verticesCount;
 	int indicesCount;
 
-	void calcNormals();
-
-	unsigned int primitive;
 	VertexFormat* format;
-
-	bool hNormals;
-	bool hTexCoords;
 };
+
+}
+
 #endif

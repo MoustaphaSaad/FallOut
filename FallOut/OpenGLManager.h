@@ -1,7 +1,7 @@
 #ifndef OpenGLManager_H
 #define OpenGLManager_H
 #include"GXManager.h"
-
+namespace Fallout{
 class OpenGLManager : public GXManager{
 public:
 	OpenGLManager(Display* d);
@@ -35,10 +35,10 @@ public:
 	unsigned int CreateDataBuffer(void* data, int dataSize, bool isStatic, int type);
 	unsigned int MapBuffer(void* data, int dataSize, unsigned int buffer);
 
-	unsigned int createBuffer(BufferType type, unsigned int w, unsigned int h);
-	void deleteBuffer(BufferType type, unsigned int h);
-	void bindBuffer(BufferType type, unsigned int h);
-	void addBuffertoFB(BufferType type, unsigned int fb, unsigned int b);
+	unsigned int createBuffer(Buffer::Type type, unsigned int w, unsigned int h);
+	void deleteBuffer(Buffer::Type type, unsigned int h);
+	void bindBuffer(Buffer::Type type, unsigned int h,int x,int y);
+	void addBuffertoFB(Buffer::Type type, unsigned int fb, unsigned int b);
 	void addDepthTexturetoFB(Texture*txt,unsigned int h);
 	void addTexturetoFB(Texture*txt,unsigned int h);
 
@@ -46,4 +46,5 @@ public:
 
 	void drawGeometry(Geometry* geo, unsigned int vbo, unsigned int ibo);
 };
+}
 #endif

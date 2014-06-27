@@ -1,0 +1,991 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Vector&lt;T, D&gt;" Collapsed="true">
+    <Position X="12" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAABAABAAAAAAAAQBACAEAACAAgEAgAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector2&lt;T&gt;" Collapsed="true">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABBAYAAAAAAAAAAAAAAAAAYACAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector3&lt;T&gt;" Collapsed="true">
+    <Position X="9" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAKALAABBYAAAAAAAAgEQAAAAAAYAGAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector4&lt;T&gt;" Collapsed="true">
+    <Position X="19.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAABBaAAAAAAAAAAAAAAAAAYAkAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matrix&lt;T, D&gt;" Collapsed="true">
+    <Position X="15" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAKQAAQAAAEIAAAAAgAgAAgAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matrix4&lt;T&gt;" Collapsed="true">
+    <Position X="14" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAIAAAAAAAAIgAAAAAEACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matrix3&lt;T&gt;" Collapsed="true">
+    <Position X="16.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector3f" Collapsed="true">
+    <Position X="9" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAABBYAAAAAAQBAGAAAAAAAYAGggAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quaternion" Collapsed="true">
+    <Position X="19.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAIkAAAAJIAAAAAAAAAAAAAAgAIAQAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Application" Collapsed="true">
+    <Position X="28" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAFAAQAAACAAAAIAAEBAKQBIABAAAAAAEAAA=</HashCode>
+      <FileName>Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Engine" Collapsed="true">
+    <Position X="29.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAEQAAAEgAIEAAAEAEBEEQBYEBCAoEAQUAAA=</HashCode>
+      <FileName>Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::InputManager" Collapsed="true">
+    <Position X="5.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAEAAAAAAAATAAAAIAAAAAAAAAAAAAAAAAECAA=</HashCode>
+      <FileName>InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::RenderEngine" Collapsed="true">
+    <Position X="28" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAgAAAAAAAAEAAAAAAAgUAAABAAQQAAA=</HashCode>
+      <FileName>RenderEngine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::ResourceManager" Collapsed="true">
+    <Position X="29.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAQoAAAAFAAAAJEAAEQAAAAAAAAIAAg=</HashCode>
+      <FileName>Resources.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::GXManager" Collapsed="true">
+    <Position X="11.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABANAEgAgIAADEBgAIQQAAAACAABERAAJwAAgQAAgQA=</HashCode>
+      <FileName>GXManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::DepthTexture" Collapsed="true">
+    <Position X="16.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DepthTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::OpenGLManager" Collapsed="true">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEJAEBAAIAADEBgBIQQAAAAAAEBERAAJwAAgQAAgQA=</HashCode>
+      <FileName>OpenGLManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Geometry" Collapsed="true">
+    <Position X="31.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABAAAAEAACCAAABAAQAAAAAAAAAAEAgRA=</HashCode>
+      <FileName>Geometry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::ShadowShader" Collapsed="true">
+    <Position X="21" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAAAAAAAAAAAAgAAAAABAAAAAAgAAAASAQA=</HashCode>
+      <FileName>SimpleShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Scene" Collapsed="true">
+    <Position X="4.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYABAiAiAAAAAIkgAAABAAAWAAAAAAAQBAAAAAAAAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Resource" Collapsed="true">
+    <Position X="18.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAIAAAAAAAAAAAAAAAARAHAABAAAAEAAAAAAA=</HashCode>
+      <FileName>Resource.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Mesh" Collapsed="true">
+    <Position X="12" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACAAAAAAAEQgEAAAAAAgAAIAAQAAAQAEQAAAgRAAAA=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Material" Collapsed="true">
+    <Position X="14.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAAAAAAABAAAAAAAAAAABAAAAEQAQAA=</HashCode>
+      <FileName>Material.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Texture" Collapsed="true">
+    <Position X="16.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIAAgASAQAAAAAAAEAAAQAAAAAIgAAAABAA=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Shader" Collapsed="true">
+    <Position X="23.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQJhCCAAAAABAAAAAAAAAIAAAAAAAAABAAAAABQJAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Time" Collapsed="true">
+    <Position X="35" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Fallout::Time::FPS" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Timing.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAxAAAAAAAAAAAEAAEAAhBAARABAAZEAAAAAAEECEA=</HashCode>
+      <FileName>Timing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Transform" Collapsed="true">
+    <Position X="36.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAEIAAAAAAAADAAACAIAwCEAAAAAAAgAAAAAAIAAA=</HashCode>
+      <FileName>Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::IVertex" Collapsed="true">
+    <Position X="1.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAI=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Vertex" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAIAgAAAAAAACAAAIAAgAAAAA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::DefVertex2D" Collapsed="true">
+    <Position X="2.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAIAAAAAAAAACAAAIAAAAAAAA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Transformable" Collapsed="true">
+    <Position X="9.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAEAAAAAAAAABAAAEAAAABAAAAEAAAAA=</HashCode>
+      <FileName>VisualObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Camera" Collapsed="true">
+    <Position X="6.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAEAAAAAAADAAAAAEAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::PerspectiveCamera" Collapsed="true">
+    <Position X="6.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAIAEAAAAYAAAAAAAAEAAAgAAAABAAACAAAIA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::GameComponent" Collapsed="true">
+    <Position X="6.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAEAAAAAABAAAAAAAAAEAAAAAAAABAAAABAAAA=</HashCode>
+      <FileName>Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::GameObject" Collapsed="true">
+    <Position X="6.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAAAAAAAgAAECBAAAABCEAAAAAAAIBAAAAIAAAI=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::FrameBuffer" Collapsed="true">
+    <Position X="0.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAQAAAAKIAAAAAAAQACwBAEAAADAACAAAAAAAAEAAA=</HashCode>
+      <FileName>FrameBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::FreeLook" Collapsed="true">
+    <Position X="4.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAoAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FreeLook.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::FreeMove" Collapsed="true">
+    <Position X="6.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FreeMove.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::DirectionalLight" Collapsed="true">
+    <Position X="1.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQgAAAAAAAAAAACQAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::light" Collapsed="true">
+    <Position X="1.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAIAAogCAQAAAAAACEAgACAAMCCgCAAAAAAAAgAEA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Shadow" Collapsed="true">
+    <Position X="31.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAUAAAAAAEAAAAAIAAAAAAAIAgAABABAAAAI=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::BasicMaterial" Collapsed="true">
+    <Position X="14.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAEABIogABAAAABAIAQABAAQQkBIAAACFAAAA=</HashCode>
+      <FileName>MaterialBasic.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::ObjectBehavior" Collapsed="true">
+    <Position X="5.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAQAAAAAAAAEAAAABgAABAAAAAAAAA=</HashCode>
+      <FileName>ObjectBehavior.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::DefaultRenderer" Collapsed="true">
+    <Position X="8.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAAAAAQAAAAAIEAIAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>ObjectRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Buffer" Collapsed="true">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIAAgASAQAAAAAAAAQABQAAAAAAAAAAQRAA=</HashCode>
+      <FileName>Buffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::Texture3D" Collapsed="true">
+    <Position X="18.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Texture3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::visualComposer" Collapsed="true">
+    <Position X="28" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAICAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualComposer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::VertexFormat" Collapsed="true">
+    <Position X="1.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAgAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>GlobalStructs.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::VertexDescription" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GlobalStructs.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::DefVertex2DDesc" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GlobalStructs.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::GLSL" Collapsed="true">
+    <Position X="33.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Fallout::GLSL::Shaders" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GLSLTranslator.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAEAAAgAAAAAAAAABAAAJAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>GLSLTranslator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::ObjLoader" Collapsed="true">
+    <Position X="36.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::StringOp" Collapsed="true">
+    <Position X="33.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAQAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAAQAAA=</HashCode>
+      <FileName>StringOp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::InputGL" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAgIAAAAAIAAAAAAAAAAAAAECAA=</HashCode>
+      <FileName>InputGL.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fallout::filterShader" Collapsed="true">
+    <Position X="25.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SimpleShader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="__unnamed_struct_0043_1" Collapsed="true">
+    <Position X="5.5" Y="26.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAEAAAYAgAAgAAAAAAAhAAAAABACA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_3" Collapsed="true">
+    <Position X="22.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAAAIAAACCAAAAAAAEAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_4" Collapsed="true">
+    <Position X="1.5" Y="25.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAABAAAIAAEDEAgIAAABAAAgAAABAoAAAAAgAgA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_6" Collapsed="true">
+    <Position X="20.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEEAAAAAAAAAAQAAAAAAAACAIABAIAAAgAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_7" Collapsed="true">
+    <Position X="16.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAgIAAAACCAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_8" Collapsed="true">
+    <Position X="12.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAQAAAIEAJAAgAgAAAgAAAAAAIAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_9" Collapsed="true">
+    <Position X="1.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_10" Collapsed="true">
+    <Position X="18.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAQAAAAAAAAAAAAAAAIAAAIAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0043_12" Collapsed="true">
+    <Position X="8.5" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAIAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="stbi_gif_lzw_struct" Collapsed="true">
+    <Position X="14.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAgAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="stbi_gif_struct" Collapsed="true">
+    <Position X="4.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEICAgAIAAARAQAgAEBAYAAgAAAAQAggAAAAJAQ=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_0044_2" Collapsed="true">
+    <Position X="10.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fallout::Display" Collapsed="true">
+    <Position X="28" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAQAAAAAQAQAAAAQAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Display.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fallout::TimeStep" Collapsed="true">
+    <Position X="31.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABA=</HashCode>
+      <FileName>Timing.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fallout::UniformData" Collapsed="true">
+    <Position X="33.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAQAAAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>GlobalStructs.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fallout::ShaderStruct" Collapsed="true">
+    <Position X="29.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAEABAAAAAAAAAAAAA=</HashCode>
+      <FileName>GlobalStructs.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="uint8" Collapsed="true">
+    <Position X="36.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint16" Collapsed="true">
+    <Position X="33.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int16" Collapsed="true">
+    <Position X="35" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint32" Collapsed="true">
+    <Position X="35" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int32" Collapsed="true">
+    <Position X="36.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="uint" Collapsed="true">
+    <Position X="31.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="validate_uint32" Collapsed="true">
+    <Position X="28" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi" Collapsed="true">
+    <Position X="5.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="huffman" Collapsed="true">
+    <Position X="22.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="jpeg" Collapsed="true">
+    <Position X="1.5" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_dequantize_t" Collapsed="true">
+    <Position X="31.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="resample_row_func" Collapsed="true">
+    <Position X="33.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_resample" Collapsed="true">
+    <Position X="20.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="zhuffman" Collapsed="true">
+    <Position X="16.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="zbuf" Collapsed="true">
+    <Position X="12.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="chunk" Collapsed="true">
+    <Position X="1.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="png" Collapsed="true">
+    <Position X="18.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="pic_packet_t" Collapsed="true">
+    <Position X="8.5" Y="23.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_gif_lzw" Collapsed="true">
+    <Position X="14.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_gif" Collapsed="true">
+    <Position X="4.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::ApplicationPtr" Collapsed="true">
+    <Position X="28" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Application.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::DisplayPtr" Collapsed="true">
+    <Position X="28" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Display.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::GeometryPtr" Collapsed="true">
+    <Position X="33.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector2i" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector3i" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector4i" Collapsed="true">
+    <Position X="23.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector2f" Collapsed="true">
+    <Position X="12" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector4f" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector2d" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector3d" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Vector4d" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix2i" Collapsed="true">
+    <Position X="15" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix3i" Collapsed="true">
+    <Position X="22.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix4i" Collapsed="true">
+    <Position X="12" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix2f" Collapsed="true">
+    <Position X="15" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix3f" Collapsed="true">
+    <Position X="21.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix4f" Collapsed="true">
+    <Position X="14" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix2d" Collapsed="true">
+    <Position X="18" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix3d" Collapsed="true">
+    <Position X="20.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Matrix4d" Collapsed="true">
+    <Position X="18" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vec2" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vec3" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="mat3" Collapsed="true">
+    <Position X="16.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="mat4" Collapsed="true">
+    <Position X="12" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vec4" Collapsed="true">
+    <Position X="19.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Math3D.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::ResourcePtr" Collapsed="true">
+    <Position X="35" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Resource.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_uc" Collapsed="true">
+    <Position X="35" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_io_callbacks" Collapsed="true">
+    <Position X="10.5" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_idct_8x8" Collapsed="true">
+    <Position X="33.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="stbi_YCbCr_to_RGB_run" Collapsed="true">
+    <Position X="36.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::TransformPtr" Collapsed="true">
+    <Position X="29.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::CameraPtr" Collapsed="true">
+    <Position X="35" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::GameComponentPtr" Collapsed="true">
+    <Position X="31.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Component.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::FrameBufferPtr" Collapsed="true">
+    <Position X="29.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FrameBuffer.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::DirectionalLightPtr" Collapsed="true">
+    <Position X="36.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::lightPtr" Collapsed="true">
+    <Position X="28" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::ShadowPtr" Collapsed="true">
+    <Position X="29.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::MaterialPtr" Collapsed="true">
+    <Position X="29.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Material.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::BasicMaterialPtr" Collapsed="true">
+    <Position X="29.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MaterialBasic.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::MeshPtr" Collapsed="true">
+    <Position X="31.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::BufferPtr" Collapsed="true">
+    <Position X="33.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buffer.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::ScenePtr" Collapsed="true">
+    <Position X="36.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::ShaderPtr" Collapsed="true">
+    <Position X="28" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Fallout::TexturePtr" Collapsed="true">
+    <Position X="28" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="__unnamed_enum_0043_2" Collapsed="true">
+    <Position X="29.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0043_11" Collapsed="true">
+    <Position X="28" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAIAAABAAAAAAAACAAAAAAAAAEAAAAAAABAAAA=</HashCode>
+      <FileName>stb_image.cpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0044_1" Collapsed="true">
+    <Position X="31.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAABAAAAAAAAAAEAAABAAAAAAAIAAAAAA=</HashCode>
+      <FileName>stb_image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fallout::keyState" Collapsed="true">
+    <Position X="33.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAICAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

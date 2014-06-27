@@ -1,7 +1,8 @@
 #include"Mesh.h"
 #include<GL\glew.h>
 #include"Engine.h"
-Mesh::Mesh(const string name,Geometry* geo,Material* mat):Resource(name,ResourceType::MESH){
+using namespace Fallout;
+Mesh::Mesh(const string name,Geometry* geo,Material* mat):Resource(name,Resource::Type::MESH){
 	this->geometry = geo;
 	this->material = mat;
 	subMesh = vector<Mesh*>();
@@ -9,13 +10,12 @@ Mesh::Mesh(const string name,Geometry* geo,Material* mat):Resource(name,Resource
 	ibo = Engine::getInstance()->getGXManager()->CreateIndexBuffer(geo->getIndices(), geo->getIndicesCount()*sizeof(int), true);
 }
 Mesh::Mesh(Geometry* geo,Material* mat):Resource(){
-	this->type = ResourceType::MESH;
+	this->type = Resource::Type::MESH;
 	this->geometry = geo;
 	this->material = mat;
 	subMesh = vector<Mesh*>();
 	vbo = Engine::getInstance()->getGXManager()->CreateVertexBuffer(geo->getVertices(), geo->getVerticesCount()*geo->getFormat()->vertexSize, true);
 	ibo = Engine::getInstance()->getGXManager()->CreateIndexBuffer(geo->getIndices(), geo->getIndicesCount()*sizeof(int), true);
-
 }
 
 Mesh::~Mesh(){

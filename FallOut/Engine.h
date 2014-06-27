@@ -4,14 +4,15 @@
 #include"OpenGLManager.h"
 #include"RenderEngine.h"
 #include"FrameBuffer.h"
+#include"Application.h"
+namespace Fallout{
 class DepthTexture;
-class Application;
-enum GraphicsHandle{ OpenGL,DirectX};
 class InputManager;
 class Engine{
 	friend class OpenGLManager;
 	friend class RenderEngine;
 public:
+	enum GraphicsHandle{ OpenGL,DirectX};
 	static Engine* getInstance();
 	GXManager* getGXManager();
 	Application* getApplication();
@@ -41,4 +42,5 @@ private:
 	RenderEngine* rEngine;
 	
 };
+}
 #endif

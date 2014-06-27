@@ -25,6 +25,9 @@
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{8eef589f-de47-4ca5-b8d7-1f3cd0b61fac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{a40e3517-a37b-481f-83e0-29f3e43c1373}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FallOut.h">
@@ -144,11 +147,23 @@
     <ClInclude Include="DepthTexture.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleShader.h">
-      <Filter>Header Files\Engine Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Buffer.h">
       <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeLook.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeMove.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualComposer.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,8 +260,14 @@
     <ClCompile Include="Buffer.cpp">
       <Filter>Header Files\Engine Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleShader.cpp">
+    <ClCompile Include="basicShader.cpp">
       <Filter>Header Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleShader.cpp">
+      <Filter>Header Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,23 +277,30 @@
     <None Include="res\light.glh">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\basic2D.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\Atmosphere.glh">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\Sky.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\Clouds.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\Ocean.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\simple.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\shadow.glh">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\filter-gaussianBlur.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="textfile.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\default1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="glslshad.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="simple.glsl" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

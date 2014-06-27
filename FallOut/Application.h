@@ -1,8 +1,14 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
-#include"Engine.h"
+#include"GXManager.h"
 #include"Scene.h"
+#include<memory>
+using namespace std;
+namespace Fallout{
+	class Application;
+	typedef tr1::shared_ptr<Application> ApplicationPtr;
 class Application{
+
 	friend class Engine;
 public:
 	Application();
@@ -10,7 +16,7 @@ public:
 
 	virtual void init();
 	virtual void input();
-	virtual void update();
+	virtual void update(TimeStep gameTime);
 	virtual void setupScene();
 	virtual void loadResources();
 	virtual void postRender();
@@ -24,4 +30,6 @@ protected:
 	RenderEngine* rEngine;
 	GXManager* gxManager;
 };
+
+}
 #endif

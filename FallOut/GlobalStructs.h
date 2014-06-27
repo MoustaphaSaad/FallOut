@@ -4,6 +4,7 @@
 #include<vector>
 #include"Math3D.h"
 using namespace std;
+namespace Fallout{
 struct UniformData
 {
     unsigned int Location;
@@ -38,14 +39,16 @@ public:
 class VertexDescription: public VertexFormat{
 public:
 	VertexDescription(){
-		nElements = 4;
+		nElements = 5;
 		
 		Sizes = vector<int>();
 		Sizes.push_back(sizeof(vec3));
 		Sizes.push_back(sizeof(vec3));
 		Sizes.push_back(sizeof(vec3));
 		Sizes.push_back(sizeof(vec2));
-		vertexSize = sizeof(vec3)+sizeof(vec3)+sizeof(vec3)+sizeof(vec2);
+		Sizes.push_back(sizeof(vec3));
+
+		vertexSize = sizeof(vec3)+sizeof(vec3)+sizeof(vec3)+sizeof(vec2)+sizeof(vec3);
 	}
 };
 class DefVertex2DDesc : public VertexFormat{
@@ -59,4 +62,5 @@ public:
 		vertexSize = sizeof(vec2)+sizeof(vec3)+sizeof(vec2);
 	}
 };
+}
 #endif

@@ -4,13 +4,12 @@
 #include"Resource.h"
 #include<map>
 using namespace std;
-
+namespace Fallout{
 class Mesh;
 class Geometry;
 class Material;
 class Texture;
 class Shader;
-
 class ResourceManager{
 public:
 	ResourceManager(){
@@ -26,7 +25,8 @@ public:
 	void DeleteAll();
 	void Delete(const string name);
 	bool isExist(const string name);
-	Resource* getResource(const string name);
+	template<class TYPE>
+	TYPE* getResource(const string name);
 
 	void RegisterResource(Resource* r);
 	~ResourceManager(){
@@ -41,4 +41,5 @@ private:
 	map<string,Resource*> ResourcesList;
 	static ResourceManager* resourceManager;
 };
+}
 #endif

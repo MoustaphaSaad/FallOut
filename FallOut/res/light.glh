@@ -13,6 +13,7 @@ struct DirLight{
 	vec3 ld;
 	vec3 ls;
 	float intensity;
+	mat4 shadowMatrix;
 };
 
 struct materialInfo{
@@ -22,7 +23,14 @@ struct materialInfo{
 	float shine;
 };
 
-fragment vec3 calcLight(lightInfo light,vec3 pos,vec3 norm,materialInfo Mat){
+struct lightOut{
+	vec3 la;
+	vec3 ld;
+	vec3 ls;
+};
+
+fragment lightOut calcLight(lightInfo light,vec3 pos,vec3 norm,materialInfo Mat){
+	lightOut res;
 	vec3 lpos = light.pos;
 	float dist = length(pos-lpos);
 	float att = 1.0/(1.0+0.01*dist+0.001*dist*dist);
@@ -39,10 +47,16 @@ fragment vec3 calcLight(lightInfo light,vec3 pos,vec3 norm,materialInfo Mat){
 	float scont = pow(max(0.0,dot(surf2view,-reflection)),Mat.shine);
 	vec3 specular = scont*light.ls*Mat.ks;
 
-	return (ambient+diffuse+specular)*att;
+	res.la = ambient*att*light.intensity;
+	res.ld = diffuse*att*light.intensity;
+	res.ls = specular*att*light.intensity;
+
+	return res;
 }
 
-fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos,materialInfo Mat){
+fragment lightOut CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos,materialInfo Mat){
+	lightOut res;
+
 	float df = dot(normal,-light.dir);
 
 	vec4 dc = vec4(0,0,0,0);
@@ -60,5 +74,9 @@ fragment vec4 CalcDirLight(DirLight light,vec3 pos,vec3 normal,vec3 epos,materia
 			ds = vec4(light.ls,1.0)*sf*vec4(Mat.ks,1.0);
 		}
 	}
-	return dc + ds+vec4((light.la*Mat.ka),1.0);
+	res.la = (light.la*Mat.ka)*light.intensity;
+	res.ld = vec3(dc)*light.intensity;
+	res.ls = vec3(ds)*light.intensity;
+	return res;
 }
+

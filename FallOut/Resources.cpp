@@ -3,6 +3,7 @@
 #include"ObjLoader.h"
 #include"Shader.h"
 #include<iostream>
+using namespace Fallout;
 ResourceManager* ResourceManager::resourceManager = NULL;
 void ResourceManager::RegisterResource(Resource* r){
 	ResourcesList.insert(make_pair(r->getName(),r));
@@ -28,20 +29,22 @@ bool ResourceManager::isExist(const string name){
 		return false;
 	return true;
 }
-
-Resource* ResourceManager::getResource(const string name){
+template<class TYPE>
+TYPE* ResourceManager::getResource(const string name){
 	if(isExist(name))
-		return this->ResourcesList[name];
+		return (TYPE*)this->ResourcesList[name];
 	return NULL;
 }
 
 Mesh* ResourceManager::createMesh(const string name,const string fileName){
 	Mesh* obj;
 	if(!isExist(name)){
-		obj = ObjLoader::loadObj(name,fileName);
+		obj = ObjLoader::loadObj(fileName);
+		obj->setType(Resource::MESH);
+		obj->setName(name);
 		RegisterResource(obj);
 	}else{
-		obj = (Mesh*)getResource(name);
+		obj = getResource<Mesh>(name);
 	}
 	return obj;
 }
@@ -51,7 +54,7 @@ Mesh* ResourceManager::createMesh(const string name,Geometry* geo,Material* mat)
 		obj = new Mesh(name,geo,mat);
 		RegisterResource(obj);
 	}else{
-		obj = (Mesh*)getResource(name);
+		obj = getResource<Mesh>(name);
 	}
 	return obj;
 }
@@ -62,7 +65,7 @@ Texture* ResourceManager::createTexture(const string name,const string fileName)
 		obj->setName(name);
 		RegisterResource(obj);
 	}else{
-		obj = (Texture*)getResource(name);
+		obj = getResource<Texture>(name);
 	}
 	return obj;
 }
@@ -73,7 +76,7 @@ Texture* ResourceManager::createTexture(const string name,int w,int h,unsigned c
 		obj->setName(name);
 		RegisterResource(obj);
 	}else{
-		obj = (Texture*)getResource(name);
+		obj = getResource<Texture>(name);
 	}
 	return obj;
 }
@@ -83,7 +86,7 @@ Shader* ResourceManager::createShader(const string name,const string fileName){
 		obj = new Shader(name,fileName);
 		RegisterResource(obj);
 	}else{
-		obj = (Shader*)getResource(name);
+		obj = getResource<Shader>(name);
 	}
 	return obj;
 }
@@ -94,7 +97,7 @@ Material* ResourceManager::createMaterial(const string name,Shader* shader){
 		obj = new Material(name,shader);
 		RegisterResource(obj);
 	}else{
-		obj= (Material*)getResource(name);
+		obj= getResource<Material>(name);
 	}
 	return obj;
 }

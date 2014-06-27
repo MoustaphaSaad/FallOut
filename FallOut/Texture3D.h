@@ -4,8 +4,10 @@
 #include"stb_image.h"
 #include"Resources.h"
 using namespace std;
+namespace Fallout{
 class Texture3D : public Resource{
 public:
 	Texture3D();
 };
+}
 #endif 

@@ -2,9 +2,10 @@
 #include"Engine.h"
 #include<iostream>
 using namespace std;
+using namespace Fallout;
 Texture::Texture(const std::string fileName, bool linearFiltering, bool repeatTexture) :Resource()
 {
-	this->type = ResourceType::TEXTURE;
+	this->type = Resource::Type::TEXTURE;
 	int x, y, numComponents;
 	unsigned char* data = stbi_load(fileName.c_str(), &x, &y, &numComponents, 4);
 
@@ -19,7 +20,7 @@ Texture::Texture(const std::string fileName, bool linearFiltering, bool repeatTe
 
 Texture::Texture(int width, int height, void* data, bool linearFiltering, bool repeatTexture) :Resource()
 {
-	this->type = ResourceType::TEXTURE;
+	this->type = Resource::Type::TEXTURE;
 	TextureID = Engine::getInstance()->getGXManager()->CreateTexture(width, height, data, linearFiltering, repeatTexture);
 	this->width = width;
 	this->height = height;
@@ -36,4 +37,10 @@ void Texture::bind(int unit) const
 }
 void Texture::unbind(int unit){
 	Engine::getInstance()->getGXManager()->BindTexture(0, unit);
+}
+int Texture::getWidth(){
+	return this->width;
+}
+int Texture::getHeight(){
+	return this->height;
 }

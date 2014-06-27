@@ -1,6 +1,7 @@
 #include"ObjectBehavior.h"
 #include"Engine.h"
-ObjectBehavior::ObjectBehavior(Transformable* object) :GameComponent(ComponentType::BEHAVIOUR, object){
+using namespace Fallout;
+ObjectBehavior::ObjectBehavior() :GameComponent(){
 	input = Engine::getInstance()->getInputManager();
 }
 

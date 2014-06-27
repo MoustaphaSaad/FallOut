@@ -1,12 +1,14 @@
 #include"MaterialBasic.h"
-#include"Shader.h"
-
+#include"basicShader.h"
+using namespace Fallout;
 BasicMaterial::BasicMaterial(){
 	ambient = vec3(.1,.1,.1);
 	diffuse = vec3(.80,.8,.8);
 	specular = vec3(.9,.9,.9);
 	shine = .65;
 	Tex = NULL;
+	NormalTex = NULL;
+	shader = new BasicShader();
 }
 BasicMaterial::~BasicMaterial(){
 }
@@ -46,15 +48,24 @@ void BasicMaterial::setTexture(Texture* val){
 	Tex = val;
 }
 
+void BasicMaterial::setNormalTexture(Texture* val){
+	NormalTex = val;
+}
+
+Texture* BasicMaterial::getNormaleTexture(){
+	return NormalTex;
+}
+
 void BasicMaterial::use(){
 	shader->setUniform("Mat.ka",ambient);
 	shader->setUniform("Mat.kd",diffuse);
 	shader->setUniform("Mat.ks",specular);
 	shader->setUniform("Mat.shine",shine);
 	if(Tex!=NULL){
-		shader->setUniform("Tex", 0);
-		Tex->bind(0);
-		
+		shader->BindTexture(Tex,"Tex");
+	}
+	if(NormalTex != NULL){
+		shader->BindTexture(NormalTex,"NormalTex");
 	}
 }
 

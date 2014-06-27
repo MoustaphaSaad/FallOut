@@ -16,15 +16,15 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -42,6 +42,10 @@
     <IncludePath>$(ProjectDir)\Libs\freeglut\include;$(ProjectDir)\Libs\assimp--3.0.1270-sdk\include;$(ProjectDir)\Libs\glew-1.10.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\Libs\assimp--3.0.1270-sdk\lib\assimp_debug-dll_win32;$(ProjectDir)\Libs\freeglut\lib;$(ProjectDir)\Libs\glew-1.10.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)\Libs\freeglut\include;$(ProjectDir)\Libs\assimp--3.0.1270-sdk\include;$(ProjectDir)\Libs\glew-1.10.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Libs\assimp--3.0.1270-sdk\lib\assimp_release-dll_win32;$(ProjectDir)\Libs\freeglut\lib;$(ProjectDir)\Libs\glew-1.10.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -51,6 +55,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;glew32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EmbedManagedResourceFile>basic.glsl;simple.glsl;%(EmbedManagedResourceFile)</EmbedManagedResourceFile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -67,6 +72,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;glew32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -80,6 +86,8 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FallOut.h" />
     <ClInclude Include="FrameBuffer.h" />
+    <ClInclude Include="FreeLook.h" />
+    <ClInclude Include="FreeMove.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GlobalStructs.h" />
@@ -99,6 +107,7 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
@@ -110,12 +119,15 @@
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VisualComposer.h" />
     <ClInclude Include="VisualObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="basicShader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -147,14 +159,19 @@
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Atmosphere.glh" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="glslshad.bin" />
     <None Include="res\basic.glsl" />
-    <None Include="res\basic2D.glsl" />
-    <None Include="res\Clouds.glsl" />
+    <None Include="res\default1.bin" />
+    <None Include="res\filter-gaussianBlur.glsl" />
     <None Include="res\light.glh" />
-    <None Include="res\Ocean.glsl" />
+    <None Include="res\shadow.glh" />
     <None Include="res\simple.glsl" />
-    <None Include="res\Sky.glsl" />
+    <None Include="simple.glsl" />
+    <None Include="textfile.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

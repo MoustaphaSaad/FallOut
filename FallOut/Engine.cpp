@@ -1,7 +1,8 @@
 #include"Engine.h"
-#include"FallOut.h"
+#include"InputGL.h"
 #include<algorithm>
 #include<iostream>
+using namespace Fallout;
 Engine* Engine::engine = NULL;
 
 Engine::Engine(){
@@ -37,8 +38,8 @@ void Engine::initiate(Display* d,GraphicsHandle h){
 }
 void Engine::start(Application* app){
 	this->app = app;
-	init();
 	Time::init();
+	init();
 	gameLoop();
 	gxManager->start();
 }
@@ -48,7 +49,7 @@ void Engine::gameLoop(){
 	double passedTime = current - Time::lastTime;
 	double delta;
 	delta = min(passedTime, Time::frameLimit);
-	if (Time::type == FPS::LIMITED)
+	if (Time::type == Time::FPS::LIMITED)
 		if (passedTime > Time::frameLimit)
 			delta = passedTime;
 
@@ -62,7 +63,7 @@ void Engine::gameLoop(){
 		Time::frameCount = 0;
 		Time::frameTimeCount = 0;
 	}
-	if (Time::type == FPS::LIMITED){
+	if (Time::type == Time::FPS::LIMITED){
 		if (Time::timeCount > Time::frameLimit){
 			Time::update(Time::timeCount);
 			input();
@@ -71,7 +72,7 @@ void Engine::gameLoop(){
 			Time::timeCount = 0;
 		}
 	}
-	else if(Time::type == FPS::UNLIMITED){
+	else if(Time::type == Time::FPS::UNLIMITED){
 		if (Time::timeCount > delta){
 			Time::update(Time::timeCount);
 			input();
@@ -103,7 +104,7 @@ void Engine::input(){
 void Engine::update(TimeStep time){
 	if(app->scene!=NULL)
 		app->scene->Update(time);
-	app->update();
+	app->update(time);
 }
 
 void Engine::render(){

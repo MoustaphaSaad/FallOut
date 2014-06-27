@@ -7,34 +7,48 @@
 #include"StringOp.h"
 #include"GLSLTranslator.h"
 using namespace std;
-
-Shader::Shader(const string fileName):Resource(){
-	this->type = ResourceType::SHADER;
+using namespace Fallout;
+Shader::Shader(const string content):Resource(){
+	this->type = Resource::Type::SHADER;
 	m_Program=0;
 	m_isValid = false;
 	m_Shaders = vector<unsigned int>();
 	m_Uniforms = vector<UniformData>();
+	Samplers = map<string,int>();
 
-	string shaderText = loadShader(fileName);
+	string shaderText = content;
 	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateVertexShader(shaderText));
 	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateFragmentShader(shaderText));
 	m_Program = Engine::getInstance()->getGXManager()->CreateProgram(&m_Shaders[0], m_Shaders.size());
 	m_Structs = GLSL::CreateStructs(shaderText, m_Program);
 	m_Uniforms = GLSL::CreateUniforms(shaderText, m_Program, m_Structs);
+	handleSamplers();
 }
-
-Shader::Shader(const string name,const string fileName):Resource(name,ResourceType::SHADER){
+Shader::Shader(const string name,const string content):Resource(name,Resource::Type::SHADER){
 	m_Program=0;
 	m_isValid = false;
 	m_Shaders = vector<unsigned int>();
 	m_Uniforms = vector<UniformData>();
+	Samplers = map<string,int>();
 
-	string shaderText = loadShader(fileName);
+	string shaderText = content;
 	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateVertexShader(shaderText));
 	m_Shaders.push_back(Engine::getInstance()->getGXManager()->CreateFragmentShader(shaderText));
 	m_Program = Engine::getInstance()->getGXManager()->CreateProgram(&m_Shaders[0], m_Shaders.size());
 	m_Structs = GLSL::CreateStructs(shaderText, m_Program);
 	m_Uniforms = GLSL::CreateUniforms(shaderText, m_Program, m_Structs);
+	handleSamplers();
+}
+void Shader::handleSamplers(){
+	int samplerID =0;
+	for(int i=0;i<m_Uniforms.size();i++)
+		if(StringOp::Contains(m_Uniforms[i].Type,"sampler")){
+			this->Samplers[m_Uniforms[i].Name] = samplerID++;
+		}
+}
+void Shader::BindTexture(Texture* txt,string sampler){
+	setUniform(sampler,Samplers[sampler]);
+	txt->bind(Samplers[sampler]);
 }
 Shader::~Shader(){
 	Engine::getInstance()->getGXManager()->DeleteShader(m_Program, &m_Shaders[0], m_Shaders.size());
@@ -44,7 +58,7 @@ void Shader::Bind(){
 	Engine::getInstance()->getGXManager()->BindShader(m_Program);
 }
 
-void Shader::Update(Transformable* obj){
+void Shader::Update(Transformable* obj,Material* mtl){
 
 
 }

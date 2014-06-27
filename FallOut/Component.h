@@ -4,19 +4,18 @@
 #include<memory>
 #include"Timing.h"
 #include"VisualObject.h"
+using namespace std;
+namespace Fallout{
+	class GameComponent;
+	typedef tr1::shared_ptr<GameComponent> GameComponentPtr;
 class GameObject;
-enum ComponentType{RENDERER,BEHAVIOUR,XNONE};
 class GameComponent{
+	friend class GameObject;
 protected:
-	ComponentType type;
 	Transformable* parent;
 public:
-	GameComponent(ComponentType type, Transformable* parent = 0){
-		this->type = type;
-		this->parent = parent;
-	}
-	ComponentType getType(){
-		return type;
+
+	GameComponent(){
 	}
 	virtual void Input(){}
 	virtual void Update(TimeStep time){}
@@ -29,4 +28,6 @@ public:
 		parent = val;
 	}
 };
+
+}
 #endif

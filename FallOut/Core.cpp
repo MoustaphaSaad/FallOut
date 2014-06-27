@@ -1,5 +1,6 @@
 #include"Core.h"
 #include"Engine.h"
+using namespace Fallout;
 Engine* Fallout::getEngine(){
 	return Engine::getInstance();
 }
@@ -17,4 +18,7 @@ GXManager* Fallout::getGXManager(){
 }
 Application* Fallout::getApplication(){
 	return getEngine()->getApplication();
+}
+Display* Fallout::getDisplay(){
+	return getEngine()->getDisplay();
 }
